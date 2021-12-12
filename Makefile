@@ -49,3 +49,6 @@ php migrate:
 
 composer:
 	docker-compose exec php-cli php composer.phar
+
+php:
+	docker-compose exec php-cli php

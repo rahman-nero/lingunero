@@ -1,42 +1,48 @@
 version: '3'
 services:
-  php-cli:
-    build:
-      context: ./
-      dockerfile: ./docker/php.docker
-    volumes:
-      - ./:/var/www
-    tty: true
-  php-fpm:
-    build:
-      context: ./
-      dockerfile: ./docker/php-fpm.docker
-    volumes:
-        - ./:/var/www/
-        - ./public:/var/www/public
-    links:
-      - mysql
-  nginx:
-      build:
-        context: ./
-        dockerfile: ./docker/nginx.docker
-      ports:
-        - "8080:80"
-      volumes:
-        - ./public:/var/www/public
-      links:
-        - php-fpm
-  mysql:
-    image: mysql:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=rahman
-      - MYSQL_PASSWORD=rahman
-      - MYSQL_DATABASE=app
-    volumes:
-      - ./storage/mysql:/var/lib/mysql/
-    ports:
-      - "33006:3306"
-
-  redis:
-    image: redis
+    php-cli:
+        container_name: php
+        build:
+            context: ./
+            dockerfile: ./docker/php.docker
+        volumes:
+            - ./:/var/www/
+        tty: true
+    php-fpm:
+        container_name: php-fpm
+        build:
+            context: ./
+            dockerfile: ./docker/php-fpm.docker
+        volumes:
+            - ./:/var/www/
+            - ./public:/var/www/public
+        links:
+            - mysql
+    nginx:
+        container_name: nginx
+        build:
+            context: ./
+            dockerfile: ./docker/nginx.docker
+        ports:
+            - "8080:80"
+        volumes:
+            - ./public:/var/www/public
+        links:
+            - php-fpm
+    mysql:
+        container_name: mysql
+        image: mysql:8.0
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=rahman
+            - MYSQL_PASSWORD=rahman
+            - MYSQL_DATABASE=app
+        volumes:
+            - ./storage/mysql:/var/lib/mysql/
+        ports:
+            - "33006:3306"
+    redis:
+        container_name: redis
+        image: redis
+        ports:
+            - "63799:6379"
