@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Library\Words\PracticeController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +26,16 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/', [MainController::class, 'index'])->name('home');
-    Route::get('/library/{library_id}', [MainController::class, 'library'])
+
+    // Библиотека
+    Route::get('/library/{libraryId}', [MainController::class, 'library'])
         ->name('library.show')
-        ->whereNumber('library_id');
+        ->whereNumber('libraryId');
+
+    // Карточки
+    Route::get('/library/{libraryId}/words', [PracticeController::class, 'index'])
+        ->name('library.words.studying')
+        ->whereNumber('libraryId');
 
 });
 

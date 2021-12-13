@@ -1,10 +1,12 @@
 <header id="header">
+
     <div class="center">
         <div class="logo">
             <a href="{{ route('home') }}">
                 <img src="{{ asset('media/logotip.png') }}" alt="Logotip">
             </a>
         </div>
+
         <div class="top-nav-bar">
             <ul>
                 <li><a href="{{ route('home') }}">Главная</a></li>

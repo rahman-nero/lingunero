@@ -9,51 +9,51 @@
     <section id="content">
         <div class="heading">
             <h2>{{ $library->first()->title  }}</h2>
+
+            <span><a href="">Удалить библиотеку</a></span>
         </div>
 
         <div class="list-action">
 
-            <div class="list-block"
-                 data-background="{{ asset('media/i01_1.jpg') }}"
-            >
+            <a href="{{ route('library.words.studying', $library->first()->id) }}">
+                <div class="list-block" data-background="{{ asset('media/i01_1.jpg') }}">
+                    <div class="content">
+                        <span>Карточки слов - {{ $library->first()->countWords() }}</span>
+                    </div>
+                    <div class="action">
+                        <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
+                        <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                    </div>
+                </div>
+            </a>
 
-                <div class="content">
-                    <span>Карточки слов - {{ $library->first()->countWords() }}</span>
-                </div>
-                <div class="action">
-                    <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                    <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
-                    <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
-                </div>
-            </div>
+            <a href="">
+                <div class="list-block" data-background="{{ asset('media/i01_2.jpg') }}">
 
+                    <div class="content">
+                        <span>Практика слов - {{ $library->first()->countWords() }}</span>
+                    </div>
+                    <div class="action">
+                        <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
+                        <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                    </div>
+                </div>
+            </a>
 
-            <div class="list-block"
-                 data-background="{{ asset('media/i01_2.jpg') }}"
-            >
-
-                <div class="content">
-                    <span>Практика слов - {{ $library->first()->countWords() }}</span>
+            <a href="">
+                <div class="list-block" data-background="{{ asset('media/i01_3.jpg') }}">
+                    <div class="content">
+                        <span>Практика предложении - {{ $library->first()->countSentences() }}</span>
+                    </div>
+                    <div class="action">
+                        <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
+                        <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                    </div>
                 </div>
-                <div class="action">
-                    <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                    <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
-                    <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
-                </div>
-            </div>
-
-            <div class="list-block"
-                 data-background="{{ asset('media/i01_3.jpg') }}"
-            >
-                <div class="content">
-                    <span>Практика предложении - {{ $library->first()->countSentences() }}</span>
-                </div>
-                <div class="action">
-                    <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                    <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
-                    <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
-                </div>
-            </div>
+            </a>
 
         </div>
     </section>

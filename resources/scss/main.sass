@@ -1,5 +1,7 @@
 $text-color: #282e3e
 $border-color: #EDEFF4
+$button-color: #423ED8
+
 
 *
     box-sizing: border-box
@@ -146,24 +148,6 @@ main#root
 
 ////////////////////////// Страница показа библиотеки
 
-
-//.block-with-section
-//    width: 100%
-//    margin-top: 70px
-//    display: flex
-//    border-bottom: 1px solid $border-color
-//    a
-//        padding: 7px 20px
-//        font-size: 21px
-//        color: rgba(0,0,0,.7)
-//        &:hover
-//            background: #eaf0f8
-//            color: black
-//
-//    a.active-section
-//        background: #eaf0f8
-
-
 .list-action
     display: flex
     width: auto
@@ -180,11 +164,10 @@ main#root
         color: white
         background-position: center
         background-size: cover
-        border: 1px solid rgba(0, 0, 0, .5)
+        //border: 1px solid rgba(0, 0, 0, .5)
         border-radius: 15px
         cursor: pointer
-        //filter: brightness(40%)
-        transition: all 1s
+        transition: all 400ms
 
         .content
             padding: 15px
@@ -218,5 +201,109 @@ main#root
         &:hover .action
             visibility: visible
             margin-top: 35px
+
+
+        &:hover
+            transform: scale(1.02)
+            box-shadow: 0 0 4px rgba(0, 0, 0, .3)
+
+
+// Slider on word.practice.blade.php
+
+.slider
+    width: 800px
+    overflow: hidden
+    margin: 0 auto
+    height: 650px
+    display: flex
+    justify-content: stretch
+    scroll-snap-type: x mandatory
+    scroll-behavior: smooth
+    position: relative
+
+
+.slide
+    min-width: 800px
+    display: flex
+    scroll-snap-align: start
+    justify-content: center
+    align-items: center
+
+
+.card
+    width: 99%
+    height: 99%
+    border-radius: 40px
+    margin: 0 auto
+    perspective: 1000px
+
+    .word, .translation
+        width: inherit
+        height: inherit
+        position: absolute
+        box-shadow: 0 0 5px rgba(0, 0, 0, .2)
+        background: #ffffff
+        font-size: 33px
+        font-weight: 500
+        backface-visibility: hidden
+        left: 0
+        top: 0
+        display: flex
+        justify-content: center
+        align-items: center
+        transition: 1s
+        cursor: pointer
+
+    .translation
+        transform: rotateX(-180deg)
+
+    &:hover:hover .word
+        transform: rotateX(-180deg)
+
+    &:hover:hover .translation
+        transform: rotateX(-360deg)
+
+
+.panel
+    width: 800px
+    margin: 20px auto
+    position: relative
+
+    .controls
+        z-index: 9
+        background: #fafafa
+        justify-content: center
+        width: inherit
+        display: flex
+        margin-bottom: 20px
+        border-bottom: 1px solid $border-color
+        padding-bottom: 30px
+
+    .add-button
+        padding: 7px 12px
+        background: $button-color
+        font-weight: bold
+        letter-spacing: .5px
+        font-size: 14px
+        border-radius: 4px
+        color: white
+
+
+.left, .right
+    width: 40px
+    height: 40px
+    background: white
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2)
+    margin: 0 50px
+    border-radius: 50%
+    cursor: pointer
+    display: flex
+    align-content: center
+    flex-wrap: wrap
+    justify-content: center
+    transition: all 400ms
+
+    &:hover
+        box-shadow: 0 0 7px rgba(0, 0, 0, .3)
 
 

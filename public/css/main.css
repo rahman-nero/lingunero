@@ -142,7 +142,6 @@ main#root section#content {
     justify-content: flex-start;
     color: white !important;
 }
-
 .list-action .list-block {
     margin: 10px 20px 10px 0px;
     width: 320px;
@@ -150,22 +149,18 @@ main#root section#content {
     color: white;
     background-position: center;
     background-size: cover;
-    border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     cursor: pointer;
-    transition: all 1s;
+    transition: all 400ms;
 }
-
 .list-action .list-block .content {
     padding: 15px;
 }
-
 .list-action .list-block .content span {
     font-weight: bold;
     color: white;
     font-size: 14px;
 }
-
 .list-action .list-block .action {
     display: flex;
     position: absolute;
@@ -192,4 +187,115 @@ main#root section#content {
 .list-action .list-block:hover .action {
     visibility: visible;
     margin-top: 35px;
+}
+
+.list-action .list-block:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.slider {
+    width: 800px;
+    overflow: hidden;
+    margin: 0 auto;
+    height: 650px;
+    display: flex;
+    justify-content: stretch;
+    -ms-scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.slide {
+    min-width: 800px;
+    display: flex;
+    scroll-snap-align: start;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 99%;
+    height: 99%;
+    border-radius: 40px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.card .word, .card .translation {
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #ffffff;
+    font-size: 33px;
+    font-weight: 500;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.card .translation {
+    transform: rotateX(-180deg);
+}
+
+.card:hover:hover .word {
+    transform: rotateX(-180deg);
+}
+
+.card:hover:hover .translation {
+    transform: rotateX(-360deg);
+}
+
+.panel {
+    width: 800px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.panel .controls {
+    z-index: 9;
+    background: #fafafa;
+    justify-content: center;
+    width: inherit;
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #EDEFF4;
+    padding-bottom: 30px;
+}
+
+.panel .add-button {
+    padding: 7px 12px;
+    background: #423ED8;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: white;
+}
+
+.left, .right {
+    width: 40px;
+    height: 40px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin: 0 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: all 400ms;
+}
+
+.left:hover, .right:hover {
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
 }
