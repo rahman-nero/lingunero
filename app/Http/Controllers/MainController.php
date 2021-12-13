@@ -4,22 +4,26 @@
 namespace App\Http\Controllers;
 
 
-use App\Repository\WordsRepository;
+use App\Repository\LibraryRepository;
+use Illuminate\Support\Facades\Auth;
 
 final class MainController
 {
-    private WordsRepository $wordsRepository;
+    private LibraryRepository $libraryRepository;
 
-    /**
-     * MainController constructor.
-     */
-    public function __construct(WordsRepository $wordsRepository)
+    public function __construct(LibraryRepository $libraryRepository)
     {
-        $this->wordsRepository = $wordsRepository;
+        $this->libraryRepository = $libraryRepository;
     }
 
     public function index()
     {
-        dd($this->wordsRepository->get());
+        $libraries = $this->libraryRepository->getAllLibraries(Auth::id());
+
+
+        $countWords = 5;
+        $countSentences = 5;
+
+        return view('site.main', compact('libraries', 'countSentences', 'countWords'));
     }
 }

@@ -17,10 +17,16 @@ final class LibraryRepository extends CoreRepository
         return Library::class;
     }
 
-    public function get()
+    public function getAllLibraries(int $userId): object
     {
+        $columns = ['id', 'title', 'created_at'];
+
         return $this->model()
-            ->all();
+            ->newQuery()
+            ->select($columns)
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
 }
