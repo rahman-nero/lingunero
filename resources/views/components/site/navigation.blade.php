@@ -1,12 +1,14 @@
 <header id="header">
     <div class="center">
         <div class="logo">
-            <img src="{{ asset('media/logotip.png') }}" alt="Logotip">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('media/logotip.png') }}" alt="Logotip">
+            </a>
         </div>
         <div class="top-nav-bar">
             <ul>
-                <li><a href="">Главная</a></li>
-                <li><a href="">Библиотека</a></li>
+                <li><a href="{{ route('home') }}">Главная</a></li>
+                <li><a href="{{ route('home') }}">Библиотека</a></li>
                 <li><a href="" class="styled-button">Создать библиотеку</a></li>
             </ul>
         </div>

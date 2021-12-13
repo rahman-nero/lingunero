@@ -1,4 +1,5 @@
 $text-color: #282e3e
+$border-color: #EDEFF4
 
 *
     box-sizing: border-box
@@ -10,6 +11,7 @@ body
     background: #ffffff
     margin-top: 77px
 
+// Меню
 #header
     width: 100%
     position: fixed
@@ -70,6 +72,7 @@ body
                     color: $text-color
 
 
+// Стилизированная кнопка в меню вверху
 .styled-button
     color: white
     padding: 7px 14px
@@ -81,6 +84,7 @@ body
         background: #302cd4
 
 
+// Главный блок
 main#root
     height: 100vh
 
@@ -90,10 +94,13 @@ main#root
         margin: 0 auto
         padding: 30px
 
+// Применив этот класс меняем цвет #main
 .background-soft-purple
     background: #f7fafc
 
+///////////////////////// Главная страница вывода всех библиотек
 
+// Вывод всех библиотек (на главной странице)
 .libraries-row
     margin-top: 20px
     width: auto
@@ -131,7 +138,85 @@ main#root
             transform: scale(1.02)
 
 
+// Большой заголовок
 .heading
     margin: 0px 20px 0px 0px
     font-size: 24px
     font-weight: bold
+
+////////////////////////// Страница показа библиотеки
+
+
+//.block-with-section
+//    width: 100%
+//    margin-top: 70px
+//    display: flex
+//    border-bottom: 1px solid $border-color
+//    a
+//        padding: 7px 20px
+//        font-size: 21px
+//        color: rgba(0,0,0,.7)
+//        &:hover
+//            background: #eaf0f8
+//            color: black
+//
+//    a.active-section
+//        background: #eaf0f8
+
+
+.list-action
+    display: flex
+    width: auto
+    margin-top: 40px
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+    color: white !important
+
+    .list-block
+        margin: 10px 20px 10px 0px
+        width: 320px
+        height: 140px
+        color: white
+        background-position: center
+        background-size: cover
+        border: 1px solid rgba(0, 0, 0, .5)
+        border-radius: 15px
+        cursor: pointer
+        //filter: brightness(40%)
+        transition: all 1s
+
+        .content
+            padding: 15px
+
+            span
+                font-weight: bold
+                color: white
+                font-size: 14px
+
+        .action
+            display: flex
+            position: absolute
+            visibility: hidden
+            width: inherit
+            height: 50px
+            align-items: center
+            margin-left: -1px
+            margin-top: 70px
+            padding: 5px 10px 5px 10px
+            padding-left: 20px
+            border-radius: 0px 0px 15px 15px
+            background: rgba(0, 0, 0, .5)
+
+            a
+                padding-right: 15px
+
+                img
+                    width: 20px
+
+
+        &:hover .action
+            visibility: visible
+            margin-top: 35px
+
+

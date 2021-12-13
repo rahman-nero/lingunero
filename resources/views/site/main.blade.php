@@ -15,7 +15,7 @@
             @if($libraries->isNotEmpty())
                 @foreach($libraries as $library)
 
-                    <a href="{{ route('', $library->id) }}">
+                    <a href="{{ route('library.show', $library->id) }}">
                         <div class="library-block">
                             <div class="library-title">{{ $library->title }}</div>
                             <div class="library-count-items">

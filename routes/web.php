@@ -24,10 +24,10 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('dashboard');
 
 
-    Route::get('/', [MainController::class, 'index']);
-
-//    Route::get('library/{id}')
-//        ->name('library');
+    Route::get('/', [MainController::class, 'index'])->name('home');
+    Route::get('/library/{library_id}', [MainController::class, 'library'])
+        ->name('library.show')
+        ->whereNumber('library_id');
 
 });
 

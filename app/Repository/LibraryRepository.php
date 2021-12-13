@@ -29,4 +29,18 @@ final class LibraryRepository extends CoreRepository
             ->get();
     }
 
+    public function getLibrary(int $libraryId, int $userId): object
+    {
+        $columns = ['id', 'title', 'created_at'];
+
+        return $this->model()
+            ->newQuery()
+            ->select($columns)
+            ->where('id', $libraryId)
+            ->where('user_id', $userId)
+            ->limit(1)
+            ->get();
+    }
+
+
 }
