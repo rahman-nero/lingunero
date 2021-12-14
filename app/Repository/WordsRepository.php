@@ -5,6 +5,7 @@ namespace App\Repository;
 
 
 use App\Models\Words;
+use Illuminate\Support\Collection;
 
 /**
  * @method Words model()
@@ -16,7 +17,7 @@ final class WordsRepository extends CoreRepository
         return Words::class;
     }
 
-    public function getWordsByLibraryId(int $libraryId): object
+    public function getWordsByLibraryId(int $libraryId): Collection
     {
         $columns = ['id', 'word', 'translation', 'description'];
 

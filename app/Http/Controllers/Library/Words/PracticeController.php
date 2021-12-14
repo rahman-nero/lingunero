@@ -5,23 +5,27 @@ namespace App\Http\Controllers\Library\Words;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Words\WordsPracticeRequest;
 use App\Repository\WordsRepository;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Services\WordsService;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class PracticeController extends Controller
 {
     private WordsRepository $wordsRepository;
+    private WordsService $wordsService;
 
-    public function __construct(WordsRepository $wordsRepository)
+    public function __construct(
+        WordsRepository $wordsRepository,
+        WordsService $wordsService)
     {
         $this->wordsRepository = $wordsRepository;
+        $this->wordsService = $wordsService;
     }
 
-    public function index(int $libraryId)
+    public function cards(int $libraryId)
     {
         if (!Gate::allows('can-studying-words', $libraryId)) {
             throw new NotFoundHttpException('Страница не найдена');
@@ -29,13 +33,42 @@ final class PracticeController extends Controller
 
         $words = $this->wordsRepository->getWordsByLibraryId(libraryId: $libraryId);
 
-
-        return view(view: 'site.word.practice', data: compact('words'));
+        return view(view: 'site.word.cards', data: compact('words', 'libraryId'));
     }
 
-    public function store(Request $request, int $libraryId)
+    public function practice(int $libraryId)
     {
+        if (!Gate::allows('can-studying-words', $libraryId)) {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
 
+        $words = $this->wordsRepository->getWordsByLibraryId(libraryId: $libraryId);
+
+        return view(view: 'site.word.practice', data: compact('words', 'libraryId'));
+    }
+
+    public function store(WordsPracticeRequest $request, int $libraryId)
+    {
+        if (!Gate::allows('can-studying-words', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+        $words = $request['words'];
+
+        $statisticId = $this->wordsService->calcPracticeWords(libraryId: $libraryId, words: $words);
+
+        if (!$statisticId) {
+            return back()
+                ->withErrors(['message' => 'Данные введены неправильно'])
+                ->withInput();
+        }
+
+        return redirect()
+            ->route('library.words.statistic.show', [$libraryId, $statisticId]);
+    }
+
+    public function statistic(int $libraryId, int $statisticId)
+    {
+        dd($libraryId, $statisticId);
     }
 
 }

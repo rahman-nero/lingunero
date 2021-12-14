@@ -79,11 +79,16 @@ body {
 main#root {
     height: 100vh;
 }
+
 main#root section#content {
     max-width: 1150px;
     color: #282e3e;
     margin: 0 auto;
     padding: 30px;
+}
+
+.disable-vh {
+    height: initial !important;
 }
 
 .background-soft-purple {
@@ -175,20 +180,16 @@ main#root section#content {
     border-radius: 0px 0px 15px 15px;
     background: rgba(0, 0, 0, 0.5);
 }
-
 .list-action .list-block .action a {
     padding-right: 15px;
 }
-
 .list-action .list-block .action a img {
     width: 20px;
 }
-
 .list-action .list-block:hover .action {
     visibility: visible;
     margin-top: 35px;
 }
-
 .list-action .list-block:hover {
     transform: scale(1.02);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
@@ -222,7 +223,6 @@ main#root section#content {
     margin: 0 auto;
     perspective: 1000px;
 }
-
 .card .word, .card .translation {
     width: inherit;
     height: inherit;
@@ -241,15 +241,12 @@ main#root section#content {
     transition: 1s;
     cursor: pointer;
 }
-
 .card .translation {
     transform: rotateX(-180deg);
 }
-
 .card:hover:hover .word {
     transform: rotateX(-180deg);
 }
-
 .card:hover:hover .translation {
     transform: rotateX(-360deg);
 }
@@ -259,7 +256,6 @@ main#root section#content {
     margin: 20px auto;
     position: relative;
 }
-
 .panel .controls {
     z-index: 9;
     background: #fafafa;
@@ -270,7 +266,6 @@ main#root section#content {
     border-bottom: 1px solid #EDEFF4;
     padding-bottom: 30px;
 }
-
 .panel .add-button {
     padding: 7px 12px;
     background: #423ED8;
@@ -298,4 +293,41 @@ main#root section#content {
 
 .left:hover, .right:hover {
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+}
+
+.form-div {
+    display: block;
+    width: 100%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background: #ffffff;
+    margin-bottom: 40px;
+    padding: 30px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.form-div .word {
+    margin-bottom: 190px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #282e3e;
+}
+
+.form-div .label-input {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.form-div input {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 2px;
+    font-weight: bold;
+    color: black;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    outline: none;
+    background: #f1ecec;
+    border-bottom: 3px solid #423ED8;
 }

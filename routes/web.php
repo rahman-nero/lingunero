@@ -33,9 +33,26 @@ Route::group(['middleware' => 'auth'], function () {
         ->whereNumber('libraryId');
 
     // Карточки
-    Route::get('/library/{libraryId}/words', [PracticeController::class, 'index'])
+    Route::get('/library/{libraryId}/cards', [PracticeController::class, 'cards'])
         ->name('library.words.studying')
         ->whereNumber('libraryId');
+
+
+    // Практика слов
+    Route::get('/library/{libraryId}/words/practice', [PracticeController::class, 'practice'])
+        ->name('library.words.practice.index')
+        ->whereNumber('libraryId');
+
+    // Практика слов - проверка
+    Route::post('/library/{libraryId}/words/practice', [PracticeController::class, 'store'])
+        ->name('library.words.practice.store')
+        ->whereNumber('libraryId');
+
+
+    // Просмотр статистики
+    Route::get('/library/{libraryId}/words/statistic/{statisticId}', [PracticeController::class, 'statistic'])
+        ->name('library.words.statistic.show')
+        ->whereNumber(['libraryId', 'statisticId']);
 
 });
 

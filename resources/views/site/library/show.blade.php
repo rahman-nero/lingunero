@@ -28,7 +28,7 @@
                 </div>
             </a>
 
-            <a href="">
+            <a href="{{ route('library.words.practice.index', $library->first()->id) }}">
                 <div class="list-block" data-background="{{ asset('media/i01_2.jpg') }}">
 
                     <div class="content">
