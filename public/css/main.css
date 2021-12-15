@@ -365,12 +365,6 @@ main#root section#content {
   font-weight: bold;
   color: #282e3e;
 }
-.block-statistic .percent:before {
-  content: "%";
-  margin-left: 25px;
-  position: absolute;
-  display: block;
-}
 .block-statistic .progress-bar {
   width: inherit;
   height: 30px;

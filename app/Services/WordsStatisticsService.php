@@ -10,8 +10,8 @@ final class WordsStatisticsService
 {
     public function create(int $libraryId, int $countWords, int $countFails, int $countSuccess): int|bool
     {
-        $model = new WordsStatistics();
-        $result = $model->newQuery()
+        $result = (new WordsStatistics())
+            ->newQuery()
             ->create([
                 'library_id' => $libraryId,
                 'count_words' => $countWords,
@@ -21,4 +21,5 @@ final class WordsStatisticsService
 
         return $result->id;
     }
+
 }

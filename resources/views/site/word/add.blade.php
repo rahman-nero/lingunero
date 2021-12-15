@@ -126,7 +126,8 @@
         ///////// Отправка слов на сохранение
         const form = document.querySelector('#form');
 
-        form.addEventListener('submit', function () {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
             const word_blocks = edit_row_block.querySelectorAll('.word-block');
             let data = [];
 
@@ -144,12 +145,13 @@
             })
 
 
-            axios.post('{{ route('manage.library.words.add.store', $libraryId) }}', data)
+            axios.post('{{ route('manage.library.words.add.store', $libraryId) }}', {words: data})
                 .then(function (response) {
-                    location.reload();
+                    // location.reload();
+                    console.log(response);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log(error.toJSON());
                 });
         });
 

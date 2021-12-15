@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
             ->name('library.words.add.show');
 
         // Страница добавлении слов
-        Route::post('manage/library/{libraryId}/words/add', [ManageController::class, 'add'])
+        Route::post('manage/library/{libraryId}/words/add', [ManageController::class, 'addStore'])
             ->name('library.words.add.store');
     });
 });

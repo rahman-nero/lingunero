@@ -4,24 +4,31 @@
 namespace App\Http\Controllers\Library\Words;
 
 
+use App\DTO\Words\StoreWordsDTO;
+use App\Http\Requests\Words\StoreWordsRequest;
 use App\Repository\LibraryRepository;
 use App\Repository\WordsRepository;
-use Illuminate\Http\Request;
+use App\Services\WordsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class ManageController
 {
+    private WordsService $wordsService;
     private WordsRepository $wordsRepository;
     private LibraryRepository $libraryRepository;
 
     public function __construct(WordsRepository $wordsRepository,
-                                LibraryRepository $libraryRepository)
+                                LibraryRepository $libraryRepository,
+                                WordsService $wordsService)
     {
 
         $this->wordsRepository = $wordsRepository;
         $this->libraryRepository = $libraryRepository;
+        $this->wordsService = $wordsService;
     }
 
     // Страница редактирование слов
@@ -63,12 +70,20 @@ final class ManageController
     }
 
 
-    public function addStore(Request $request, $libraryId)
+    public function addStore(StoreWordsRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
-        dd($request);
+        $data = StoreWordsDTO::fromTo($request['words']);
+
+        $result = $this->wordsService->storeWords($libraryId, $data);
+
+        if (!$result) {
+            throw new BadRequestHttpException();
+        }
+
+        return 'Ok';
     }
 }

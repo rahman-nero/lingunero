@@ -79,7 +79,7 @@ final class EnglishWords implements ProcessorContract
         return true;
     }
 
-    private function clearString(string $string): string
+    private function clearString(?string $string): string
     {
         return strip_tags(
             mb_strtolower(trim($string))
