@@ -21,9 +21,8 @@
                         <span>Карточки слов - {{ $library->first()->countWords() }}</span>
                     </div>
                     <div class="action">
-                        <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                        <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
-                        <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}"><img src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.add.show', $library->first()->id) }}"><img src="{{ asset('media/plus.png') }}" alt=""></a>
                     </div>
                 </div>
             </a>
@@ -35,9 +34,8 @@
                         <span>Практика слов - {{ $library->first()->countWords() }}</span>
                     </div>
                     <div class="action">
-                        <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                        <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
-                        <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}"><img src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.add.show', $library->first()->id) }}"><img src="{{ asset('media/plus.png') }}" alt=""></a>
                     </div>
                 </div>
             </a>
@@ -48,15 +46,19 @@
                         <span>Практика предложении - {{ $library->first()->countSentences() }}</span>
                     </div>
                     <div class="action">
-                        <a href=""><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                        <a href=""><img src="{{ asset('media/remove.png') }}" alt=""></a>
-                        <a href=""><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}"><img src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.add.show', $library->first()->id) }}"><img src="{{ asset('media/plus.png') }}" alt=""></a>
                     </div>
                 </div>
             </a>
 
         </div>
     </section>
+
+@endsection
+
+
+@push('js')
     <script>
         let list_blocks = document.querySelectorAll('.list-block');
 
@@ -67,6 +69,4 @@
             elem.style.backgroundImage = "url(" + elem.dataset.background + ")";
         });
     </script>
-@endsection
-
-
+@endpush

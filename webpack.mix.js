@@ -17,5 +17,5 @@ mix.js('resources/js/app.js', 'public/js')
         require('autoprefixer'),
     ]);
 
-mix.sass('resources/scss/main.sass', 'public/css');
+mix.sass('resources/sass/main.sass', 'public/css');
 

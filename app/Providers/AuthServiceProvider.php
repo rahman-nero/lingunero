@@ -26,6 +26,15 @@ class AuthServiceProvider extends ServiceProvider
                 ->isNotEmpty();
         });
 
-        //
+
+        Gate::define('can-edit-library', function (User $user, int $libraryId) {
+
+            return Library::query()
+                ->where('user_id', $user->id)
+                ->where('id', $libraryId)
+                ->get()
+                ->isNotEmpty();
+        });
+
     }
 }

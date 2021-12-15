@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Library\Words;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Words\WordsPracticeRequest;
 use App\Repository\WordsRepository;
+use App\Repository\WordsStatisticsRepository;
 use App\Services\WordsService;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -16,13 +17,17 @@ final class PracticeController extends Controller
 {
     private WordsRepository $wordsRepository;
     private WordsService $wordsService;
+    private WordsStatisticsRepository $statisticsRepository;
 
     public function __construct(
         WordsRepository $wordsRepository,
-        WordsService $wordsService)
+        WordsService $wordsService,
+        WordsStatisticsRepository $statisticsRepository
+    )
     {
         $this->wordsRepository = $wordsRepository;
         $this->wordsService = $wordsService;
+        $this->statisticsRepository = $statisticsRepository;
     }
 
     public function cards(int $libraryId)
@@ -68,7 +73,18 @@ final class PracticeController extends Controller
 
     public function statistic(int $libraryId, int $statisticId)
     {
-        dd($libraryId, $statisticId);
+        if (!Gate::allows('can-studying-words', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $statistic = $this->statisticsRepository
+            ->findByIdAndLibraryId(statisticId: $statisticId, libraryId: $libraryId);
+
+        if ($statistic->isEmpty()) {
+            throw new NotFoundHttpException();
+        }
+
+        return view('site.word.statistic', compact('statistic', 'libraryId'));
     }
 
 }

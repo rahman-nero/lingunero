@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Library\Words\ManageController;
 use App\Http\Controllers\Library\Words\PracticeController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -37,23 +38,37 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('library.words.studying')
         ->whereNumber('libraryId');
 
-
     // Практика слов
     Route::get('/library/{libraryId}/words/practice', [PracticeController::class, 'practice'])
         ->name('library.words.practice.index')
         ->whereNumber('libraryId');
 
-    // Практика слов - проверка
+    // Практика слов - проверка слов и создание статистики
     Route::post('/library/{libraryId}/words/practice', [PracticeController::class, 'store'])
         ->name('library.words.practice.store')
         ->whereNumber('libraryId');
-
 
     // Просмотр статистики
     Route::get('/library/{libraryId}/words/statistic/{statisticId}', [PracticeController::class, 'statistic'])
         ->name('library.words.statistic.show')
         ->whereNumber(['libraryId', 'statisticId']);
 
+    ///////////////// Управление словами
+    Route::group(['as' => 'manage.'], function () {
+
+        // Страница редактирования слов
+        Route::get('manage/library/{libraryId}/words/edit', [ManageController::class, 'edit'])
+            ->name('library.words.edit.show');
+
+
+        // Страница добавлении слов
+        Route::get('manage/library/{libraryId}/words/add', [ManageController::class, 'add'])
+            ->name('library.words.add.show');
+
+        // Страница добавлении слов
+        Route::post('manage/library/{libraryId}/words/add', [ManageController::class, 'add'])
+            ->name('library.words.add.store');
+    });
 });
 
 

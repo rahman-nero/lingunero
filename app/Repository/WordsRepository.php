@@ -22,7 +22,6 @@ final class WordsRepository extends CoreRepository
         $columns = ['id', 'word', 'translation', 'description'];
 
         return $this->model()
-            ->newQuery()
             ->select($columns)
             ->where('library_id', $libraryId)
             ->orderBy('created_at')

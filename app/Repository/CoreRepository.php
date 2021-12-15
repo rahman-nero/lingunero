@@ -3,7 +3,11 @@
 
 namespace App\Repository;
 
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property Model $model
+*/
 abstract class CoreRepository
 {
     protected $model;
@@ -17,6 +21,6 @@ abstract class CoreRepository
 
     public function model()
     {
-        return clone $this->model;
+        return $this->model->newQuery();
     }
 }

@@ -39,5 +39,7 @@
     @yield('content')
 </main>
 
+@stack('js')
+
 </body>
 </html>

@@ -35,7 +35,9 @@
         @endif
 
     </section>
+@endsection
 
+@push('js')
     <script>
         // Slider
         const slider = document.querySelector(".slider");
@@ -65,4 +67,4 @@
             slider.scrollLeft = scrollValue;
         });
     </script>
-@endsection
+@endpush
