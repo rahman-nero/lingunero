@@ -11,9 +11,10 @@ use App\Repository\WordsRepository;
 use App\Services\WordsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 final class ManageController
 {
@@ -40,9 +41,9 @@ final class ManageController
         $userId = Auth::id();
 
         $library = $this->libraryRepository->getLibrary($libraryId, $userId);
-        $words = $this->wordsRepository->getWordsByLibraryId($libraryId);
+        $words = $this->wordsRepository->getWordsByLibraryIdWithPaginate($libraryId, 20);
 
-        return view('site.word.edit', [$library, $words]);
+        return view('site.word.edit', compact('libraryId', 'library', 'words'));
     }
 
 
@@ -53,7 +54,6 @@ final class ManageController
         }
 
     }
-
 
     // Страница Добавление слов
     public function add($libraryId)
@@ -82,6 +82,25 @@ final class ManageController
 
         if (!$result) {
             throw new BadRequestHttpException();
+        }
+
+        return 'Ok';
+    }
+
+    public function deleteWord(int $libraryId, int $wordId)
+    {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        if (!$this->wordsRepository->isBelongsToLibrary(wordId: $wordId, libraryId: $libraryId)) {
+            throw new NotFoundHttpException();
+        }
+
+        $result = $this->wordsService->delete($wordId);
+
+        if (!$result) {
+            throw new ServiceUnavailableHttpException();
         }
 
         return 'Ok';

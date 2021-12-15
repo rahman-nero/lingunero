@@ -17,6 +17,7 @@ final class WordsService
         $this->wordFacade = $wordFacade;
     }
 
+
     protected function getModel(): string
     {
         return Words::class;
@@ -56,5 +57,14 @@ final class WordsService
             }
         }
         return true;
+    }
+
+    public function delete(int $wordId): bool
+    {
+        $model = (new Words)
+            ->newQuery()
+            ->find($wordId);
+
+        return $model->delete();
     }
 }

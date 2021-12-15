@@ -9,7 +9,7 @@
     <a id="up"></a>
     <section id="content">
         <div class="heading">
-            Редактирование библиотеки
+            Добавление слов в библиотеку
         </div>
         {{-- Описание библиотеки --}}
         <div class="edit-library">
@@ -22,8 +22,7 @@
             </div>
 
             <div class="panel-edit-library">
-                <a href="">Удалить библиотеку</a>
-                <a href="">Импорт слов</a>
+                <a href="{{ route('manage.library.words.edit.show', $libraryId) }}">Редактировать библиотеку</a>
             </div>
         </div>
 
@@ -147,8 +146,7 @@
 
             axios.post('{{ route('manage.library.words.add.store', $libraryId) }}', {words: data})
                 .then(function (response) {
-                    // location.reload();
-                    console.log(response);
+                    location.reload();
                 })
                 .catch(function (error) {
                     console.log(error.toJSON());

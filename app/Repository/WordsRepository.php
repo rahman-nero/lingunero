@@ -29,10 +29,26 @@ final class WordsRepository extends CoreRepository
             ->get();
     }
 
-    public function get()
+    public function getWordsByLibraryIdWithPaginate(int $libraryId, int $limit): object
+    {
+        $columns = ['id', 'word', 'translation', 'description'];
+
+        return $this->model()
+            ->select($columns)
+            ->where('library_id', $libraryId)
+            ->orderBy('created_at')
+            ->toBase()
+            ->paginate($limit);
+    }
+
+    public function isBelongsToLibrary(int $wordId, int $libraryId): bool
     {
         return $this->model()
-            ->all();
+            ->where('id', $wordId)
+            ->where('library_id', $libraryId)
+            ->toBase()
+            ->get()
+            ->isNotEmpty();
     }
 
 }

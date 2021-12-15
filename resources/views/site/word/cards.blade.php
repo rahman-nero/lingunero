@@ -28,10 +28,10 @@
                     <div class="right"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></div>
                 </div>
 
-                <span class="add-button"><a href="">Добавить новое слово</a></span>
+                <span class="add-button"><a href="{{ route('manage.library.words.add.show', $libraryId) }}">Добавить новое слово</a></span>
             </div>
         @else
-            <a href="">Добавь сюда слова</a>
+            <a href="{{ route('manage.library.words.add.show', $libraryId) }}">Добавь сюда слова</a>
         @endif
 
     </section>

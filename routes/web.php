@@ -58,15 +58,22 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Страница редактирования слов
         Route::get('manage/library/{libraryId}/words/edit', [ManageController::class, 'edit'])
+            ->whereNumber(['libraryId'])
             ->name('library.words.edit.show');
+
+        Route::delete('manage/library/{libraryId}/words/{wordId}', [ManageController::class, 'deleteWord'])
+            ->whereNumber(['libraryId', 'wordId'])
+            ->name('library.words.edit.delete');
 
 
         // Страница добавлении слов
         Route::get('manage/library/{libraryId}/words/add', [ManageController::class, 'add'])
+            ->whereNumber(['libraryId'])
             ->name('library.words.add.show');
 
         // Страница добавлении слов
         Route::post('manage/library/{libraryId}/words/add', [ManageController::class, 'addStore'])
+            ->whereNumber(['libraryId'])
             ->name('library.words.add.store');
     });
 });
