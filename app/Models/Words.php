@@ -15,4 +15,9 @@ class Words extends Model
         'created_at' => 'datetime'
     ];
 
+    public function examples()
+    {
+        return $this->hasMany(WordExample::class, 'word_id', 'id');
+    }
+
 }

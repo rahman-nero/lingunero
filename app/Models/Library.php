@@ -16,7 +16,10 @@ class Library extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public $timestamps = true;
+
     protected $casts = [
         'created_at' => 'datetime'
     ];

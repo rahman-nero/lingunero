@@ -38,6 +38,18 @@ final class WordsService
         return $result->id;
     }
 
+    public function edit(int $id, WordDTO $dto): bool
+    {
+        $model = (new Words)->newQuery();
+
+        return $model->find($id)
+            ->update([
+                'word' => $dto->word,
+                'translation' => $dto->translation,
+                'description' => $dto->description
+            ]);
+    }
+
 
     public function calcPracticeWords(int $libraryId, array $words): int|bool
     {
@@ -56,6 +68,37 @@ final class WordsService
                 return false;
             }
         }
+        return true;
+    }
+
+
+    // Обновление слов
+    public function editWords(int $libraryId, array $data): bool
+    {
+
+        foreach ($data as $word) {
+            $hasWord = Words::query()
+                ->where('id', $word['id'])
+                ->where('library_id', $libraryId)
+                ->toBase()
+                ->get();
+
+            if (!$hasWord) {
+                return false;
+            }
+
+            $wordDto = new WordDTO(
+                word: $word['word'],
+                translation: $word['translation'],
+                description: $word['description']
+            );
+            $edit = $this->edit($word['id'], $wordDto);
+
+            if (!$edit) {
+                return false;
+            }
+        }
+
         return true;
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Library\Words;
 
 
 use App\DTO\Words\StoreWordsDTO;
+use App\Http\Requests\Words\EditWordsRequest;
 use App\Http\Requests\Words\StoreWordsRequest;
 use App\Repository\LibraryRepository;
 use App\Repository\WordsRepository;
@@ -41,18 +42,27 @@ final class ManageController
         $userId = Auth::id();
 
         $library = $this->libraryRepository->getLibrary($libraryId, $userId);
-        $words = $this->wordsRepository->getWordsByLibraryIdWithPaginate($libraryId, 20);
+        $words = $this->wordsRepository->getWordsByLibraryIdWithPaginate($libraryId, 10);
 
         return view('site.word.edit', compact('libraryId', 'library', 'words'));
     }
 
 
-    public function editStore($libraryId)
+    public function editStore(EditWordsRequest $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
+        $data = $request->input('words');
+
+        $result = $this->wordsService->editWords($libraryId, $data);
+
+        if (!$result) {
+            throw new BadRequestHttpException();
+        }
+
+        return 'Ok';
     }
 
     // Страница Добавление слов
@@ -69,7 +79,7 @@ final class ManageController
         return view('site.word.add', compact('library', 'libraryId', 'words'));
     }
 
-
+    // Множественно добавление слов
     public function addStore(StoreWordsRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -87,6 +97,7 @@ final class ManageController
         return 'Ok';
     }
 
+    // Удаление слов
     public function deleteWord(int $libraryId, int $wordId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {

@@ -11,30 +11,33 @@
             <ul>
                 <li><a href="{{ route('home') }}">Главная</a></li>
                 <li><a href="{{ route('home') }}">Библиотека</a></li>
-                <li><a href="" class="styled-button">Создать библиотеку</a></li>
+                <li><a href="{{ route('manage.library.create.show') }}" class="styled-button">Создать библиотеку</a>
+                </li>
             </ul>
         </div>
 
         <div class="profile-block">
 
-            <div class="user">
-                <div class="avatar">
-                    <img src="{{ asset('media/user.png') }}" alt="">
-                </div>
-                <div class="description">
+            <a href="{{ route('dashboard') }}">
+                <div class="user">
+                    <div class="avatar">
+                        <img src="{{ asset('media/user.png') }}" alt="">
+                    </div>
+                    <div class="description">
                     <span>
                         @php
                             $userName = \Illuminate\Support\Facades\Auth::user()->name;
+                            $output = $userName;
+
                             if(strlen($userName) > 9) {
                                 $output = substr($userName, 0, 10) . '...';
-                            } else {
-                                $output = $userName;
                             }
                         @endphp
                         {{ $output }}
                     </span>
+                    </div>
                 </div>
-            </div>
+            </a>
 
         </div>
     </div>

@@ -8,9 +8,10 @@
 @section('content')
     <section id="content">
         <div class="heading">
-            <h2>{{ $library->first()->title  }}</h2>
+            <h2>{{ \Illuminate\Support\Str::ucfirst($library->first()->title)  }}</h2>
 
-            <span><a href="">Удалить библиотеку</a></span>
+            <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}" style="font-size: 14px">Редактировать
+                библиотеку</a>
         </div>
 
         <div class="list-action">

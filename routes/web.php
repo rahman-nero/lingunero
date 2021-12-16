@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Library\LibraryController;
 use App\Http\Controllers\Library\Words\ManageController;
 use App\Http\Controllers\Library\Words\PracticeController;
 use App\Http\Controllers\MainController;
@@ -18,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
 
-
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', function () {
@@ -26,12 +26,34 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('dashboard');
 
 
-    Route::get('/', [MainController::class, 'index'])->name('home');
+    Route::get('/', [MainController::class, 'index'])
+        ->name('home');
 
-    // Библиотека
     Route::get('/library/{libraryId}', [MainController::class, 'library'])
         ->name('library.show')
         ->whereNumber('libraryId');
+
+    // Библиотека
+    Route::group(['as' => 'manage.library.'], function () {
+        // Страница создания библиотеки
+        Route::get('/library/create', [LibraryController::class, 'create'])
+            ->name('create.show');
+
+        // Ендпоинт создания библиотеки - ну т.е store-метод
+        Route::post('/library/create', [LibraryController::class, 'createStore'])
+            ->name('create.store');
+
+        // Обновить библиотеку
+        Route::post('/library/{libraryId}/edit', [LibraryController::class, 'editStore'])
+            ->name('edit.store')
+            ->whereNumber('libraryId');
+
+        // Удалить библиотеку
+        Route::delete('/library/{libraryId}', [LibraryController::class, 'delete'])
+            ->name('delete')
+            ->whereNumber('libraryId');
+    });
+
 
     // Карточки
     Route::get('/library/{libraryId}/cards', [PracticeController::class, 'cards'])
@@ -48,10 +70,11 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('library.words.practice.store')
         ->whereNumber('libraryId');
 
-    // Просмотр статистики
+    // Просмотр статистики слов
     Route::get('/library/{libraryId}/words/statistic/{statisticId}', [PracticeController::class, 'statistic'])
         ->name('library.words.statistic.show')
         ->whereNumber(['libraryId', 'statisticId']);
+
 
     ///////////////// Управление словами
     Route::group(['as' => 'manage.'], function () {
@@ -61,6 +84,12 @@ Route::group(['middleware' => 'auth'], function () {
             ->whereNumber(['libraryId'])
             ->name('library.words.edit.show');
 
+        // ендпоинт редактирования слов - отправка
+        Route::post('manage/library/{libraryId}/words/edit', [ManageController::class, 'editStore'])
+            ->whereNumber(['libraryId'])
+            ->name('library.words.edit.store');
+
+        // Удалени слова
         Route::delete('manage/library/{libraryId}/words/{wordId}', [ManageController::class, 'deleteWord'])
             ->whereNumber(['libraryId', 'wordId'])
             ->name('library.words.edit.delete');

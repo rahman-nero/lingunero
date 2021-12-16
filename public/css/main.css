@@ -412,29 +412,56 @@ main#root section#content {
 .edit-library .description-input-library textarea {
   width: 100%;
   padding: 9px 10px;
-  background: #f6f7fb;
-  outline: none;
-  border-bottom: 3px solid transparent;
-  min-height: 230px;
-  max-height: 230px;
-  transition: all 400ms;
+    background: #f6f7fb;
+    outline: none;
+    border-bottom: 3px solid transparent;
+    min-height: 230px;
+    max-height: 230px;
+    transition: all 400ms;
 }
+
 .edit-library .description-input-library textarea:focus {
-  border-bottom-color: #423ed8;
+    border-bottom-color: #423ed8;
 }
-.edit-library .panel-edit-library {
-  padding: 10px;
-  margin-top: 30px;
+
+.edit-library button {
+    background: #423ed8;
+    color: white;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    padding: 9px 12px;
 }
-.edit-library .panel-edit-library a {
-  padding: 9px 12px;
-  background: #423ed8;
-  margin-right: 10px;
-  color: white;
-  font-weight: bold;
-  border-radius: 3px;
-  font-size: 14px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+.panel-edit-library {
+    padding: 10px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.panel-edit-library button {
+    background: #423ed8;
+    color: white;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    padding: 9px 12px;
+}
+
+.panel-edit-library a {
+    padding: 9px 12px;
+    background: #423ed8;
+    margin-right: 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 14px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .add-word-form, .edit-word-form {
@@ -442,13 +469,11 @@ main#root section#content {
     margin-top: 30px;
     padding-bottom: 10px;
 }
-
 .add-word-form h3, .edit-word-form h3 {
     margin-bottom: 30px;
     font-size: 27px;
     font-weight: bold;
 }
-
 .add-word-form .block-add-word-button, .edit-word-form .block-add-word-button {
     background: #ffffff;
     width: inherit;
@@ -468,17 +493,14 @@ main#root section#content {
     border: 3px dashed #e2dcdc;
     align-items: center;
 }
-
 .add-word-form .block-add-word-button:hover, .edit-word-form .block-add-word-button:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     transform: scale(1.02);
 }
-
 .add-word-form .add-row-words, .add-word-form .edit-row-words, .edit-word-form .add-row-words, .edit-word-form .edit-row-words {
     margin-top: 30px;
     margin-bottom: 30px;
 }
-
 .add-word-form .add-row-words .word-block, .add-word-form .edit-row-words .word-block, .edit-word-form .add-row-words .word-block, .edit-word-form .edit-row-words .word-block {
     width: inherit;
     background: #fff;
@@ -488,13 +510,11 @@ main#root section#content {
     display: block;
     margin-bottom: 30px;
 }
-
 .add-word-form .add-row-words .word-block .header-block, .add-word-form .edit-row-words .word-block .header-block, .edit-word-form .add-row-words .word-block .header-block, .edit-word-form .edit-row-words .word-block .header-block {
     font-weight: bold;
     font-size: 22px;
     margin-bottom: 10px;
 }
-
 .add-word-form .add-row-words .word-block .definition-block input, .add-word-form .edit-row-words .word-block .definition-block input, .edit-word-form .add-row-words .word-block .definition-block input, .edit-word-form .edit-row-words .word-block .definition-block input {
     padding: 14px 20px;
     outline: none;
@@ -504,19 +524,15 @@ main#root section#content {
     border-bottom: 3px dashed #ccc;
     transition: all 400ms;
 }
-
 .add-word-form .add-row-words .word-block .definition-block input:nth-child(1), .add-word-form .edit-row-words .word-block .definition-block input:nth-child(1), .edit-word-form .add-row-words .word-block .definition-block input:nth-child(1), .edit-word-form .edit-row-words .word-block .definition-block input:nth-child(1) {
     margin-right: 30px;
 }
-
 .add-word-form .add-row-words .word-block .definition-block input:focus, .add-word-form .edit-row-words .word-block .definition-block input:focus, .edit-word-form .add-row-words .word-block .definition-block input:focus, .edit-word-form .edit-row-words .word-block .definition-block input:focus {
     border-bottom-color: #423ed8;
 }
-
 .add-word-form .add-row-words .word-block .definition-block p, .add-word-form .edit-row-words .word-block .definition-block p, .edit-word-form .add-row-words .word-block .definition-block p, .edit-word-form .edit-row-words .word-block .definition-block p {
     margin-top: 20px;
 }
-
 .add-word-form .add-row-words .word-block .definition-block p textarea, .add-word-form .edit-row-words .word-block .definition-block p textarea, .edit-word-form .add-row-words .word-block .definition-block p textarea, .edit-word-form .edit-row-words .word-block .definition-block p textarea {
     width: 100%;
     padding: 14px 20px;
@@ -527,15 +543,12 @@ main#root section#content {
     border-bottom: 2px solid #ccc;
     transition: all 400ms;
 }
-
 .add-word-form .add-row-words .word-block .definition-block p textarea:focus, .add-word-form .edit-row-words .word-block .definition-block p textarea:focus, .edit-word-form .add-row-words .word-block .definition-block p textarea:focus, .edit-word-form .edit-row-words .word-block .definition-block p textarea:focus {
     border-bottom-color: #423ed8;
 }
-
 .add-word-form .add-row-words .word-block .word-panel, .add-word-form .edit-row-words .word-block .word-panel, .edit-word-form .add-row-words .word-block .word-panel, .edit-word-form .edit-row-words .word-block .word-panel {
     margin-top: 30px;
 }
-
 .add-word-form .add-row-words .word-block .word-panel a, .add-word-form .edit-row-words .word-block .word-panel a, .edit-word-form .add-row-words .word-block .word-panel a, .edit-word-form .edit-row-words .word-block .word-panel a {
     padding: 9px 13px;
     background: #423ed8;
@@ -544,17 +557,14 @@ main#root section#content {
     font-size: 14px;
     cursor: pointer;
 }
-
 .add-word-form .add-row-words .word-block .word-panel a#delete-word, .add-word-form .edit-row-words .word-block .word-panel a#delete-word, .edit-word-form .add-row-words .word-block .word-panel a#delete-word, .edit-word-form .edit-row-words .word-block .word-panel a#delete-word {
     background: #f0f03a !important;
     color: red;
 }
-
 .add-word-form .button-save, .edit-word-form .button-save {
     margin-top: 20px;
     margin-bottom: 120px;
 }
-
 .add-word-form .button-save button, .edit-word-form .button-save button {
     padding: 10px 20px;
     background: #423ed8;

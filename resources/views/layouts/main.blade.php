@@ -28,13 +28,8 @@
 @include('components.site.navigation')
 
 <main id="root" class="@yield('root-classes')">
-    @if($errors->any())
-        <div>
-            @foreach($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
+    @include('components.site.errors')
+    @include('components.site.info')
 
     @yield('content')
 </main>

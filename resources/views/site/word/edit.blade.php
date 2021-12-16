@@ -11,19 +11,31 @@
             Редактирование библиотеки
         </div>
 
-        <div class="edit-library">
-            <div class="title-input-library">
-                <input type="text" name="library[title]" placeholder="Название библиотеки">
+        <form action="{{ route('manage.library.edit.store', $libraryId) }}" method="POST">
+            @csrf
+            <div class="edit-library">
+                <div class="title-input-library">
+                    <input type="text" name="title" value="{{ $library->first()->title }}"
+                           placeholder="Название библиотеки">
+                </div>
+
+                <div class="description-input-library">
+                    <textarea name="description"
+                              placeholder="Описание библиотеки">{{ $library->first()->description }}</textarea>
+                </div>
+
+                <button type="submit">Обновить библиотеку</button>
             </div>
 
-            <div class="description-input-library">
-                <textarea name="library[description]" placeholder="Описание библиотеки"></textarea>
-            </div>
+        </form>
 
-            <div class="panel-edit-library">
-                <a href="">Удалить библиотеку</a>
-                <a href="">Импорт слов</a>
-            </div>
+        <div class="panel-edit-library">
+            <form action="{{ route('manage.library.delete', $libraryId) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Удалить библиотеку</button>
+            </form>
+            <a href="">Импорт слов</a>
         </div>
 
 
@@ -59,6 +71,9 @@
 
                     @endforeach
 
+                    @if($words->total() > $words->count())
+                        {{ $words->links() }}
+                    @endif
 
                 </div>
 
@@ -69,7 +84,7 @@
                 </a>
 
                 <div class="button-save">
-                    <button type="submit" id="save-words">Сохранить все слова</button>
+                    <button type="submit" id="save-words">Обновить слова</button>
                 </div>
 
             </div>
@@ -113,35 +128,38 @@
 
 
         ///////// Отправка слов на сохранение
-        {{--const form = document.querySelector('#form');--}}
+        const form = document.querySelector('#form');
 
-        {{--form.addEventListener('submit', function (event) {--}}
-        {{--    event.preventDefault()--}}
-        {{--    const word_blocks = edit_row_block.querySelectorAll('.word-block');--}}
-        {{--    let data = [];--}}
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-        {{--    word_blocks.forEach(function (elem, key) {--}}
-        {{--        let--}}
-        {{--            word = elem.querySelector('#word').value,--}}
-        {{--            translation = elem.querySelector('#translation').value,--}}
-        {{--            description = elem.querySelector('#description').value;--}}
+            const word_blocks = document.querySelectorAll('.edit-row-words .word-block');
 
-        {{--        data.push({--}}
-        {{--            word: word,--}}
-        {{--            translation: translation,--}}
-        {{--            description: description,--}}
-        {{--        })--}}
-        {{--    })--}}
+            let data = [];
+            word_blocks.forEach(function (elem, key) {
+                let
+                    wordId = elem.dataset.id,
+                    word = elem.querySelector('#word').value,
+                    translation = elem.querySelector('#translation').value,
+                    description = elem.querySelector('#description').value;
+                data.push({
+                    id: +wordId,
+                    word: word,
+                    translation: translation,
+                    description: description,
+                })
+            })
 
 
-        {{--    axios.post('{{ route('manage.library.words.add.store', $libraryId) }}', {words: data})--}}
-        {{--        .then(function (response) {--}}
-        {{--            location.reload();--}}
-        {{--        })--}}
-        {{--        .catch(function (error) {--}}
-        {{--            console.log(error.toJSON());--}}
-        {{--        });--}}
-        {{--});--}}
+            axios.post('{{ route('manage.library.words.edit.store', $libraryId) }}', {words: data})
+                .then(function (response) {
+                    // console.log(response)
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error.toJSON());
+                });
+        });
 
     </script>
 @endpush
