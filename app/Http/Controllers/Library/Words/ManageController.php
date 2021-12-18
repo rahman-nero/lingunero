@@ -48,12 +48,11 @@ final class ManageController
     }
 
 
-    public function editStore(EditWordsRequest $request, int $libraryId)
+    public function update(EditWordsRequest $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
-
         $data = $request->input('words');
 
         $result = $this->wordsService->editWords($libraryId, $data);
@@ -66,7 +65,7 @@ final class ManageController
     }
 
     // Страница Добавление слов
-    public function add($libraryId)
+    public function show($libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
@@ -80,7 +79,7 @@ final class ManageController
     }
 
     // Множественно добавление слов
-    public function addStore(StoreWordsRequest $request, $libraryId)
+    public function store(StoreWordsRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
@@ -98,7 +97,7 @@ final class ManageController
     }
 
     // Удаление слов
-    public function deleteWord(int $libraryId, int $wordId)
+    public function delete(int $libraryId, int $wordId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();

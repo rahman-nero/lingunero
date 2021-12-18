@@ -35,20 +35,24 @@
                         <span>Практика слов - {{ $library->first()->countWords() }}</span>
                     </div>
                     <div class="action">
-                        <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}"><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                        <a href="{{ route('manage.library.words.add.show', $library->first()->id) }}"><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}"><img
+                                src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.words.add.show', $library->first()->id) }}"><img
+                                src="{{ asset('media/plus.png') }}" alt=""></a>
                     </div>
                 </div>
             </a>
 
-            <a href="">
+            <a href="{{ route('library.sentences.practice.index', $library->first()->id) }}">
                 <div class="list-block" data-background="{{ asset('media/i01_3.jpg') }}">
                     <div class="content">
                         <span>Практика предложении - {{ $library->first()->countSentences() }}</span>
                     </div>
                     <div class="action">
-                        <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}"><img src="{{ asset('media/edit.png') }}" alt=""></a>
-                        <a href="{{ route('manage.library.words.add.show', $library->first()->id) }}"><img src="{{ asset('media/plus.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.sentences.edit.show', $library->first()->id) }}"><img
+                                src="{{ asset('media/edit.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.sentences.add.show', $library->first()->id) }}"><img
+                                src="{{ asset('media/plus.png') }}" alt=""></a>
                     </div>
                 </div>
             </a>

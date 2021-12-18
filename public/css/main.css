@@ -410,8 +410,8 @@ main#root section#content {
   margin-bottom: 5px;
 }
 .edit-library .description-input-library textarea {
-  width: 100%;
-  padding: 9px 10px;
+    width: 100%;
+    padding: 9px 10px;
     background: #f6f7fb;
     outline: none;
     border-bottom: 3px solid transparent;
@@ -419,11 +419,9 @@ main#root section#content {
     max-height: 230px;
     transition: all 400ms;
 }
-
 .edit-library .description-input-library textarea:focus {
     border-bottom-color: #423ed8;
 }
-
 .edit-library button {
     background: #423ed8;
     color: white;
@@ -441,7 +439,6 @@ main#root section#content {
     display: flex;
     align-items: center;
 }
-
 .panel-edit-library button {
     background: #423ed8;
     color: white;
@@ -452,7 +449,6 @@ main#root section#content {
     border-radius: 3px;
     padding: 9px 12px;
 }
-
 .panel-edit-library a {
     padding: 9px 12px;
     background: #423ed8;

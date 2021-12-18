@@ -28,7 +28,7 @@ final class LibraryController
     }
 
     // Ендпоинт для создания библиотеки
-    public function createStore(CreateRequest $request)
+    public function store(CreateRequest $request)
     {
         $data = new LibraryDTO(
             title: $request->input('title'),
@@ -49,7 +49,7 @@ final class LibraryController
     }
 
     // Ендпоинт для изменения библиотеки
-    public function editStore(EditRequest $request, $libraryId)
+    public function update(EditRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
