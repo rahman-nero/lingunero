@@ -50,55 +50,54 @@ final class SentencesService
         );
     }
 
-//    public function storeWords(int $libraryId, array $data): bool
-//    {
-//        /** @var WordDTO $wordDto */
-//        foreach ($data as $wordDto) {
-//            $add = $this->create($libraryId, $wordDto);
-//            if (!$add) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
+    public function storeSentences(int $libraryId, array $data): bool
+    {
+        /** @var SentenceDTO $sentenceDTO */
+        foreach ($data as $sentenceDTO) {
+            $add = $this->create($libraryId, $sentenceDTO);
+            if (!$add) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
-    // Обновление слов
-//    public function editWords(int $libraryId, array $data): bool
-//    {
-//
-//        foreach ($data as $word) {
-//            $hasWord = Words::query()
-//                ->where('id', $word['id'])
-//                ->where('library_id', $libraryId)
-//                ->toBase()
-//                ->get();
-//
-//            if (!$hasWord) {
-//                return false;
-//            }
-//
-//            $wordDto = new WordDTO(
-//                word: $word['word'],
-//                translation: $word['translation'],
-//                description: $word['description']
-//            );
-//            $edit = $this->edit($word['id'], $wordDto);
-//
-//            if (!$edit) {
-//                return false;
-//            }
-//        }
-//
-//        return true;
-//    }
-//
-//    public function delete(int $wordId): bool
-//    {
-//        $model = (new Words)
-//            ->newQuery()
-//            ->find($wordId);
-//
-//        return $model->delete();
-//    }
+    // Обновление предложении
+    public function editSentences(int $libraryId, array $data): bool
+    {
+
+        foreach ($data as $sentence) {
+            $hasWord = Sentence::query()
+                ->where('id', $sentence['id'])
+                ->where('library_id', $libraryId)
+                ->toBase()
+                ->get();
+
+            if (!$hasWord) {
+                return false;
+            }
+
+            $sentenceDTO = new SentenceDTO(
+                sentence: $sentence['sentence'],
+                translation: $sentence['translation'],
+            );
+            $edit = $this->edit($sentence['id'], $sentenceDTO);
+
+            if (!$edit) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function delete(int $wordId): bool
+    {
+        $model = (new Sentence)
+            ->newQuery()
+            ->find($wordId);
+
+        return $model->delete();
+    }
 }

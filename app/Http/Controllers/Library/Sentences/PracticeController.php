@@ -18,9 +18,6 @@ final class PracticeController extends Controller
 {
     private SentencesRepository $sentencesRepository;
     private SentencesService $sentencesService;
-    /**
-     * @var SentencesStatisticsRepository
-     */
     private SentencesStatisticsRepository $statisticsRepository;
 
     public function __construct(
