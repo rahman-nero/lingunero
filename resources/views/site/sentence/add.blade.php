@@ -23,6 +23,7 @@
 
             <div class="panel-edit-library">
                 <a href="{{ route('manage.library.words.edit.show', $libraryId) }}">Редактировать библиотеку</a>
+                <a href="{{ route('manage.library.sentences.import', $libraryId) }}">Импорт предложении</a>
             </div>
         </div>
 

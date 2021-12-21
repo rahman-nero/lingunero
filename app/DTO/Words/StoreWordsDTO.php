@@ -15,9 +15,9 @@ final class StoreWordsDTO
 
         foreach ($words as $word) {
             $wordsDto[] = new WordDTO(
-                $word['word'],
-                $word['translation'],
-                $word['description'],
+                trim($word['word']),
+                trim($word['translation']),
+                trim($word['description']),
             );
         }
 

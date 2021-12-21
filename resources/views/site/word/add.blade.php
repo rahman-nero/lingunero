@@ -48,8 +48,18 @@
                         </div>
                         <div class="word-panel">
                             <a id="delete-word"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                            {{--                        <a href="">Примеры</a>--}}
+                            <a id="open-examples">Примеры</a>
                         </div>
+
+                        <div class="list-examples">
+                            <a id="add-example">Добавить пример</a>
+                            <br>
+
+                            <div class="example-block">
+                                <input type="text" name="example" placeholder="Пример">
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -86,13 +96,24 @@
                                     <input type="text" required placeholder="Слово (на английском)" id="word" >
                                     <input type="text" required placeholder="Слово (на русском)" id="translation">
                                     <p><textarea placeholder="Объяснение" id="description"></textarea></p>
-                                </div>
-                            <div class="word-panel">
+                            </div>
+                           <div class="word-panel">
                                 <a id="delete-word"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a id="open-examples">Примеры</a>
+                            </div>
+
+                            <div class="list-examples">
+                                <a id="add-example">Добавить пример</a>
+                                <br>
+
+                                <div class="example-block">
+                                    <input type="text" name="example" placeholder="Пример">
+                                </div>
                             </div>
                         </div>
                      </div>
                     `);
+                addSentences();
                 deleteAction();
             })
         })
@@ -121,6 +142,63 @@
 
         deleteAction();
 
+
+        /// Примеры
+        function addSentences() {
+            const word_blocks = document.querySelectorAll('.add-row-words .word-block');
+
+            word_blocks.forEach(function (elem) {
+
+                let blockExample = elem.querySelector('#open-examples');
+                // Если кто нажал на кнопку "Примеры"
+
+                blockExample.addEventListener('click', function () {
+
+                    blockExample.removeEventListener('click', addSentences);
+
+                    let list_examples = elem.querySelector('.list-examples');
+
+                    console.log(list_examples);
+                    console.log(list_examples.classList.contains('open'));
+
+                    if (!list_examples.classList.contains('open')) {
+                        list_examples.classList.toggle('open');
+                    } else {
+                        list_examples.classList.toggle('open');
+
+                        list_examples.querySelectorAll('.example-block')
+                            .forEach(function (elem) {
+
+                                const input = elem.querySelector('input') ?
+                                    elem.querySelector('input').value :
+                                    null;
+
+                                if (input == '') {
+                                    elem.querySelector('input').remove();
+                                }
+
+
+                            })
+                    }
+
+                });
+
+                // Добавление нового примера
+                elem.querySelector('#add-example').addEventListener('click', function () {
+                    elem
+                        .querySelector('.list-examples')
+                        .insertAdjacentHTML('beforeend',
+                            `<div class="example-block">
+                            <input type="text" name="example" placeholder="Пример">
+                        </div>`
+                        );
+                });
+
+
+            });
+        }
+
+        addSentences();
 
         ///////// Отправка слов на сохранение
         const form = document.querySelector('#form');
@@ -152,7 +230,5 @@
                     console.log(error.toJSON());
                 });
         });
-
-
     </script>
 @endpush

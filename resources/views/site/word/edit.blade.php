@@ -35,7 +35,7 @@
                 @method('DELETE')
                 <button type="submit">Удалить библиотеку</button>
             </form>
-            <a href="">Импорт слов</a>
+            <a href="{{ route('manage.library.words.import', $libraryId) }}">Импорт слов</a>
         </div>
 
 

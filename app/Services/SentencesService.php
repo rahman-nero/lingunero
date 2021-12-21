@@ -62,6 +62,24 @@ final class SentencesService
         return true;
     }
 
+    public function importWords(int $libraryId, array $data)
+    {
+        /** @var SentenceDTO $dto */
+        foreach ($data as $sentence) {
+
+            $dto = new SentenceDTO(
+                sentence: $sentence['sentence'],
+                translation: $sentence['translation'],
+            );
+
+            $add = $this->create(libraryId: $libraryId, dto: $dto);
+            if (!$add) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     // Обновление предложении
     public function editSentences(int $libraryId, array $data): bool

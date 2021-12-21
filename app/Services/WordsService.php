@@ -31,7 +31,7 @@ final class WordsService
                 'library_id' => $libraryId,
                 'word' => $dto->word,
                 'translation' => $dto->translation,
-                'description' => $dto->description
+                'description' => $dto->description,
             ]
         );
 
@@ -46,7 +46,7 @@ final class WordsService
             ->update([
                 'word' => $dto->word,
                 'translation' => $dto->translation,
-                'description' => $dto->description
+                'description' => $dto->description,
             ]);
     }
 
@@ -64,6 +64,25 @@ final class WordsService
         /** @var WordDTO $wordDto */
         foreach ($data as $wordDto) {
             $add = $this->create($libraryId, $wordDto);
+            if (!$add) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function importWords(int $libraryId, array $data)
+    {
+        /** @var WordDTO $wordDto */
+        foreach ($data as $word) {
+
+            $dto = new WordDTO(
+                word: $word['word'],
+                translation: $word['translation'],
+                description: null
+            );
+
+            $add = $this->create($libraryId, $dto);
             if (!$add) {
                 return false;
             }

@@ -27,7 +27,7 @@
 
                 @endforeach
             @else
-                <a href="">Пожалуйста добавьте библиотеку</a>
+                <a href="{{ route('manage.library.create.show') }}">Пожалуйста добавьте библиотеку</a>
             @endif
 
         </div>

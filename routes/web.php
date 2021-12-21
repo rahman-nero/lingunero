@@ -91,7 +91,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('manage/library/{libraryId}/words/add', [ManageController::class, 'store'])
             ->whereNumber(['libraryId'])
             ->name('add.store');
+
+
+        // Страница импорта слов
+        Route::get('manage/library/{libraryId}/words/import', [ManageController::class, 'import'])
+            ->whereNumber(['libraryId'])
+            ->name('import');
+
+
+        // Страница импорт слов - отправка
+        Route::post('manage/library/{libraryId}/words/import', [ManageController::class, 'importStore'])
+            ->whereNumber(['libraryId'])
+            ->name('import.store');
     });
+
 
     ////////// Практика слов
     Route::get('/library/{libraryId}/words/practice', [PracticeController::class, 'practice'])
@@ -138,6 +151,17 @@ Route::group(['middleware' => 'auth'], function () {
             ->whereNumber(['libraryId'])
             ->name('add.store');
 
+
+        // Страница импорта слов
+        Route::get('manage/library/{libraryId}/sentences/import', [SentenceManageController::class, 'import'])
+            ->whereNumber(['libraryId'])
+            ->name('import');
+
+
+        // Страница импорт слов - отправка
+        Route::post('manage/library/{libraryId}/sentences/import', [SentenceManageController::class, 'importStore'])
+            ->whereNumber(['libraryId'])
+            ->name('import.store');
     });
 
 

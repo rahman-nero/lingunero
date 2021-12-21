@@ -1,3 +1,6 @@
+route:
+	docker-compose exec php-cli php artisan route:cache
+
 docker-up: memory
 	docker-compose up -d
 

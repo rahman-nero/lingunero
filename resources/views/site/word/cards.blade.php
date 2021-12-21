@@ -39,6 +39,14 @@
 
 @push('js')
     <script>
+        const cards = document.querySelectorAll('.slide .card');
+        cards.forEach(function (card) {
+            card.addEventListener('click', function () {
+                card.classList.toggle('is-flip');
+            });
+        })
+    </script>
+    <script>
         // Slider
         const slider = document.querySelector(".slider");
         const slides = document.querySelectorAll(".slide");

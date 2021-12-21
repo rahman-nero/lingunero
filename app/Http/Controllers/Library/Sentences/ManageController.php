@@ -10,9 +10,11 @@ use App\Http\Requests\Sentences\StoreSentenceRequest;
 use App\Repository\LibraryRepository;
 use App\Repository\SentencesRepository;
 use App\Services\SentencesService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
@@ -90,6 +92,54 @@ final class ManageController
         }
 
         return 'Ok';
+    }
+
+
+    public function import($libraryId)
+    {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+        $userId = Auth::id();
+
+        $library = $this->libraryRepository->getLibrary($libraryId, $userId);
+
+        return view('site.sentence.import', compact('libraryId', 'library'));
+    }
+
+    public function importStore(Request $request, $libraryId)
+    {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $data = $request->input('sentences');
+
+        preg_match_all("#(?<sentence>[а-ёА-Я\w_ ]+)[\s]+-[\s]+(?<translation>[\w ]+)#uim", $data, $matches, PREG_SET_ORDER);
+        $matches = $this->clearRequest($matches);
+
+        $result = $this->sentencesService->importWords(libraryId: $libraryId, data: $matches);
+
+        if (!$result) {
+            throw new BadRequestHttpException();
+        }
+
+        return redirect()->route('manage.library.sentences.edit.show', $libraryId);
+    }
+
+    public function clearRequest(array $matches)
+    {
+        foreach ($matches as $key => $match) {
+            foreach ($match as $stringKey => $string) {
+                if (!is_string($stringKey)) {
+                    unset($matches[$key][$stringKey]);
+                    continue;
+                }
+                $matches[$key][$stringKey] = trim($matches[$key][$stringKey]);
+            }
+        }
+
+        return $matches;
     }
 
 
