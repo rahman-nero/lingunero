@@ -21,7 +21,7 @@
                         <div class="word">{{ $sentence->sentence }}</div>
 
                         <p class="label-input"><label for="input-{{ $sentence->id }}">Ваш ответ:</label></p>
-                        <p><input type="text" id="input-{{ $sentence->id }}"
+                        <p><input type="text" autocomplete="off" id="input-{{ $sentence->id }}"
                                   placeholder="Введите перевод"
                                   name="sentences[{{ $sentence->id }}]"
                             ></p>
