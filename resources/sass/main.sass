@@ -1,0 +1,673 @@
+$text-color: #282e3e
+$border-color: #EDEFF4
+$button-color: #423ed8
+$soft-white-color: #f6f7fb
+
+
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+body
+    font-family: Roboto, sans-serif
+    background: #ffffff
+    margin-top: 77px
+
+// Меню
+#header
+    width: 100%
+    position: fixed
+    background: #ffffff
+    z-index: 9
+    top: 0
+    left: 0
+    border-bottom: 1px solid #EDEFF4
+
+    .center
+        padding: 5px 10px
+        display: flex
+        align-self: center
+
+        .logo
+            flex: 1
+            //background: #000
+
+            img
+                width: 50px
+
+        .top-nav-bar
+            flex: 5
+            //background: #afb14c
+            align-self: center
+
+            ul
+                list-style: none
+                display: flex
+
+                li
+                    color: $text-color
+                    margin-left: 20px
+                    font-size: 15px
+                    font-weight: 500
+
+                    &:hover
+                        color: black
+
+        .profile-block
+            flex: 2
+            display: flex
+            align-self: center
+            padding-right: 10px
+            justify-content: right
+            cursor: pointer
+
+            //background: #fcff32
+            .user
+                .avatar
+                    img
+                        width: 40px
+                        margin: 0 auto
+
+                .description
+                    padding-top: 5px
+                    font-size: 14px
+                    color: $text-color
+
+
+// Стилизированная кнопка в меню вверху
+.styled-button
+    color: white
+    padding: 7px 14px
+    border-radius: 3px
+    font-size: 14px
+    background: #423ED8
+
+    &:hover
+        background: #302cd4
+
+
+// Главный блок
+main#root
+    height: 100vh
+
+    section#content
+        max-width: 1150px
+        color: $text-color
+        margin: 0 auto
+        padding: 30px
+
+.disable-vh
+    height: initial !important
+
+// Применив этот класс меняем цвет #main
+.background-soft-purple
+    background: #f7fafc
+
+///////////////////////// Главная страница вывода всех библиотек
+
+// Вывод всех библиотек (на главной странице)
+.libraries-row
+    margin-top: 20px
+    width: auto
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+
+    .library-block
+        padding: 15px
+        margin: 10px 20px 10px 0px
+        width: 320px
+        background: #fff
+        border-bottom: 1px solid rgba(0, 0, 0, .05)
+        border-radius: 3px
+        cursor: pointer
+        transition: all 200ms
+
+        .library-title
+            font-size: 18px
+            font-weight: bold
+            color: $text-color
+
+        .library-count-items
+            margin-top: 15px
+
+            p
+                font-size: 14px
+                color: #737c95
+                font-weight: 500
+
+        &:hover
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .2)
+            transform: scale(1.02)
+
+
+// Большой заголовок
+.heading
+    margin: 0px 20px 0px 0px
+    font-size: 24px
+    font-weight: bold
+
+////////////////////////// Страница показа библиотеки
+
+.list-action
+    display: flex
+    width: auto
+    margin-top: 40px
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: flex-start
+    color: white !important
+
+    .list-block
+        margin: 10px 20px 10px 0px
+        width: 320px
+        height: 140px
+        color: white
+        background-position: center
+        background-size: cover
+        //border: 1px solid rgba(0, 0, 0, .5)
+        border-radius: 15px
+        cursor: pointer
+        transition: all 400ms
+
+        .content
+            padding: 15px
+
+            span
+                font-weight: bold
+                color: white
+                font-size: 14px
+
+        .action
+            display: flex
+            position: absolute
+            visibility: hidden
+            width: inherit
+            height: 50px
+            align-items: center
+            margin-left: -1px
+            margin-top: 70px
+            padding: 5px 10px 5px 10px
+            padding-left: 20px
+            border-radius: 0px 0px 15px 15px
+            background: rgba(0, 0, 0, .5)
+
+            a
+                padding-right: 15px
+
+                img
+                    width: 20px
+
+
+        &:hover .action
+            visibility: visible
+            margin-top: 35px
+
+
+        &:hover
+            transform: scale(1.02)
+            box-shadow: 0 0 4px rgba(0, 0, 0, .3)
+
+
+// Slider on word.cards.blade.php
+
+.slider
+    width: 800px
+    overflow: hidden
+    margin: 0 auto
+    height: 650px
+    display: flex
+    justify-content: stretch
+    scroll-snap-type: x mandatory
+    scroll-behavior: smooth
+    position: relative
+
+
+.slide
+    min-width: 800px
+    display: flex
+    scroll-snap-align: start
+    justify-content: center
+    align-items: center
+
+
+.card
+    width: 99%
+    height: 99%
+    border-radius: 40px
+    margin: 0 auto
+    perspective: 1000px
+
+    .word, .translation
+        width: inherit
+        height: inherit
+        position: absolute
+        box-shadow: 0 0 5px rgba(0, 0, 0, .2)
+        background: #ffffff
+        font-size: 33px
+        font-weight: 500
+        backface-visibility: hidden
+        left: 0
+        top: 0
+        display: flex
+        justify-content: center
+        align-items: center
+        transition: 600ms
+        cursor: pointer
+
+    .translation
+        transform: rotateX(-180deg)
+
+.is-flip
+    .word
+        transform: rotateX(-180deg)
+
+    .translation
+        transform: rotateX(-360deg)
+
+
+.panel
+    width: 800px
+    margin: 20px auto
+    position: relative
+
+    .controls
+        z-index: 9
+        background: #fafafa
+        justify-content: center
+        width: inherit
+        display: flex
+        margin-bottom: 20px
+        border-bottom: 1px solid $border-color
+        padding-bottom: 30px
+
+    .add-button
+        padding: 7px 12px
+        background: $button-color
+        font-weight: bold
+        letter-spacing: .5px
+        font-size: 14px
+        border-radius: 4px
+        color: white
+
+
+.left, .right
+    width: 40px
+    height: 40px
+    background: white
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2)
+    margin: 0 50px
+    border-radius: 50%
+    cursor: pointer
+    display: flex
+    align-content: center
+    flex-wrap: wrap
+    justify-content: center
+    transition: all 400ms
+
+    &:hover
+        box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+
+//////////////////// Страница практики слов с написанием
+
+.form-div
+    display: block
+    width: 100%
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .1)
+    border-radius: 15px
+    background: #ffffff
+    margin-bottom: 40px
+    padding: 30px 20px
+    font-size: 18px
+    cursor: pointer
+
+    .word
+        margin-bottom: 190px
+        font-size: 25px
+        font-weight: bold
+        color: $text-color
+
+    .label-input
+        font-size: 15px
+        margin-bottom: 10px
+
+    input
+        width: 100%
+        padding: 9px 12px
+        border-radius: 2px
+        font-weight: bold
+        color: black
+        font-size: 14px
+        letter-spacing: .4px
+        outline: none
+        background: #f1ecec
+        border-bottom: 3px solid $button-color
+
+
+///////////// statistic.blade.php
+
+.block-statistic
+    background: #ffffff
+    padding: 20px
+    max-width: 800px
+    margin: 0 auto
+    border-radius: 10px
+    box-shadow: 0 0 3px rgba(0, 0, 0, .1)
+
+    h3
+        font-size: 22px
+        display: block
+        font-weight: bold
+        color: $text-color
+
+    .result
+        margin-top: 60px
+
+        p
+            font-weight: bold
+            font-size: 19px
+            color: rgba(0, 0, 0, .7)
+
+            &.count-words span
+                color: $button-color
+
+            &.count-wrong span
+                color: red
+
+            &.count-right span
+                color: green
+
+    .percent
+        margin-top: 40px
+        margin-bottom: 10px
+        font-size: 22px
+        font-weight: bold
+        color: $text-color
+
+    //&:before
+    //    content: '%'
+    //    margin-left: 25px
+    //    position: absolute
+    //    display: block
+
+    .progress-bar
+        width: inherit
+        height: 30px
+        background: #cdd9e7
+        border-radius: 5px
+        cursor: pointer
+        transition: all 800ms
+
+        .loaded
+            width: 1%
+            background: $button-color
+            transition: all 3240ms
+            height: inherit
+            border-radius: 5px
+
+            &:hover
+                box-shadow: 0 0 3px rgba(66, 62, 216, .4)
+
+
+/////// library - add.blade.php
+
+.edit-library
+    width: inherit
+    margin-top: 40px
+    padding-bottom: 40px
+    border-bottom: 2px dashed #e2dcdc
+
+    // Инпуты название библиотеки и описание
+    .title-input-library
+        width: inherit
+        margin-bottom: 20px
+
+        input
+            outline: none
+            width: 100%
+            padding: 9px 10px
+            border-bottom: 3px solid transparent
+            background: #f6f7fb
+            transition: all 400ms
+
+            &:focus
+                border-bottom-color: $button-color
+
+    .description-input-library
+        width: inherit
+        margin-bottom: 5px
+
+        textarea
+            width: 100%
+            padding: 9px 10px
+            background: #f6f7fb
+            outline: none
+            border-bottom: 3px solid transparent
+            min-height: 230px
+            max-height: 230px
+            transition: all 400ms
+
+            &:focus
+                border-bottom-color: $button-color
+    // Кнопка "Обновить библиотеку"
+    button
+        background: $button-color
+        color: white
+        margin-right: 10px
+        font-weight: bold
+        font-size: 14px
+        box-shadow: 0 0 5px rgba(0, 0, 0, .3)
+        border-radius: 3px
+        padding: 9px 12px
+
+
+// Кнопки "Удалить библиотеку" и "Импорт слов"
+.panel-edit-library
+    //background: red
+    padding: 10px
+    margin-top: 30px
+    display: flex
+    align-items: center
+
+    button
+        background: $button-color
+        color: white
+        margin-right: 10px
+        font-weight: bold
+        font-size: 14px
+        box-shadow: 0 0 5px rgba(0, 0, 0, .3)
+        border-radius: 3px
+        padding: 9px 12px
+
+    a
+        padding: 9px 12px
+        background: $button-color
+        margin-right: 10px
+        color: white
+        font-weight: bold
+        border-radius: 3px
+        font-size: 14px
+        box-shadow: 0 0 5px rgba(0, 0, 0, .3)
+
+.add-word-form, .edit-word-form
+    width: inherit
+    margin-top: 30px
+    padding-bottom: 10px
+
+    h3
+        margin-bottom: 30px
+        font-size: 27px
+        font-weight: bold
+
+    // Большая кнопка добавление слово, ну тот большой блок, сверху слов и снизу в конце
+    .block-add-word-button
+        background: #ffffff
+        //box-shadow: 0 0 10px rgba(0,0,0, .4)
+        width: inherit
+        user-select: none
+        margin-bottom: 20px
+        cursor: pointer
+        transition: all 400ms
+        font-size: 22px
+        font-weight: bold
+        letter-spacing: .5px
+        height: 120px
+        display: flex
+        justify-content: center
+        border: 3px dashed #e2dcdc
+        align-items: center
+
+        &:hover
+            box-shadow: 0 0 5px rgba(0, 0, 0, .2)
+            transform: scale(1.02)
+
+    // Блок в котором слова-блоки
+    .add-row-words, .edit-row-words
+        margin-top: 30px
+        margin-bottom: 30px
+
+        // Слово-блок
+        .word-block
+            width: inherit
+            //background: #ebecef
+            background: #fff
+            padding: 20px
+            border-radius: 5px
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1)
+            display: block
+            margin-bottom: 30px
+            // Блок с инпутами
+            .definition-block
+                // Input для ввода слова и перевода
+                input
+                    padding: 14px 20px
+                    outline: none
+                    width: 48%
+                    cursor: pointer
+                    background: $soft-white-color
+                    border-bottom: 3px dashed #ccc
+                    transition: all 400ms
+
+                    &:nth-child(1)
+                        margin-right: 30px
+
+                    &:focus
+                        border-bottom-color: $button-color
+
+                p
+                    margin-top: 20px
+
+                    textarea
+                        width: 100%
+                        padding: 14px 20px
+                        background: $soft-white-color
+                        outline: none
+                        min-height: 100px
+                        max-height: 200px
+                        border-bottom: 2px solid #ccc
+                        transition: all 400ms
+
+                        &:focus
+                            border-bottom-color: $button-color
+            // Кнопки "Удалить слово" и "Примеры"
+            .word-panel
+                margin-top: 30px
+
+                a
+                    padding: 9px 13px
+                    background: $button-color
+                    color: white
+                    border-radius: 3px
+                    font-size: 14px
+                    outline: none
+                    user-select: none
+                    cursor: pointer
+
+                    &#delete-word
+                        background: rgba(240, 240, 58, 1) !important
+                        color: red
+
+            .list-examples
+                visibility: hidden
+                height: 0
+                //background: #a0aec0
+                padding-top: 20px
+                border-top: 1px solid #ccc
+                margin-top: 30px
+
+                #add-example
+                    background: #ff49a0
+                    border-radius: 5px
+                    width: inherit
+                    font-size: 14px
+                    color: white
+                    user-select: none
+                    padding: 9px 14px
+                    cursor: pointer
+
+                .example-block
+                    width: inherit
+                    margin-top: 20px
+
+                    input
+                        background: $soft-white-color
+                        border-bottom: 1px solid $border-color
+                        outline: none
+                        padding: 9px 14px
+                        width: 100%
+
+            .list-examples.open
+                visibility: visible
+                height: auto
+
+
+    // Кнопка "Сохранить слова"
+    .button-save
+        margin-top: 20px
+        margin-bottom: 120px
+
+        button
+            padding: 10px 20px
+            background: $button-color
+            color: white
+            border-radius: 4px
+            font-size: 14px
+
+// Кнопка для того чтобы на верх не нужно было скролить (я не знаю как это действие называется)
+#up-button
+    position: fixed
+    padding: 7px 17px
+    border-radius: 3px
+    box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+    font-size: 22px
+    color: white
+    right: 20px
+    background: $button-color
+    bottom: 20px
+
+
+// Страница words/edit.blade.php
+
+.block-import
+    width: inherit
+    margin-top: 20px
+
+    h3
+        display: block
+        margin: 10px 0px
+
+    textarea
+        width: 100%
+        min-height: 400px
+        max-height: 600px
+        padding: 10px
+        border: 1px solid #ccc
+
+#import-words
+    padding: 10px 20px
+    background: $button-color
+    color: white
+    border-radius: 4px
+    font-size: 14px
