@@ -30,12 +30,18 @@
         </form>
 
         <div class="panel-edit-library">
+            <a href="{{ route('manage.library.words.import', $libraryId) }}">Импорт слов</a>
+
             <form action="{{ route('manage.library.delete', $libraryId) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Удалить библиотеку</button>
+                <button type="submit" style="background: red">Удалить библиотеку</button>
             </form>
-            <a href="{{ route('manage.library.words.import', $libraryId) }}">Импорт слов</a>
+            <form action="{{ route('manage.library.words.clear', $libraryId) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" style="background: #ffa90a">Удалить все слова</button>
+            </form>
         </div>
 
 

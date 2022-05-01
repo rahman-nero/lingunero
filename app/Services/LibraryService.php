@@ -6,14 +6,23 @@ namespace App\Services;
 
 use App\DTO\Library\LibraryDTO;
 use App\Models\Library;
-use App\Models\WordsStatistics;
+use App\Models\Words;
+use Illuminate\Database\Eloquent\Builder;
 
 final class LibraryService
 {
+
+    protected function getModel(): Builder
+    {
+        return (new Library())->newQuery();
+    }
+
+    /**
+     * Creating a new library
+    */
     public function create(LibraryDTO $dto, int $userId): int
     {
-        $model = (new Library())->newQuery();
-        $result = $model->create(
+        $result = $this->getModel()->create(
             [
                 'user_id' => $userId,
                 'title' => $dto->title,
@@ -24,43 +33,74 @@ final class LibraryService
         return $result->id;
     }
 
+    /**
+     * Edite selected library
+    */
     public function edit(int $libraryId, LibraryDTO $dto): bool
     {
-        $model = (new Library)->newQuery();
-
-        return $model->find($libraryId)
+        return $this->getModel()->find($libraryId)
             ->update([
                 'title' => $dto->title,
                 'description' => $dto->description
             ]);
     }
 
+    /**
+     * Delete library with all relations of the other tables
+    */
     public function delete(int $libraryId): bool
     {
-        $library = (new Library)
-            ->newQuery()
+        $library = $this->getModel()
             ->find($libraryId);
 
         // Удаление слов
-        $deleteWords = $library->words()
-            ->each(function ($elem) {
-                $elem->examples()->each(fn($elem) => $elem->delete());
+        $library->words()
+            ->each(function (Words $elem) {
+                // Удаляем примеры слов
+                $elem->examples()->delete();
+
+                // Удаляем само слов
                 $elem->delete();
             });
 
         // TODO: на сервисы переведи
-        $deleteStatistic = (new WordsStatistics())
-            ->newQuery()
-            ->where('library_id', $libraryId)
-            ->get()
-            ->each(function ($elem) {
+        // Удаление статистики тестов на слова
+        $library->wordsStatistics()
+            ->delete();
+
+        // Удаление предложении
+        $library->sentences()
+            ->delete();
+
+        return $library->delete();
+    }
+
+
+    /**
+     * Remove all words of library
+     * @param int $libraryId
+     * @return bool
+     */
+    public function removeAllLibraryWords(int $libraryId): bool
+    {
+        // Remove words with examples
+        $this->getModel()
+            ->find($libraryId)
+            ->words()
+            ->each(function (Words $elem) {
+                // Remove word's examples
+                $elem->examples()->delete();
+
+                // Remove current word
                 $elem->delete();
             });
 
-        // Удаление предложении
-        $deleteSentences = $library->sentences()
+        // Remove statistic of words
+        $this->getModel()
+            ->find($libraryId)
+            ->wordsStatistics()
             ->delete();
 
-        return $library->newQuery()->find($libraryId)->delete();
+        return true;
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\DTO\Words\WordDTO;
 use App\Models\Words;
@@ -129,4 +127,5 @@ final class WordsService
 
         return $model->delete();
     }
+
 }

@@ -54,6 +54,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/library/{libraryId}', [LibraryController::class, 'delete'])
             ->name('delete')
             ->whereNumber('libraryId');
+
+        Route::delete('/library/{libraryId}/words', [LibraryController::class, 'removeWordsOfLibrary'])
+            ->name('words.clear')
+            ->whereNumber('libraryId');
     });
 
     //////////// Слова

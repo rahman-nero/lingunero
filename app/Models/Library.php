@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $created_at
  * @property string $updated_at
+ *
  */
 class Library extends Model
 {
@@ -34,6 +35,11 @@ class Library extends Model
         return $this->belongsTo(Sentence::class, 'id', 'library_id');
     }
 
+    public function wordsStatistics()
+    {
+        return $this->hasMany(WordsStatistics::class, 'library_id', 'id');
+    }
+
     public function countWords()
     {
         return $this->words()->count();
@@ -43,4 +49,6 @@ class Library extends Model
     {
         return $this->sentences()->count();
     }
+
+
 }

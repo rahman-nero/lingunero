@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers;
-
 
 use App\Repository\LibraryRepository;
 use Illuminate\Support\Facades\Auth;

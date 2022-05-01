@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\Library;
-
 
 use App\DTO\Library\LibraryDTO;
 use App\Http\Requests\Library\CreateRequest;
@@ -73,7 +71,6 @@ final class LibraryController
             ->with('success', 'Вы успешно обновили библиотеку');
     }
 
-
     // Ендпоинт для удаления библиотеки и всего что с ним связано
     public function delete(int $libraryId)
     {
@@ -93,4 +90,23 @@ final class LibraryController
             ->route('home')
             ->with('success', 'Вы успешно удалили библиотеку');
     }
+
+    // Удаление всех слов с библиотеки
+    public function removeWordsOfLibrary(int $libraryId)
+    {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $result = $this->service->removeAllLibraryWords($libraryId);
+
+        if (!$result) {
+            return back()
+                ->withErrors(['message' => 'Не удалось очистить слова библиотеки']);
+        }
+
+        return back()
+            ->with('success', 'Вы успешно очистили слова из библиотеки');
+    }
+
 }
