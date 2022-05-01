@@ -5,7 +5,10 @@ php-migrate:
 	docker-compose exec php-cli php artisan migrate
 
 composer:
-	docker-compose exec php-cli composer
+	docker-compose exec php-cli composer install
+
+npm:
+	docker-compose exec npm npm install
 
 docker-up: memory
 	docker-compose up -d

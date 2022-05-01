@@ -1,5 +1,15 @@
 version: '3.7'
 services:
+    npm:
+        container_name: npm
+        build:
+            context: ./
+            dockerfile: ./docker/npm.docker
+        volumes:
+            -  ./:/var/www
+        tty: true
+        restart: unless-stopped
+
     php-cli:
         container_name: php
         build:
@@ -11,6 +21,7 @@ services:
             - ./:/var/www/
         user: 'obitel'
         tty: true
+
     php-fpm:
         container_name: php-fpm
         build:
@@ -20,10 +31,10 @@ services:
                 WWWUSER: 'obitel'
         volumes:
             - ./:/var/www/
-            - ./public:/var/www/public
         links:
             - mysql
         user: 'obitel'
+
     nginx:
         container_name: nginx
         build:
@@ -35,6 +46,7 @@ services:
             - ./public:/var/www/public
         links:
             - php-fpm
+
     mysql:
         container_name: mysql
         image: mysql:8.0
@@ -47,8 +59,10 @@ services:
             - ./storage/mysql:/var/lib/mysql/
         ports:
             - "33006:3306"
+
     redis:
         container_name: redis
         image: redis
         ports:
             - "63799:6379"
+
