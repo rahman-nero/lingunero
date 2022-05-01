@@ -21,7 +21,8 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "phpunit/phpunit": "^9.5.10",
+        "squizlabs/php_codesniffer": "^3.6"
     },
     "autoload": {
         "psr-4": {
@@ -54,7 +55,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "valid-code" : "./vendor/bin/phpcs --ignore=tests,vendor --extensions=php  -p ./app/Http/Controllers/User/UserController.php"
     },
     "extra": {
         "laravel": {

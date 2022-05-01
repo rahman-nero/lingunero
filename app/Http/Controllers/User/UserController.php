@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\User;
-
 
 final class UserController
 {

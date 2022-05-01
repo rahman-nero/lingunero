@@ -33,7 +33,7 @@
 
 Чтобы выполнить последующие действия, нам нужно запустить контейнеры:
 ```
-    make docker-up
+make docker-up
 ```
 
 
@@ -41,7 +41,7 @@
 
 Чтобы установить зависимости выполняем, вот эту команду:
 ```
-    docker-compose exec php-cli composer install 
+docker-compose exec php-cli composer install 
 ```
 
 
@@ -52,7 +52,7 @@
 
 В этом файле вы должны указать заполнить поле `APP_KEY`, это не делается вручную, для этого есть команда
 ```
-    docker-compose exec php-cli php artisan key:generate 
+docker-compose exec php-cli php artisan key:generate 
 ```
 Также если вы запустили сайт не на **localhost**, а на каком-то домене. (Поумолчанию сайт находится на **localhost:8080**) 
 То тогда, меняем параметр `APP_URL` в конфиге, на тот адрес который вы указали.
@@ -73,7 +73,7 @@
 Миграция - это когда мы запускаем процесс, который создает таблицы нужные для работы приложения, так что это команда **обязательна**
 
 ```
-    docker-compose exec php-cli php artisan migrate
+docker-compose exec php-cli php artisan migrate
 ```
 
 
@@ -82,7 +82,7 @@
 Команда для создание ссылки на `storage` в папке `public`.
 
 ```
-    docker-compose exec php-cli php artisan storage:link 
+docker-compose exec php-cli php artisan storage:link 
 ```
 
 Дальше заходим на `localhost:8080` и наслаждаемся баном :)
