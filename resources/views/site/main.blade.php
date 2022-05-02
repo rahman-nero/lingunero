@@ -1,6 +1,5 @@
 @extends('layouts.main')
 
-
 @section('title', 'Библиотека')
 
 @section('root-classes', 'background-soft-purple')

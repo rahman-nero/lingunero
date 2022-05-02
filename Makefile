@@ -10,6 +10,9 @@ composer:
 npm:
 	docker-compose exec npm npm install
 
+mix-watch:
+	docker-compose exec npm npm watch
+
 docker-up: memory
 	docker-compose up -d
 

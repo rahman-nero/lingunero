@@ -3,7 +3,6 @@ $border-color: #EDEFF4
 $button-color: #423ed8
 $soft-white-color: #f6f7fb
 
-
 *
     box-sizing: border-box
     margin: 0
@@ -13,6 +12,42 @@ body
     font-family: Roboto, sans-serif
     background: #ffffff
     margin-top: 77px
+
+// Блок уведомления ошибки
+.info-error
+    position: fixed
+    display: flex
+    align-items: center
+    left: 50%
+    background-color: #f8d7da
+    padding: 10px 20px
+    color: #842029
+    border: 1px solid #f5c2c7
+    border-radius: 3px
+    transform: translate(-50%, 0%)
+    z-index: 99
+    div
+        margin: 0 3px
+    .close-arrow
+        cursor: pointer
+
+// Блок успешного уведомления
+.info-success
+    position: fixed
+    display: flex
+    left: 50%
+    color: #0f5132
+    align-items: center
+    padding: 10px 20px
+    border-radius: 3px
+    background-color: #d1e7dd
+    border-color: #badbcc
+    z-index: 99
+    transform: translate(-50%, 0%)
+    div
+        margin: 0 3px
+    .close-arrow
+        cursor: pointer
 
 // Меню
 #header
@@ -259,6 +294,7 @@ main#root
 
     .translation
         transform: rotateX(-180deg)
+
 
 .is-flip
     .word
