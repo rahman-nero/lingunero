@@ -20,6 +20,8 @@ services:
         volumes:
             - ./:/var/www/
         user: 'obitel'
+        ports:
+            - "9001:9001"
         tty: true
 
     php-fpm:
@@ -31,6 +33,8 @@ services:
                 WWWUSER: 'obitel'
         volumes:
             - ./:/var/www/
+#        ports:
+#            - "9001:9001"
         links:
             - mysql
         user: 'obitel'

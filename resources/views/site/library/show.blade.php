@@ -1,6 +1,5 @@
 @extends('layouts.main')
 
-
 @section('title', 'Библиотека')
 
 @section('root-classes', 'background-soft-purple')
@@ -21,7 +20,7 @@
                     <div class="content">
                         <span>Карточки слов - {{ $library->first()->countWords() }}</span>
                     </div>
-                    <div class="action">
+                <div class="action">
                         <a href="{{ route('manage.library.words.edit.show', $library->first()->id) }}"><img src="{{ asset('media/edit.png') }}" alt=""></a>
                         <a href="{{ route('manage.library.words.add.show', $library->first()->id) }}"><img src="{{ asset('media/plus.png') }}" alt=""></a>
                     </div>
@@ -56,6 +55,7 @@
                     </div>
                 </div>
             </a>
+
 
         </div>
     </section>
