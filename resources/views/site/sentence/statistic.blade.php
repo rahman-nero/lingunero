@@ -9,7 +9,7 @@
 
     <section id="content">
         <div class="back">
-            <a href="{{ route(name: 'home') }}">Назад</a>
+            <a href="{{ back()->getTargetUrl() }}">Назад</a>
         </div>
 
         <div class="block-statistic">
