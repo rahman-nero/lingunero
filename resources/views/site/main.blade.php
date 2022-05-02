@@ -28,7 +28,7 @@
             @else
                 <a href="{{ route('manage.library.create.show') }}">Пожалуйста добавьте библиотеку</a>
             @endif
-
         </div>
+        {{ $libraries->links() }}
     </section>
 @endsection

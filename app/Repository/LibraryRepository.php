@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Repository;
-
 
 use App\Models\Library;
 use App\Models\Words;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * @method Words model()
@@ -17,7 +16,7 @@ final class LibraryRepository extends CoreRepository
         return Library::class;
     }
 
-    public function getAllLibraries(int $userId): object
+    public function getAllLibrariesWithPaginate(int $userId, int $perPage = 10): LengthAwarePaginator
     {
         $columns = ['id', 'title', 'created_at'];
 
@@ -26,7 +25,7 @@ final class LibraryRepository extends CoreRepository
             ->select($columns)
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate($perPage);
     }
 
     public function getLibrary(int $libraryId, int $userId): object
