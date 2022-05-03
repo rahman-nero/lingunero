@@ -194,7 +194,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/favorites', [FavoriteWordsController::class, 'index'])
         ->name('user.favorites');
 
+    // Добавление слова в избранные
+    Route::post('/user/favorites/{wordId}', [FavoriteWordsController::class, 'add'])
+        ->name('user.favorites.add')
+        ->whereNumber('wordId');
+
     // Удаление избранного слова
     Route::delete('/user/favorites/{id}', [FavoriteWordsController::class, 'delete'])
-        ->name('user.favorites.delete');
+        ->name('user.favorites.delete')
+        ->whereNumber('id');
+
+    // Удаление избранного слова (запрос ajax) (Временное решение или нет)
+    Route::delete('/user/favorites/{wordId}/ajax', [FavoriteWordsController::class, 'deleteAjax'])
+        ->name('user.favorites.delete.ajax')
+        ->whereNumber('wordId');
 });

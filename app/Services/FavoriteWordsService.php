@@ -12,6 +12,17 @@ final class FavoriteWordsService
         return FavoriteWords::query();
     }
 
+    public function create(int $userId, int $wordId): bool
+    {
+        $result = $this->getModel()
+                    ->create([
+                        'word_id' => $wordId,
+                        'user_id' => $userId
+                    ]);
+
+        return (bool) $result->id;
+    }
+
     /**
      * Удалить избранное слово
     */

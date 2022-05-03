@@ -57,7 +57,9 @@
                 </a>
 
                 <div class="edit-row-words">
-
+                    @php
+                        /** @var \App\Models\Words $word*/
+                    @endphp
                     @foreach($words as $word)
                         <div class="word-block" data-id="{{ $word->id }}">
                             <div class="header-block"></div>
@@ -71,7 +73,11 @@
                             </div>
                             <div class="word-panel">
                                 <a id="delete-word"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                <a href="">Примеры</a>
+                                @if($word->isFavorite())
+                                    <a href="#" title="Удалить из избранных" class="add-favorite added"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                @else
+                                    <a href="#" title="Добавить в избранные" class="add-favorite"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                @endif
                             </div>
                         </div>
 
@@ -102,6 +108,8 @@
 
 @push('js')
     <script>
+
+
         ///////// Удаление слова
         const word_blocks = document.querySelectorAll('.edit-row-words .word-block');
 
@@ -165,6 +173,53 @@
                 .catch(function (error) {
                     console.log(error.toJSON());
                 });
+        });
+
+
+        ///////// Добавление/Удаление слов из избранных
+
+        const icons = {
+            deleted: '<i class="fa fa-star-o" aria-hidden="true"></i>',
+            added: '<i class="fa fa-star" aria-hidden="true"></i>'
+        };
+
+        word_blocks.forEach((elem) => {
+            let wordId = elem.dataset.id;
+
+            elem.querySelector('.word-panel .add-favorite')
+            .addEventListener('click', (e) => {
+               e.preventDefault();
+
+                let currentTarget = e.currentTarget;
+
+               // Если это слово уже добавлено в избранные, то выполняем запрос на удаление из избранного
+               if (e.currentTarget.className.includes('added')) {
+                    axios.delete(`/user/favorites/${wordId}/ajax`).then(function(response) {
+
+                        if (response.data.code == 200) {
+                            currentTarget.innerHTML = '';
+                            currentTarget.classList.remove('added');
+                            currentTarget.insertAdjacentHTML('beforeend', icons.deleted)
+                        }
+                    });
+
+               } else { // Если слово не находится в избранных, то добавляем
+                   console.log('Кликнутый элемент', e.currentTarget);
+
+                   axios.post(`/user/favorites/${wordId}`).then(function(response) {
+
+                        if (response.data.code == 200) {
+                            currentTarget.innerHTML = '';
+                            currentTarget.classList.add('added');
+                            currentTarget.insertAdjacentHTML('beforeend', icons.added)
+                        }
+
+                    });
+               }
+
+            });
+
+
         });
 
     </script>

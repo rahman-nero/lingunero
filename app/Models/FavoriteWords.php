@@ -18,6 +18,8 @@ class FavoriteWords extends Model
 
     protected $table = 'favorite_words';
 
+    public $guarded = ['id'];
+
     public $timestamps = true;
 
     protected $casts = [

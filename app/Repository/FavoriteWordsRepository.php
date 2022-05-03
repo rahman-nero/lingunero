@@ -35,13 +35,42 @@ final class FavoriteWordsRepository extends CoreRepository
     }
 
     /**
-     * Ч
+     * Получение id-избранного слова, по word_id и user_id
+    */
+    public function getUserFavoriteIdByWordId(int $userId, int $wordId): int|false
+    {
+        $result = $this->model()
+            ->where('user_id', '=', $userId)
+            ->where('word_id', '=', $wordId)
+            ->limit(1)
+            ->toBase()
+            ->get();
+
+        return $result->first()->id;
+    }
+
+    /**
+     * Является ли переданный id-избранного слова относящимся к пользователю
     */
     public function isUserFavoriteWord(int $id, int $userId): bool
     {
         return $this->model()
             ->select(['id'])
             ->where('id', '=', $id)
+            ->where('user_id', '=', $userId)
+            ->toBase()
+            ->get()
+            ->isNotEmpty();
+    }
+
+    /**
+     * Является ли переданный id-избранного слова относящимся к пользователю
+     */
+    public function isUserFavoriteWordByWordId(int $wordId, int $userId): bool
+    {
+        return $this->model()
+            ->select(['id'])
+            ->where('word_id', '=', $wordId)
             ->where('user_id', '=', $userId)
             ->toBase()
             ->get()

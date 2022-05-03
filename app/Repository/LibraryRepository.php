@@ -40,4 +40,19 @@ final class LibraryRepository extends CoreRepository
             ->limit(1)
             ->get();
     }
+
+    /**
+     * Проверка, созданна ли эта библиотека ($libraryId) пользователем ($userId)
+    */
+    public function isUserLibrary(int $libraryId, int $userId): bool
+    {
+        return $this->model()
+            ->select(['id'])
+            ->where('id', '=', $libraryId)
+            ->where('user_id', '=', $userId)
+            ->toBase()
+            ->get()
+            ->isNotEmpty();
+    }
+
 }
