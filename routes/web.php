@@ -6,6 +6,7 @@ use App\Http\Controllers\Library\Sentences\PracticeController as SentencePractic
 use App\Http\Controllers\Library\Words\ManageController;
 use App\Http\Controllers\Library\Words\PracticeController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\User\FavoriteWordsController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,7 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
             ->whereNumber(['libraryId'])
             ->name('edit.store');
 
-        // Удалени слова
+        // Удаление слова
         Route::delete('manage/library/{libraryId}/words/{wordId}', [ManageController::class, 'delete'])
             ->whereNumber(['libraryId', 'wordId'])
             ->name('edit.delete');
@@ -111,6 +112,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     ////////// Практика слов
+
     Route::get('/library/{libraryId}/words/practice', [PracticeController::class, 'practice'])
         ->name('library.words.practice.index')
         ->whereNumber('libraryId');
@@ -127,6 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     ///////// Предложения
+
     Route::group(['as' => 'manage.library.sentences.'], function () {
 
         // Страница редактирования предложения
@@ -179,11 +182,15 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('library.sentences.practice.store')
         ->whereNumber(['libraryId']);
 
+    // Получившееся статистика
     Route::get('/library/{libraryId}/sentences/statistic/{statisticId}', [SentencePracticeController::class, 'statistic'])
         ->name('library.sentences.practice.statistic')
         ->whereNumber(['libraryId', 'statisticId']);
 
 
-});
+    ///////// Избранные
 
-// TODO: Завершить вывод сообщении, нормально
+    // Показ всех избранных слов пользователя
+    Route::get('/user/favorites', [FavoriteWordsController::class, 'index'])
+        ->name('user.favorites');
+});

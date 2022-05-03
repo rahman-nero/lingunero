@@ -7,11 +7,14 @@ php-migrate:
 composer:
 	docker-compose exec php-cli composer install
 
+dump:
+	docker-compose exec php-cli composer dumpautoload
+
 npm:
 	docker-compose exec npm npm install
 
 mix-watch:
-	docker-compose exec npm npm watch
+	docker-compose exec npm npm run watch
 
 docker-up: memory
 	docker-compose up -d

@@ -40,6 +40,4 @@ final class LibraryRepository extends CoreRepository
             ->limit(1)
             ->get();
     }
-
-
 }

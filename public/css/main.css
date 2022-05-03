@@ -679,3 +679,34 @@ main#root section#content {
   border-radius: 4px;
   font-size: 14px;
 }
+
+.list-favorite-words {
+  display: flex;
+  flex-direction: column;
+}
+.list-favorite-words .favorite-word {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 20px;
+  margin: 10px 0px;
+}
+.list-favorite-words .favorite-word p {
+  margin-bottom: 50px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.list-favorite-words .favorite-word .favorite-word-links {
+  float: right;
+}
+.list-favorite-words .favorite-word a {
+  padding: 6px 10px;
+  background: #423ed8;
+  font-size: 15px;
+  border-radius: 3px;
+  color: white;
+}
+
+.red-link {
+  background: red !important;
+}

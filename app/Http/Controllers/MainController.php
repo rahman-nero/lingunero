@@ -17,7 +17,7 @@ final class MainController
 
     public function index()
     {
-        $libraries = $this->libraryRepository->getAllLibrariesWithPaginate(Auth::id(), 15);
+        $libraries = $this->libraryRepository->getAllLibrariesWithPaginate(Auth::id(), 20);
 
         return view('site.main', compact('libraries'));
     }

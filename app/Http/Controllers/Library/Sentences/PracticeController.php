@@ -60,7 +60,6 @@ final class PracticeController extends Controller
 
         return redirect()
             ->route('library.sentences.practice.statistic', compact('libraryId', 'statisticId'));
-
     }
 
     public function statistic(int $libraryId, int $statisticId)

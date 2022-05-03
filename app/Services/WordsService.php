@@ -15,15 +15,14 @@ final class WordsService
         $this->wordFacade = $wordFacade;
     }
 
-
-    protected function getModel(): string
+    protected function getModel()
     {
-        return Words::class;
+        return Words::query();
     }
 
     public function create(int $libraryId, WordDTO $dto): int
     {
-        $model = (new Words)->newQuery();
+        $model = $this->getModel();
         $result = $model->create(
             [
                 'library_id' => $libraryId,
@@ -38,7 +37,7 @@ final class WordsService
 
     public function edit(int $id, WordDTO $dto): bool
     {
-        $model = (new Words)->newQuery();
+        $model = $this->getModel();
 
         return $model->find($id)
             ->update([
@@ -94,9 +93,9 @@ final class WordsService
     {
 
         foreach ($data as $word) {
-            $hasWord = Words::query()
-                ->where('id', $word['id'])
-                ->where('library_id', $libraryId)
+            $hasWord = $this->getModel()
+                ->where('id', '=', $word['id'])
+                ->where('library_id','=', $libraryId)
                 ->toBase()
                 ->get();
 
@@ -121,11 +120,11 @@ final class WordsService
 
     public function delete(int $wordId): bool
     {
-        $model = (new Words)
-            ->newQuery()
-            ->find($wordId);
+        $model = $this->getModel();
 
-        return $model->delete();
+        $result = $model->find($wordId);
+
+        return $result->delete();
     }
 
 }
