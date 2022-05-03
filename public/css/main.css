@@ -691,20 +691,25 @@ main#root section#content {
   padding: 20px 20px;
   margin: 10px 0px;
 }
-.list-favorite-words .favorite-word p {
-  margin-bottom: 50px;
+.list-favorite-words .favorite-word .favorite-word-head {
   font-size: 20px;
   font-weight: bold;
+}
+.list-favorite-words .favorite-word .favorite-word-description {
+  margin-top: 10px;
 }
 .list-favorite-words .favorite-word .favorite-word-links {
   float: right;
 }
-.list-favorite-words .favorite-word a {
-  padding: 6px 10px;
+.list-favorite-words .favorite-word .favorite-word-links button {
+  padding: 3px 10px;
   background: #423ed8;
-  font-size: 15px;
+  font-size: 17px;
   border-radius: 3px;
   color: white;
+}
+.list-favorite-words .favorite-word .favorite-word-links button:hover {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
 }
 
 .red-link {

@@ -721,30 +721,32 @@ main#root
         box-shadow: 0 0 10px rgba(0,0,0,.1)
         padding: 20px 20px
         margin: 10px 0px
-        p
-            margin-bottom: 50px
-            // Span для выводящего слова
+
+        // Само слово и его перевод
+        .favorite-word-head
             font-size: 20px
             font-weight: bold
+            // Стили для выводящего слова
             .favorite-word-span-word
 
             // Стили для выводящего перевода слова
             .favorite-word-span-translation
 
+        // Описание для слова
+        .favorite-word-description
+            margin-top: 10px
+
+        // Кнопка удаления избранного слова
         .favorite-word-links
             float: right
-        a
-            padding: 6px 10px
-            background: $button-color
-            font-size: 15px
-            border-radius: 3px
-            color: white
-
-
-
-
-
-
+            button
+                padding: 3px 10px
+                background: $button-color
+                font-size: 17px
+                border-radius: 3px
+                color: white
+                &:hover
+                    box-shadow: 0 0 3px rgba(0,0,0,.4)
 
 
 

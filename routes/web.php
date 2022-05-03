@@ -193,4 +193,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Показ всех избранных слов пользователя
     Route::get('/user/favorites', [FavoriteWordsController::class, 'index'])
         ->name('user.favorites');
+
+    // Удаление избранного слова
+    Route::delete('/user/favorites/{id}', [FavoriteWordsController::class, 'delete'])
+        ->name('user.favorites.delete');
 });

@@ -16,14 +16,29 @@
 
                 @foreach($favoriteWords as $favoriteWord)
                     <div class="favorite-word">
-                        <p>
+                        <div class="favorite-word-head">
                             <span class="favorite-word-span-word">{{ mb_ucfirst($favoriteWord->word) }}</span> - <span class="favorite-word-span-translation">{{ mb_ucfirst($favoriteWord->translation) }}</span>
-                        </p>
-                        <a href="{{ route('manage.library.words.edit.show', $favoriteWord->library_id) }}" class="">Перейти к cлову</a>
 
-                        <div class="favorite-word-links">
-                            <a href="" class="red-link"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <div class="favorite-word-links">
+                                <form action="{{ route('user.favorites.delete', $favoriteWord->f_id) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="red-link" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </form>
+{{--                                <a href="" class="red-link"></a>--}}
+                            </div>
+
                         </div>
+                        @if(!empty($favoriteWord->description))
+                            <div class="favorite-word-description">
+                                {{
+                                    strlen($favoriteWord->description) > 400 ?
+                                    mb_strcut(mb_ucfirst($favoriteWord->description), 0, 400) . ' ...' :
+                                    mb_ucfirst($favoriteWord->description)
+                                }}
+                            </div>
+                        @endif
+
                     </div>
                 @endforeach
 

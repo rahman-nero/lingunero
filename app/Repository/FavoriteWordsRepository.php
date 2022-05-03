@@ -14,7 +14,15 @@ final class FavoriteWordsRepository extends CoreRepository
 
     public function getUserFavoriteWords(int $userId): Collection
     {
-        $columns = ['favorite_words.id as f_id', 'word_id', 'library_id', 'word', 'translation', 'favorite_words.created_at'];
+        $columns = [
+            'favorite_words.id as f_id',
+            'word_id',
+            'library_id',
+            'word',
+            'translation',
+            'description',
+            'favorite_words.created_at'
+        ];
 
         $result = $this->model()
             ->select($columns)
@@ -24,5 +32,19 @@ final class FavoriteWordsRepository extends CoreRepository
             ->get();
 
         return $result;
+    }
+
+    /**
+     * Ч
+    */
+    public function isUserFavoriteWord(int $id, int $userId): bool
+    {
+        return $this->model()
+            ->select(['id'])
+            ->where('id', '=', $id)
+            ->where('user_id', '=', $userId)
+            ->toBase()
+            ->get()
+            ->isNotEmpty();
     }
 }
