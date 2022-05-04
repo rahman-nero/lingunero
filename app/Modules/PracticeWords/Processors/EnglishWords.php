@@ -27,7 +27,7 @@ final class EnglishWords implements ProcessorContract
         $fails = 0;
         $success = 0;
 
-        $dbWords = $this->wordsRepository->getWordsByLibraryId($libraryId);
+        $dbWords = $this->wordsRepository->getWordsByLibraryIdWithoutModel($libraryId);
 
         if (!$this->validateDate($dbWords->toArray(), $words)) {
             return false;

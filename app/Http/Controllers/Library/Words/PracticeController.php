@@ -54,7 +54,7 @@ final class PracticeController extends Controller
             throw new NotFoundHttpException('Страница не найдена');
         }
 
-        $words = $this->wordsRepository->getWordsByLibraryId(libraryId: $libraryId);
+        $words = $this->wordsRepository->getWordsByLibraryIdWithoutModel(libraryId: $libraryId);
 
         return view(view: 'site.word.practice', data: compact('words', 'libraryId'));
     }

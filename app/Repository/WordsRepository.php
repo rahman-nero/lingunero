@@ -26,8 +26,9 @@ final class WordsRepository extends CoreRepository
 
     /**
      * Получение всех слов из библиотеки
+     * Возвращается коллекция с stdClass
     */
-    public function getWordsByLibraryId(int $libraryId): Collection
+    public function getWordsByLibraryIdWithoutModel(int $libraryId): Collection
     {
         $columns = ['id', 'word', 'translation', 'description'];
 
@@ -38,6 +39,22 @@ final class WordsRepository extends CoreRepository
             ->toBase()
             ->get();
     }
+
+    /**
+     * Получение всех слов из библиотеки
+     * Возвращается коллекция с моделями
+     */
+    public function getWordsByLibraryId(int $libraryId): Collection
+    {
+        $columns = ['id', 'word', 'translation', 'description'];
+
+        return $this->model()
+            ->select($columns)
+            ->where('library_id', $libraryId)
+            ->orderBy('created_at')
+            ->get();
+    }
+
 
     /**
      * Получение всех слов из библиотеки с помощью пагинации

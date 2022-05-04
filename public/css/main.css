@@ -259,6 +259,7 @@ main#root section#content {
   height: 99%;
   border-radius: 40px;
   margin: 0 auto;
+  position: relative;
   perspective: 1000px;
 }
 .card .word, .card .translation {
@@ -274,10 +275,26 @@ main#root section#content {
   left: 0;
   top: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
   transition: 600ms;
   cursor: pointer;
+}
+.card .word .center-word, .card .translation .center-word {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.card .button-add-favorite {
+  width: initial;
+  height: initial;
+  position: absolute;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  font-size: 22px;
+  padding: 5px 12px;
+  top: 20px;
+  right: 20px;
+  border-radius: 50%;
+  text-align: center;
 }
 .card .translation {
   transform: rotateX(-180deg);

@@ -46,7 +46,7 @@ final class ManageController
 
         $library = $this->libraryRepository->getLibrary($libraryId);
 
-        $words = $this->wordsRepository->getWordsByLibraryId($libraryId);
+        $words = $this->wordsRepository->getWordsByLibraryIdWithoutModel($libraryId);
 
         return view('site.word.add', compact('library', 'libraryId', 'words'));
     }
