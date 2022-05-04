@@ -30,7 +30,3 @@
 
     </section>
 @endsection
-
-@push('js')
-
-@endpush

@@ -1,6 +1,5 @@
 @extends('layouts.main')
 
-
 @section('title', 'Практика слов')
 
 @section('root-classes', 'background-soft-purple disable-vh')

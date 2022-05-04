@@ -13,9 +13,23 @@ mix.webpackConfig({ stats: { children: true } });
 
 /**
  * Js files
-* */
-mix.js('resources/js/app.js', 'public/js')
+ * */
+mix.js('resources/js/bootstrap.js', 'public/js')
 mix.js('resources/js/main.js', 'public/js')
+mix.js('resources/js/app.js', 'public/js')
+
+mix.js('resources/js/site/library/show.js', 'public/js/library')
+
+mix.js('resources/js/site/sentences/add.js', 'public/js/sentences')
+mix.js('resources/js/site/sentences/edit.js', 'public/js/sentences')
+mix.js('resources/js/site/sentences/statistic.js', 'public/js/sentences')
+
+mix.js('resources/js/site/word/add.js', 'public/js/word')
+mix.js('resources/js/site/word/cards.js', 'public/js/word')
+mix.js('resources/js/site/word/edit.js', 'public/js/word')
+mix.js('resources/js/site/word/statistic.js', 'public/js/word')
+
+
 
 /**
  * Css files

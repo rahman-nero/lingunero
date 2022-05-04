@@ -143,8 +143,8 @@ Route::group(['middleware' => 'auth'], function () {
             ->name('edit.store');
 
         // Удаление предложения
-        Route::delete('manage/library/{libraryId}/sentences/{wordId}', [SentenceManageController::class, 'delete'])
-            ->whereNumber(['libraryId', 'wordId'])
+        Route::delete('manage/library/{libraryId}/sentences/{sentenceId}', [SentenceManageController::class, 'delete'])
+            ->whereNumber(['libraryId', 'sentenceId'])
             ->name('edit.delete');
 
 

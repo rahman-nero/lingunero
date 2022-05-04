@@ -7,9 +7,6 @@
 
 @section('content')
     Ты в профиле!
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        @method('POST')
-        <button type="submit">Выйти из аккаунта</button>
-    </form>
+
+    <a href="{{ route('logout') }}">Выйти из аккаунта</a>
 @endsection

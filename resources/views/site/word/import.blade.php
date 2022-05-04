@@ -28,9 +28,3 @@
 
     </section>
 @endsection
-
-@push('js')
-    <script>
-
-    </script>
-@endpush

@@ -48,10 +48,12 @@
                         <span>Практика предложении - {{ $library->first()->countSentences() }}</span>
                     </div>
                     <div class="action">
-                        <a href="{{ route('manage.library.sentences.edit.show', $library->first()->id) }}"><img
-                                src="{{ asset('media/edit.png') }}" alt=""></a>
-                        <a href="{{ route('manage.library.sentences.add.show', $library->first()->id) }}"><img
-                                src="{{ asset('media/plus.png') }}" alt=""></a>
+                        <a href="{{ route('manage.library.sentences.edit.show', $library->first()->id) }}">
+                            <img src="{{ asset('media/edit.png') }}" alt="">
+                        </a>
+                        <a href="{{ route('manage.library.sentences.add.show', $library->first()->id) }}">
+                            <img src="{{ asset('media/plus.png') }}" alt="">
+                        </a>
                     </div>
                 </div>
             </a>
@@ -64,14 +66,5 @@
 
 
 @push('js')
-    <script>
-        let list_blocks = document.querySelectorAll('.list-block');
-
-        list_blocks.forEach(function (elem, key) {
-            console.log(elem);
-            console.log(elem.dataset);
-
-            elem.style.backgroundImage = "url(" + elem.dataset.background + ")";
-        });
-    </script>
+    <script src="{{ asset('js/library/show.js') }}"></script>
 @endpush
