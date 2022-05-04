@@ -30,6 +30,9 @@ final class PracticeController extends Controller
         $this->statisticsRepository = $statisticsRepository;
     }
 
+    /**
+     * Страница показа всех слов из библиотеки в виде карточек
+    */
     public function cards(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -41,6 +44,10 @@ final class PracticeController extends Controller
         return view(view: 'site.word.cards', data: compact('words', 'libraryId'));
     }
 
+    /**
+     * Страница практики слов из библиотеки
+     * Некий тест на слова
+    */
     public function practice(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -52,6 +59,9 @@ final class PracticeController extends Controller
         return view(view: 'site.word.practice', data: compact('words', 'libraryId'));
     }
 
+    /**
+     * Обработка формы "практики слов" и выведение статистики
+    */
     public function store(WordsPracticeRequest $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -71,6 +81,9 @@ final class PracticeController extends Controller
             ->route('library.words.statistic.show', compact('libraryId', 'statisticId'));
     }
 
+    /**
+     * Страница просмотра статистики по определенному тесту
+    */
     public function statistic(int $libraryId, int $statisticId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -86,5 +99,4 @@ final class PracticeController extends Controller
 
         return view('site.word.statistic', compact('statistic', 'libraryId'));
     }
-
 }

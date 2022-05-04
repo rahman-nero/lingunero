@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\Library\Sentences;
-
 
 use App\DTO\Sentences\StoreSentencesDTO;
 use App\Http\Requests\Sentences\EditSentencesRequest;
@@ -28,13 +26,15 @@ final class ManageController
         LibraryRepository $libraryRepository,
         SentencesRepository $sentencesRepository,
         SentencesService $sentencesService
-    )
-    {
+    ) {
         $this->libraryRepository = $libraryRepository;
         $this->sentencesService = $sentencesService;
         $this->sentencesRepository = $sentencesRepository;
     }
 
+    /**
+     * Страница добавления новых предложений
+    */
     public function create(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -46,6 +46,9 @@ final class ManageController
         return view('site.sentence.add', compact('libraryId', 'library'));
     }
 
+    /**
+     * Обработка формы добавления новых предложений
+    */
     public function store(StoreSentenceRequest $data, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -64,7 +67,10 @@ final class ManageController
     }
 
 
-    public function show(int $libraryId)
+    /**
+     * Страница множественного редактирования предложений
+    */
+    public function edit(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
@@ -75,7 +81,9 @@ final class ManageController
         return view('site.sentence.edit', compact('libraryId', 'sentences'));
     }
 
-
+    /**
+     * Обработка формы множественного редактирования предложений
+    */
     public function update(EditSentencesRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -93,6 +101,9 @@ final class ManageController
         return 'Ok';
     }
 
+    /**
+     * Страница иморта предложений
+    */
     public function import($libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -104,6 +115,9 @@ final class ManageController
         return view('site.sentence.import', compact('libraryId', 'library'));
     }
 
+    /**
+     * Обработка формы импорта предложений
+    */
     public function importStore(Request $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -125,22 +139,9 @@ final class ManageController
         return redirect()->route('manage.library.sentences.edit.show', $libraryId);
     }
 
-    public function clearRequest(array $matches)
-    {
-        foreach ($matches as $key => $match) {
-            foreach ($match as $stringKey => $string) {
-                if (!is_string($stringKey)) {
-                    unset($matches[$key][$stringKey]);
-                    continue;
-                }
-                $matches[$key][$stringKey] = trim($matches[$key][$stringKey]);
-            }
-        }
-
-        return $matches;
-    }
-
-
+    /**
+     * Удаление предложения
+    */
     public function delete(int $libraryId, int $sentencesId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -158,7 +159,20 @@ final class ManageController
         }
 
         return 'Ok';
-
     }
 
+    protected function clearRequest(array $matches)
+    {
+        foreach ($matches as $key => $match) {
+            foreach ($match as $stringKey => $string) {
+                if (!is_string($stringKey)) {
+                    unset($matches[$key][$stringKey]);
+                    continue;
+                }
+                $matches[$key][$stringKey] = trim($matches[$key][$stringKey]);
+            }
+        }
+
+        return $matches;
+    }
 }

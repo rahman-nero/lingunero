@@ -29,45 +29,15 @@ final class ManageController
         WordsRepository $wordsRepository,
         LibraryRepository $libraryRepository,
         WordsService $wordsService,
-    )
-    {
+    ) {
         $this->wordsRepository = $wordsRepository;
         $this->libraryRepository = $libraryRepository;
         $this->wordsService = $wordsService;
     }
 
-    // Страница редактирование слов
-    public function edit($libraryId)
-    {
-        if (!Gate::allows('can-edit-library', $libraryId)) {
-            throw new AccessDeniedHttpException();
-        }
-
-        $library = $this->libraryRepository->getLibrary($libraryId);
-
-        $words = $this->wordsRepository->getWordsByLibraryIdWithPaginate($libraryId, 10);
-
-        return view('site.word.edit', compact('libraryId', 'library', 'words'));
-    }
-
-    // Обновление слов
-    public function update(EditWordsRequest $request, int $libraryId)
-    {
-        if (!Gate::allows('can-edit-library', $libraryId)) {
-            throw new AccessDeniedHttpException();
-        }
-        $data = $request->input('words');
-
-        $result = $this->wordsService->editWords($libraryId, $data);
-
-        if (!$result) {
-            throw new BadRequestHttpException();
-        }
-
-        return 'Ok';
-    }
-
-    // Страница добавление слов
+    /**
+     * Страница добавления новых слов
+     */
     public function show(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -81,7 +51,9 @@ final class ManageController
         return view('site.word.add', compact('library', 'libraryId', 'words'));
     }
 
-    // Множественно добавление слов
+    /**
+     * Обработка формы добавления слов
+    */
     public function store(StoreWordsRequest $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -99,7 +71,44 @@ final class ManageController
         return 'Ok';
     }
 
-    // Удаление слов
+    /**
+    * Страница редактирование слов
+   */
+    public function edit($libraryId)
+    {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $library = $this->libraryRepository->getLibrary($libraryId);
+
+        $words = $this->wordsRepository->getWordsByLibraryIdWithPaginate($libraryId, 10);
+
+        return view('site.word.edit', compact('libraryId', 'library', 'words'));
+    }
+
+    /**
+     * Обаработка формы редактирование слов
+    */
+    public function update(EditWordsRequest $request, int $libraryId)
+    {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
+            throw new AccessDeniedHttpException();
+        }
+        $data = $request->input('words');
+
+        $result = $this->wordsService->editWords($libraryId, $data);
+
+        if (!$result) {
+            throw new BadRequestHttpException();
+        }
+
+        return 'Ok';
+    }
+
+    /**
+     * Удаление слова из библиотеки
+    */
     public function delete(int $libraryId, int $wordId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -119,7 +128,9 @@ final class ManageController
         return 'Ok';
     }
 
-    // Страница импорта слов
+    /**
+     * Страница импорта слов
+    */
     public function import($libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -131,7 +142,9 @@ final class ManageController
         return view('site.word.import', compact('libraryId', 'library'));
     }
 
-    // Обработка импорта
+    /**
+     * Обработка формы импорта слов
+    */
     public function importStore(Request $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {

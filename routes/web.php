@@ -87,12 +87,12 @@ Route::group(['middleware' => 'auth'], function () {
             ->name('edit.delete');
 
 
-        // Страница добавлении слов
+        // Страница добавления слов
         Route::get('manage/library/{libraryId}/words/add', [ManageController::class, 'show'])
             ->whereNumber(['libraryId'])
             ->name('add.show');
 
-        // Страница добавлении слов
+        // Страница добавления слов
         Route::post('manage/library/{libraryId}/words/add', [ManageController::class, 'store'])
             ->whereNumber(['libraryId'])
             ->name('add.store');
@@ -133,7 +133,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['as' => 'manage.library.sentences.'], function () {
 
         // Страница редактирования предложения
-        Route::get('manage/library/{libraryId}/sentences/edit', [SentenceManageController::class, 'show'])
+        Route::get('manage/library/{libraryId}/sentences/edit', [SentenceManageController::class, 'edit'])
             ->whereNumber(['libraryId'])
             ->name('edit.show');
 

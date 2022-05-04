@@ -19,13 +19,17 @@ final class LibraryController
         $this->service = $service;
     }
 
-    // Страница для создания библиотеки
+    /**
+     * Страница создания библиотеки
+    */
     public function create()
     {
         return view('site.library.create');
     }
 
-    // Ендпоинт для создания библиотеки
+    /**
+     * Обработка формы создания библиотеки
+    */
     public function store(CreateRequest $request)
     {
         $data = new LibraryDTO(
@@ -46,7 +50,9 @@ final class LibraryController
             ->with('success', 'Вы успешно создали библиотеку, пожалуйста, добавьте слова');
     }
 
-    // Ендпоинт для изменения библиотеки
+    /**
+     * Обработка формы обновления библиотеки
+    */
     public function update(EditRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -71,7 +77,9 @@ final class LibraryController
             ->with('success', 'Вы успешно обновили библиотеку');
     }
 
-    // Ендпоинт для удаления библиотеки и всего что с ним связано
+    /**
+     * Удаление целой библиотеки со всеми связами
+    */
     public function delete(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -91,7 +99,10 @@ final class LibraryController
             ->with('success', 'Вы успешно удалили библиотеку');
     }
 
-    // Удаление всех слов с библиотеки
+    /**
+     * Удаление всех слов из библиотеки
+     * !Только слов, а не предложений
+    */
     public function removeWordsOfLibrary(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -108,5 +119,4 @@ final class LibraryController
         return back()
             ->with('success', 'Вы успешно очистили слова из библиотеки');
     }
-
 }

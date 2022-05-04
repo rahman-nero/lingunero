@@ -25,7 +25,7 @@ class FavoriteWordsController
     }
 
     /**
-     * Получение всех избранных слов
+     * Страница показа всех избранных слов
     */
     public function index()
     {

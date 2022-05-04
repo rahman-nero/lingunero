@@ -7,3 +7,4 @@ if (!function_exists('mb_ucfirst')) {
         return $fc . mb_substr($str, 1);
     }
 } else throw new RuntimeException('Error about define function');
+

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\Library\Sentences;
-
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Sentences\SentencesPracticeRequest;
@@ -10,7 +8,6 @@ use App\Repository\SentencesRepository;
 use App\Repository\SentencesStatisticsRepository;
 use App\Services\SentencesService;
 use Illuminate\Support\Facades\Gate;
-use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -76,7 +73,8 @@ final class PracticeController extends Controller
             throw new AccessDeniedHttpException();
         }
 
-        $statistic = $this->statisticsRepository->findByIdAndLibraryId(statisticId: $statisticId, libraryId: $libraryId);
+        $statistic = $this->statisticsRepository
+            ->findByIdAndLibraryId(statisticId: $statisticId, libraryId: $libraryId);
 
         if ($statistic->isEmpty()) {
             throw new NotFoundHttpException();
