@@ -30,7 +30,7 @@
                 <button type="submit" class="styled-button">Завершить практику</button>
             </form>
         @else
-            <a href="" class="styled-button">Добавь сюда слова</a>
+            <a href="{{ route('manage.library.words.add.show') }}" class="styled-button">Добавить слова</a>
         @endif
 
     </section>

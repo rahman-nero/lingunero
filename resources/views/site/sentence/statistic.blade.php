@@ -15,7 +15,7 @@
             <h3>Статистика</h3>
 
             <div class="result">
-                <p class="count-words" data-count="{{ $statistic->first()->count_sentences  }}">Слов:
+                <p class="count-words" data-count="{{ $statistic->first()->count_sentences  }}">Предложений:
                     <span>{{ $statistic->first()->count_sentences }}</span></p>
 
                 <p class="count-wrong" data-count="{{ $statistic->first()->count_wrong }}">Неправильные:

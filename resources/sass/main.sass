@@ -442,12 +442,6 @@ main#root
         font-weight: bold
         color: $text-color
 
-    //&:before
-    //    content: '%'
-    //    margin-left: 25px
-    //    position: absolute
-    //    display: block
-
     .progress-bar
         width: inherit
         height: 30px
@@ -466,6 +460,23 @@ main#root
             &:hover
                 box-shadow: 0 0 3px rgba(66, 62, 216, .4)
 
+    .table
+        width: 100%
+        text-align: center
+        //border: 1px solid #ccc
+        thead
+            border-bottom: 2px solid #000
+            th
+                padding: 3px
+        tbody
+            tr.table-wrong
+                background: #f8d7da
+
+            tr.table-success
+                background: #d1e7dd
+
+            td
+                padding: 6px 0px
 
 /////// library - add.blade.php
 

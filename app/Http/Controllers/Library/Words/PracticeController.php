@@ -97,6 +97,11 @@ final class PracticeController extends Controller
             throw new NotFoundHttpException();
         }
 
-        return view('site.word.statistic', compact('statistic', 'libraryId'));
+        $statistic = $statistic->toArray()[0];
+
+        $result = json_decode($statistic['result']);
+
+
+        return view('site.word.statistic', compact('statistic', 'libraryId', 'result'));
     }
 }

@@ -16,12 +16,14 @@
             <h3>Статистика</h3>
 
             <div class="result">
-                <p class="count-words" data-count="{{ $statistic->first()->count_words  }}">Слов:
-                    <span>{{ $statistic->first()->count_words }}</span></p>
+                <p class="count-words" data-count="{{ $statistic['count_words']  }}">Слов:
+                    <span>{{ $statistic['count_words'] }}</span></p>
 
-                <p class="count-wrong" data-count="{{ $statistic->first()->count_wrong }}">Неправильные: <span>{{ $statistic->first()->count_wrong }}</span></p>
+                <p class="count-wrong" data-count="{{ $statistic['count_wrong'] }}">Неправильные:
+                    <span>{{ $statistic['count_wrong'] }}</span></p>
 
-                <p class="count-right" data-count="{{ $statistic->first()->count_true }}">Правильные: <span>{{ $statistic->first()->count_true }}</span>
+                <p class="count-right" data-count="{{ $statistic['count_true'] }}">Правильные:
+                    <span>{{ $statistic['count_true'] }}</span>
                 </p>
             </div>
 
@@ -30,6 +32,38 @@
                 <div class="loaded"></div>
             </div>
 
+            <br>
+            <br>
+            @if(!empty($result))
+                <h3>Результат</h3>
+                <br>
+                <table class="table">
+                    <thead>
+                    <th>Слово</th>
+                    <th>Перевод</th>
+                    <th>Ответ</th>
+                    <th>Правильность</th>
+                    </thead>
+                    <tbody>
+                    @foreach($result as $item)
+                        <tr class="table-{{ $item->is_right ? 'success': 'wrong' }}">
+                            <td>{{ $item->word }}</td>
+                            <td>{{ $item->answer }}</td>
+                            @if(!$item->is_right)
+                                <td>{{ $item->user_answer }}</td>
+                            @else
+                                <td>{{ $item->answer }}</td>
+                            @endif
+                            @if(!$item->is_right)
+                                <td><i class="fa fa-times" aria-hidden="true"></i></td>
+                            @else
+                                <td><i class="fa fa-check" aria-hidden="true"></i></td>
+                            @endif
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
 
     </section>
