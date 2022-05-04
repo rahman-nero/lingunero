@@ -15,47 +15,65 @@ final class EnglishWords implements ProcessorContract
     private WordsRepository $wordsRepository;
     private WordsStatisticsService $statisticsService;
 
-    public function __construct(WordsRepository $wordsRepository,
-                                WordsStatisticsService $statisticsService)
-    {
+    public function __construct(
+        WordsRepository $wordsRepository,
+        WordsStatisticsService $statisticsService,
+    ) {
         $this->wordsRepository = $wordsRepository;
         $this->statisticsService = $statisticsService;
     }
 
     public function process(int $libraryId, array $words): bool
     {
+        $statistic = [];
+
         $fails = 0;
         $success = 0;
 
         $dbWords = $this->wordsRepository->getWordsByLibraryIdWithoutModel($libraryId);
 
+        // Проверка есть ли слова которые передал в этой библиотеке, если нет, то ошибка
         if (!$this->validateDate($dbWords->toArray(), $words)) {
             return false;
         }
 
-        foreach ($words as $wordId => $word) {
-            $currentWord = $dbWords->where('id', $wordId)
-                ->first()
+        foreach ($words as $wordId => $userAnswer) {
+            $word = $dbWords
+                ->where('id', $wordId)
+                ->first();
+
+            $correctlyAnswer = $word
                 ->translation;
 
-            if ($this->clearString($currentWord) === $this->clearString($word)) {
+            if ($this->clearString($correctlyAnswer) === $this->clearString($userAnswer)) {
                 $success++;
+                $statistic[] = [
+                    'word' => $word->word,
+                    'answer' => $correctlyAnswer,
+                    'is_right' => 1,
+                ];
             } else {
                 $fails++;
+                $statistic[] = [
+                    'word' => $word->word,
+                    'answer' => $correctlyAnswer,
+                    'user_answer' => $this->clearString($userAnswer),
+                    'is_right' => 0,
+                ];
             }
         }
 
-
-        return $this->saveStatistics($libraryId, $dbWords->count(), $fails, $success);
+        return $this->saveStatistics($libraryId, $dbWords->count(), $fails, $success, $statistic);
     }
 
-    private function saveStatistics(int $libraryId, int $countWords, int $countFails, int $countSuccess): bool
+    private function saveStatistics(int $libraryId, int $countWords, int $countFails, int $countSuccess, array $statistic): bool
     {
         $id = $this->statisticsService->create(
             libraryId: $libraryId,
             countWords: $countWords,
             countFails: $countFails,
-            countSuccess: $countSuccess
+            countSuccess: $countSuccess,
+            result: $statistic
         );
 
         if (!$id) {

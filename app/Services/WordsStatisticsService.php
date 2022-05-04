@@ -10,7 +10,7 @@ final class WordsStatisticsService
     /**
      * Создание статистики для слов
     */
-    public function create(int $libraryId, int $countWords, int $countFails, int $countSuccess): int|bool
+    public function create(int $libraryId, int $countWords, int $countFails, int $countSuccess, array $result): int|bool
     {
         $result = $this->getModel()
             ->create([
@@ -18,6 +18,7 @@ final class WordsStatisticsService
                 'count_words' => $countWords,
                 'count_wrong' => $countFails,
                 'count_true' => $countSuccess,
+                'result' => json_encode($result)
             ]);
 
         return $result->id;
