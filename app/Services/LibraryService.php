@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\DTO\Library\LibraryDTO;
+use App\Models\FavoriteWords;
 use App\Models\Library;
 use App\Models\Words;
 use Exception;
@@ -77,6 +78,13 @@ final class LibraryService
                     // Удаляем примеры слов
                     $elem->examples()->delete();
 
+                    // Удаление слова из избранных
+                    if($elem->isFavorite()) {
+                        FavoriteWords::query()
+                            ->where('word_id', '=', $elem->id)
+                            ->delete();
+                    }
+
                     // Удаляем само слов
                     $elem->delete();
                 });
@@ -119,10 +127,17 @@ final class LibraryService
             ->find($libraryId)
             ->words()
             ->each(function (Words $elem) {
-                // Remove word's examples
+                // Удаление примеров слов
                 $elem->examples()->delete();
 
-                // Remove current word
+                // Удаление слова из избранных
+                if($elem->isFavorite()) {
+                    FavoriteWords::query()
+                        ->where('word_id', '=', $elem->id)
+                        ->delete();
+                }
+
+                // Удаление самого слова
                 $elem->delete();
             });
 

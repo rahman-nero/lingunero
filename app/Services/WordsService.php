@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\DTO\Words\WordDTO;
+use App\Models\FavoriteWords;
 use App\Models\Words;
 use App\Modules\PracticeWords\PracticeWordFacade;
 use Exception;
@@ -20,7 +21,8 @@ final class WordsService
         ConnectionInterface $connection,
         LogManager          $log,
         PracticeWordFacade  $wordFacade
-    ) {
+    )
+    {
         $this->connection = $connection;
         $this->log = $log;
         $this->wordFacade = $wordFacade;
@@ -141,7 +143,7 @@ final class WordsService
 
     /**
      * Множественное редактирование слов
-    */
+     */
     public function editWords(int $libraryId, array $data): bool
     {
         try {
@@ -186,11 +188,18 @@ final class WordsService
 
     /**
      * Удаление слова
-    */
+     */
     public function delete(int $wordId): bool
     {
-        return $this->getModel()
-            ->find($wordId)
-            ->delete();
+        $word = $this->getModel()->find($wordId);
+
+        // Удаление слова из избранных, если он там есть
+        if ($word->isFavorite()) {
+            FavoriteWords::query()
+                ->where('word_id', '=', $wordId)
+                ->delete();
+        }
+
+        return $word->delete();
     }
 }
