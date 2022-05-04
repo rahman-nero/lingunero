@@ -16,6 +16,9 @@ npm:
 mix-watch:
 	docker-compose exec npm npm run watch
 
+mix-build:
+	docker-compose exec npm npm run prod
+
 docker-up: memory
 	docker-compose up -d
 
