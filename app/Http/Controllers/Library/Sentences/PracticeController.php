@@ -33,7 +33,7 @@ final class PracticeController extends Controller
 
     public function index(int $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -44,7 +44,7 @@ final class PracticeController extends Controller
 
     public function store(SentencesPracticeRequest $request, $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -64,7 +64,7 @@ final class PracticeController extends Controller
 
     public function statistic(int $libraryId, int $statisticId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 

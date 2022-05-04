@@ -32,7 +32,7 @@ final class PracticeController extends Controller
 
     public function cards(int $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new NotFoundHttpException('Страница не найдена');
         }
 
@@ -43,7 +43,7 @@ final class PracticeController extends Controller
 
     public function practice(int $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new NotFoundHttpException('Страница не найдена');
         }
 
@@ -54,7 +54,7 @@ final class PracticeController extends Controller
 
     public function store(WordsPracticeRequest $request, int $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
         $words = $request['words'];
@@ -73,7 +73,7 @@ final class PracticeController extends Controller
 
     public function statistic(int $libraryId, int $statisticId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 

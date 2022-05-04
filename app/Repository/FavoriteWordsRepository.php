@@ -12,6 +12,9 @@ final class FavoriteWordsRepository extends CoreRepository
         return FavoriteWords::class;
     }
 
+    /**
+     * Получение избранных слов пользователя
+    */
     public function getUserFavoriteWords(int $userId): Collection
     {
         $columns = [
@@ -46,7 +49,7 @@ final class FavoriteWordsRepository extends CoreRepository
             ->toBase()
             ->get();
 
-        return $result->first()->id;
+        return $result->isNotEmpty() ? $result->first()->id : false;
     }
 
     /**
@@ -64,7 +67,8 @@ final class FavoriteWordsRepository extends CoreRepository
     }
 
     /**
-     * Является ли переданный id-избранного слова относящимся к пользователю
+     * Является ли переданный id-слова относящимся к пользователю
+     * Проверка происходит по id-слова, а не по id-избранного слова.
      */
     public function isUserFavoriteWordByWordId(int $wordId, int $userId): bool
     {

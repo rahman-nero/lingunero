@@ -42,9 +42,9 @@ final class ManageController
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
-        $userId = Auth::id();
 
-        $library = $this->libraryRepository->getLibrary($libraryId, $userId);
+        $library = $this->libraryRepository->getLibrary($libraryId);
+
         $words = $this->wordsRepository->getWordsByLibraryIdWithPaginate($libraryId, 10);
 
         return view('site.word.edit', compact('libraryId', 'library', 'words'));
@@ -73,9 +73,9 @@ final class ManageController
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
-        $userId = Auth::id();
 
-        $library = $this->libraryRepository->getLibrary($libraryId, $userId);
+        $library = $this->libraryRepository->getLibrary($libraryId);
+
         $words = $this->wordsRepository->getWordsByLibraryId($libraryId);
 
         return view('site.word.add', compact('library', 'libraryId', 'words'));
@@ -125,9 +125,8 @@ final class ManageController
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
-        $userId = Auth::id();
 
-        $library = $this->libraryRepository->getLibrary($libraryId, $userId);
+        $library = $this->libraryRepository->getLibrary($libraryId);
 
         return view('site.word.import', compact('libraryId', 'library'));
     }

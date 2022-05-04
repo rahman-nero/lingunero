@@ -16,6 +16,10 @@ final class LibraryRepository extends CoreRepository
         return Library::class;
     }
 
+    /**
+     * Получение всех библиотек по id-пользователя.
+     * Получение происходит с пагинацией
+    */
     public function getAllLibrariesWithPaginate(int $userId, int $perPage = 10): LengthAwarePaginator
     {
         $columns = ['id', 'title', 'created_at'];
@@ -28,7 +32,10 @@ final class LibraryRepository extends CoreRepository
             ->paginate($perPage);
     }
 
-    public function getLibrary(int $libraryId, int $userId): object
+    /**
+     * Получение данных о библиотеке
+    */
+    public function getLibrary(int $libraryId): object
     {
         $columns = ['id', 'title', 'description', 'created_at'];
 
@@ -36,13 +43,12 @@ final class LibraryRepository extends CoreRepository
             ->newQuery()
             ->select($columns)
             ->where('id', $libraryId)
-            ->where('user_id', $userId)
             ->limit(1)
             ->get();
     }
 
     /**
-     * Проверка, созданна ли эта библиотека ($libraryId) пользователем ($userId)
+     * Проверка, созданна ли эта библиотека пользователем
     */
     public function isUserLibrary(int $libraryId, int $userId): bool
     {
@@ -54,5 +60,4 @@ final class LibraryRepository extends CoreRepository
             ->get()
             ->isNotEmpty();
     }
-
 }

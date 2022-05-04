@@ -17,16 +17,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('can-studying-words', function (User $user, int $libraryId) {
-
-            return Library::query()
-                ->where('user_id', $user->id)
-                ->where('id', $libraryId)
-                ->get()
-                ->isNotEmpty();
-        });
-
-
         Gate::define('can-edit-library', function (User $user, int $libraryId) {
 
             return Library::query()

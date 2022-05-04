@@ -37,18 +37,18 @@ final class ManageController
 
     public function create(int $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
-        $library = $this->libraryRepository->getLibrary($libraryId, Auth::id());
+        $library = $this->libraryRepository->getLibrary($libraryId);
 
         return view('site.sentence.add', compact('libraryId', 'library'));
     }
 
     public function store(StoreSentenceRequest $data, int $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -66,7 +66,7 @@ final class ManageController
 
     public function show(int $libraryId)
     {
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -79,7 +79,7 @@ final class ManageController
     public function update(EditSentencesRequest $request, $libraryId)
     {
         // TODO: у тебя везде can-studying-words, просто сделай вместо этого has-library
-        if (!Gate::allows('can-studying-words', $libraryId)) {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -99,9 +99,8 @@ final class ManageController
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
-        $userId = Auth::id();
 
-        $library = $this->libraryRepository->getLibrary($libraryId, $userId);
+        $library = $this->libraryRepository->getLibrary($libraryId);
 
         return view('site.sentence.import', compact('libraryId', 'library'));
     }
