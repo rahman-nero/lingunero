@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Repository;
 
-
 use App\Models\WordsStatistics;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @method WordsStatistics model()
+ * @method Builder model()
  */
 final class WordsStatisticsRepository extends CoreRepository
 {
@@ -16,10 +15,12 @@ final class WordsStatisticsRepository extends CoreRepository
         return WordsStatistics::class;
     }
 
+    /**
+     * Получение статистики выполненного теста
+    */
     public function findByIdAndLibraryId(int $statisticId, int $libraryId)
     {
         return $this->model()
-            ->newQuery()
             ->where('id', $statisticId)
             ->where('library_id', $libraryId)
             ->limit(1)

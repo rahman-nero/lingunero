@@ -40,6 +40,11 @@ class Library extends Model
         return $this->hasMany(WordsStatistics::class, 'library_id', 'id');
     }
 
+    public function sentencesStatistics()
+    {
+        return $this->hasMany(SentencesPractice::class, 'library_id', 'id');
+    }
+
     public function countWords()
     {
         return $this->words()->count();

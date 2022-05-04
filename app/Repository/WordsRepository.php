@@ -1,15 +1,13 @@
 <?php
 
-
 namespace App\Repository;
 
-
-use App\Models\Library;
 use App\Models\Words;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @method Words model()
+ * @method Builder model()
  */
 final class WordsRepository extends CoreRepository
 {
@@ -26,6 +24,9 @@ final class WordsRepository extends CoreRepository
         return Words::class;
     }
 
+    /**
+     * Получение всех слов из библиотеки
+    */
     public function getWordsByLibraryId(int $libraryId): Collection
     {
         $columns = ['id', 'word', 'translation', 'description'];
@@ -38,6 +39,9 @@ final class WordsRepository extends CoreRepository
             ->get();
     }
 
+    /**
+     * Получение всех слов из библиотеки с помощью пагинации
+    */
     public function getWordsByLibraryIdWithPaginate(int $libraryId, int $perPage): object
     {
         $columns = ['id', 'word', 'translation', 'description'];
@@ -49,6 +53,9 @@ final class WordsRepository extends CoreRepository
             ->paginate($perPage);
     }
 
+    /**
+     * Является ли это слово относящимся к указанной библиотеке
+    */
     public function isBelongsToLibrary(int $wordId, int $libraryId): bool
     {
         return $this->model()

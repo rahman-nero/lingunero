@@ -1,14 +1,12 @@
 <?php
 
-
 namespace App\Repository;
 
-
 use App\Models\SentencesPractice;
-use App\Models\WordsStatistics;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @method SentencesPractice model()
+ * @method Builder model()
  */
 final class SentencesStatisticsRepository extends CoreRepository
 {
@@ -17,6 +15,9 @@ final class SentencesStatisticsRepository extends CoreRepository
         return SentencesPractice::class;
     }
 
+    /**
+     * Получение статистики выполненного теста
+    */
     public function findByIdAndLibraryId(int $statisticId, int $libraryId)
     {
         return $this->model()

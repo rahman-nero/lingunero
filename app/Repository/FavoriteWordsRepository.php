@@ -4,7 +4,11 @@ namespace App\Repository;
 
 use App\Models\FavoriteWords;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @method Builder model()
+ */
 final class FavoriteWordsRepository extends CoreRepository
 {
     protected function getModel(): string

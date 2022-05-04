@@ -78,7 +78,6 @@ final class ManageController
 
     public function update(EditSentencesRequest $request, $libraryId)
     {
-        // TODO: у тебя везде can-studying-words, просто сделай вместо этого has-library
         if (!Gate::allows('can-edit-library', $libraryId)) {
             throw new AccessDeniedHttpException();
         }
@@ -117,7 +116,7 @@ final class ManageController
         preg_match_all("${regexp}uim", $data, $matches, PREG_SET_ORDER);
         $matches = $this->clearRequest($matches);
 
-        $result = $this->sentencesService->importWords(libraryId: $libraryId, data: $matches);
+        $result = $this->sentencesService->importSentences(libraryId: $libraryId, data: $matches);
 
         if (!$result) {
             throw new BadRequestHttpException();

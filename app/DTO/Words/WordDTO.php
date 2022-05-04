@@ -10,8 +10,6 @@ final class WordDTO
         public string $word,
         public string $translation,
         public ?string $description,
-    )
-    {
-    }
+    ) {}
 
 }

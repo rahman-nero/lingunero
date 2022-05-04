@@ -3,11 +3,11 @@
 namespace App\Repository;
 
 use App\Models\Library;
-use App\Models\Words;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @method Words model()
+ * @method Builder model()
  */
 final class LibraryRepository extends CoreRepository
 {
@@ -25,7 +25,6 @@ final class LibraryRepository extends CoreRepository
         $columns = ['id', 'title', 'created_at'];
 
         return $this->model()
-            ->newQuery()
             ->select($columns)
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
@@ -40,7 +39,6 @@ final class LibraryRepository extends CoreRepository
         $columns = ['id', 'title', 'description', 'created_at'];
 
         return $this->model()
-            ->newQuery()
             ->select($columns)
             ->where('id', $libraryId)
             ->limit(1)

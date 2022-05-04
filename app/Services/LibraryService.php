@@ -1,44 +1,54 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\DTO\Library\LibraryDTO;
 use App\Models\Library;
 use App\Models\Words;
+use Exception;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Log\LogManager;
+use Illuminate\Support\Facades\DB;
 
 final class LibraryService
 {
+    private ConnectionInterface $connection;
+    private LogManager $log;
+
+    public function __construct(ConnectionInterface $connection, LogManager $log)
+    {
+        $this->connection = $connection;
+        $this->log = $log;
+    }
 
     protected function getModel(): Builder
     {
-        return (new Library())->newQuery();
+        return Library::query();
     }
 
     /**
-     * Creating a new library
+     * Создание новой библиотеки
     */
     public function create(LibraryDTO $dto, int $userId): int
     {
-        $result = $this->getModel()->create(
-            [
+        $result = $this->getModel()
+            ->create([
                 'user_id' => $userId,
                 'title' => $dto->title,
                 'description' => $dto->description
-            ]
-        );
+            ]);
 
         return $result->id;
     }
 
     /**
-     * Edite selected library
+     * Редактирование библиотеки
     */
     public function edit(int $libraryId, LibraryDTO $dto): bool
     {
-        return $this->getModel()->find($libraryId)
+        return $this->getModel()
+            ->find($libraryId)
             ->update([
                 'title' => $dto->title,
                 'description' => $dto->description
@@ -46,44 +56,65 @@ final class LibraryService
     }
 
     /**
-     * Delete library with all relations of the other tables
+     * Удаление библиотеки с удалением всех остальных связей
+     * Удаление слов
+     * Удаление пример слов
+     * Удаление статистик слов
+     * Удаление предложений
+     * Удаление статистик предложений
     */
     public function delete(int $libraryId): bool
     {
         $library = $this->getModel()
             ->find($libraryId);
 
-        // Удаление слов
-        $library->words()
-            ->each(function (Words $elem) {
-                // Удаляем примеры слов
-                $elem->examples()->delete();
+        try {
+            $this->connection->beginTransaction();
 
-                // Удаляем само слов
-                $elem->delete();
-            });
+            // Удаление слов
+            $library->words()
+                ->each(function (Words $elem) {
+                    // Удаляем примеры слов
+                    $elem->examples()->delete();
 
-        // TODO: на сервисы переведи
-        // Удаление статистики тестов на слова
-        $library->wordsStatistics()
-            ->delete();
+                    // Удаляем само слов
+                    $elem->delete();
+                });
 
-        // Удаление предложении
-        $library->sentences()
-            ->delete();
+            // Удаление статистики тестов на слова
+            $library->wordsStatistics()
+                ->delete();
 
-        return $library->delete();
+            // Удаление предложении
+            $library->sentences()
+                ->delete();
+
+            // Удаление статистик предложении
+            $library->sentencesStatistics()
+                ->delete();
+
+            // Удаление библиотеки
+            $result = $library->delete();
+
+            $this->connection->commit();
+        } catch (Exception $e) {
+            $this->connection->rollBack();
+            $this->log->error(
+                sprintf('Произошла ошибка во время удаления библиотеки: %s', $e->getMessage())
+            );
+
+            return false;
+        }
+
+        return $result;
     }
 
-
     /**
-     * Remove all words of library
-     * @param int $libraryId
-     * @return bool
+     * Удаление всех слов с библиотеки
      */
     public function removeAllLibraryWords(int $libraryId): bool
     {
-        // Remove words with examples
+        // Удаление всех слов с удалением примеров
         $this->getModel()
             ->find($libraryId)
             ->words()
@@ -95,7 +126,7 @@ final class LibraryService
                 $elem->delete();
             });
 
-        // Remove statistic of words
+        // Удаление статистики слов
         $this->getModel()
             ->find($libraryId)
             ->wordsStatistics()

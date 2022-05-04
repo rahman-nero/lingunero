@@ -12,6 +12,9 @@ final class FavoriteWordsService
         return FavoriteWords::query();
     }
 
+    /**
+     * Добавление слов в избранные
+    */
     public function create(int $userId, int $wordId): bool
     {
         $result = $this->getModel()

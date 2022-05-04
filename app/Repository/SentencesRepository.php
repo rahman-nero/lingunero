@@ -1,14 +1,13 @@
 <?php
 
-
 namespace App\Repository;
-
 
 use App\Models\Sentence;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @method Sentence model()
+ * @method Builder model()
  */
 final class SentencesRepository extends CoreRepository
 {
@@ -17,6 +16,9 @@ final class SentencesRepository extends CoreRepository
         return Sentence::class;
     }
 
+    /**
+     * Получение всех предложений из библиотеки
+    */
     public function getSentencesByLibraryId(int $libraryId): Collection
     {
         $columns = ['id', 'sentence', 'translation'];
@@ -29,6 +31,9 @@ final class SentencesRepository extends CoreRepository
             ->get();
     }
 
+    /**
+     * Получение всех предложений из библиотеки с помощью пагинации
+    */
     public function getSentencesByLibraryIdWithPaginate(int $libraryId, int $limit): object
     {
         $columns = ['id', 'sentence', 'translation'];
@@ -41,6 +46,9 @@ final class SentencesRepository extends CoreRepository
             ->paginate($limit);
     }
 
+    /**
+     * Проверка, относится ли предложение к библиотеке
+    */
     public function isBelongsToLibrary(int $sentenceId, int $libraryId): bool
     {
         return $this->model()
