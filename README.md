@@ -22,7 +22,7 @@ make docker-up
 
 Чтобы установить зависимости выполняем, вот эту команду:
 ```
-docker-compose exec php-cli composer install 
+make composer-prod-install
 ```
 
 
@@ -37,7 +37,7 @@ docker-compose exec php-cli php artisan key:generate
 ```
 Также если вы запустили сайт не на **localhost**, а на каком-то домене. (Поумолчанию сайт находится на **localhost:8080**) 
 То тогда, меняем параметр `APP_URL` в конфиге, на тот адрес который вы указали.
-Мы закончили с настройками **.env-файла**
+Мы закончили с настройками **.env-файла**.
 
 
 **Шаг 3. Установить npm-зависимости**
@@ -47,10 +47,8 @@ docker-compose exec php-cli php artisan key:generate
 Чтобы установить эти зависимости и наладить работоспособность сайта, выполняем эти команды:
 
 ```
-make npm
-make mix-build
+make build-production
 ```
-
 
 **Шаг 4. Запускаем миграций**
 
@@ -58,7 +56,7 @@ make mix-build
 
 Миграция - это когда мы запускаем процесс, который создает таблицы нужные для работы приложения, так что это команда **обязательна**
 ```
-docker-compose exec php-cli php artisan migrate
+make laravel-migrate
 ```
 
 
