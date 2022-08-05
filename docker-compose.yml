@@ -16,10 +16,10 @@ services:
             context: ./
             dockerfile: ./docker/php.docker
             args:
-                WWWUSER: 'obitel'
+                WWWUSER: ${USER}
         volumes:
             - ./:/var/www/
-        user: 'obitel'
+        user: ${USER}
         ports:
             - "9001:9001"
         tty: true
@@ -30,14 +30,14 @@ services:
             context: ./
             dockerfile: ./docker/php-fpm.docker
             args:
-                WWWUSER: 'obitel'
+                WWWUSER: ${USER}
         volumes:
             - ./:/var/www/
 #        ports:
 #            - "9001:9001"
         links:
             - mysql
-        user: 'obitel'
+        user: ${USER}
 
     nginx:
         container_name: nginx
@@ -61,6 +61,8 @@ services:
             - MYSQL_DATABASE=app
         volumes:
             - ./storage/mysql:/var/lib/mysql/
+            - ./:/var/www
+        working_dir: /var/www
         ports:
             - "33006:3306"
 
