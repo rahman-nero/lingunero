@@ -23,7 +23,8 @@ class Words extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'created_at' => 'datetime'
+        'created_at' => 'datetime',
+        'result' => 'json'
     ];
 
     public function examples()

@@ -18,7 +18,7 @@ final class WordsStatisticsService
                 'count_words' => $countWords,
                 'count_wrong' => $countFails,
                 'count_true' => $countSuccess,
-                'result' => json_encode($result)
+                'result' => $result
             ]);
 
         return $result->id;

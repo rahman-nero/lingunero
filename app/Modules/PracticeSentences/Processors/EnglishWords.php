@@ -26,6 +26,8 @@ final class EnglishWords implements ProcessorContract
 
     public function process(int $libraryId, array $sentences): bool
     {
+        $statistic = [];
+
         $fails = 0;
         $success = 0;
 
@@ -36,28 +38,47 @@ final class EnglishWords implements ProcessorContract
         }
 
         foreach ($sentences as $sentenceId => $sentence) {
-            $currentSentence = $dbSentences->where('id', $sentenceId)
-                ->first()
+            $currentSentence = $dbSentences
+                ->where('id', $sentenceId)
+                ->first();
+
+            $correctlyAnswer = $currentSentence
                 ->translation;
 
-            if ($this->clearString($currentSentence) === $this->clearString($sentence)) {
+
+            if ($this->clearString($correctlyAnswer) === $this->clearString($sentence)) {
                 $success++;
+
+                $statistic[] = [
+                    'sentence' => $currentSentence->sentence,
+                    'answer' => $correctlyAnswer,
+                    'is_right' => 1,
+                    'user_answer' => $sentence
+                ];
             } else {
                 $fails++;
+
+                $statistic[] = [
+                    'sentence' => $currentSentence->sentence,
+                    'answer' => $correctlyAnswer,
+                    'is_right' => 0,
+                    'user_answer' => $sentence
+                ];
             }
         }
 
 
-        return $this->saveStatistics($libraryId, $dbSentences->count(), $fails, $success);
+        return $this->saveStatistics($libraryId, $dbSentences->count(), $fails, $success, $statistic);
     }
 
-    private function saveStatistics(int $libraryId, int $countSentences, int $countFails, int $countSuccess): bool
+    private function saveStatistics(int $libraryId, int $countSentences, int $countFails, int $countSuccess, array $result): bool
     {
         $id = $this->statisticsService->create(
             libraryId: $libraryId,
             countSentences: $countSentences,
             countFails: $countFails,
-            countSuccess: $countSuccess
+            countSuccess: $countSuccess,
+            result: $result
         );
 
         if (!$id) {

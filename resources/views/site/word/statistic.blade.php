@@ -34,7 +34,7 @@
 
             <br>
             <br>
-            @if(!empty($result))
+            @if(!empty($statistic['result']))
                 <h3>Результат</h3>
                 <br>
                 <table class="table">
@@ -45,16 +45,16 @@
                     <th>Правильность</th>
                     </thead>
                     <tbody>
-                    @foreach($result as $item)
-                        <tr class="table-{{ $item->is_right ? 'success': 'wrong' }}">
-                            <td>{{ $item->word }}</td>
-                            <td>{{ $item->answer }}</td>
-                            @if(!$item->is_right)
-                                <td>{{ $item->user_answer }}</td>
+                    @foreach($statistic['result'] as $item)
+                        <tr class="table-{{ $item['is_right'] ? 'success': 'wrong' }}">
+                            <td>{{ $item['word'] }}</td>
+                            <td>{{ $item['answer'] }}</td>
+                            @if(!$item['is_right'])
+                                <td>{{ $item['user_answer'] }}</td>
                             @else
-                                <td>{{ $item->answer }}</td>
+                                <td>{{ $item['answer'] }}</td>
                             @endif
-                            @if(!$item->is_right)
+                            @if(!$item['is_right'])
                                 <td><i class="fa fa-times" aria-hidden="true"></i></td>
                             @else
                                 <td><i class="fa fa-check" aria-hidden="true"></i></td>
