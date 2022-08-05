@@ -12,7 +12,7 @@
         </div>
 
         @if($words->isNotEmpty())
-            <form action="{{ route('library.words.practice.store', [$libraryId]) }}" method="POST">
+            <form action="{{ route('library.words.practice.store', $libraryId) }}" method="POST">
                 @csrf
 
                 @foreach($words as $word)
@@ -30,7 +30,7 @@
                 <button type="submit" class="styled-button">Завершить практику</button>
             </form>
         @else
-            <a href="{{ route('manage.library.words.add.show') }}" class="styled-button">Добавить слова</a>
+            <a href="{{ route('manage.library.words.add.show', $libraryId) }}" class="styled-button">Добавить слова</a>
         @endif
 
     </section>
