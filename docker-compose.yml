@@ -45,7 +45,7 @@ services:
             context: ./
             dockerfile: ./docker/nginx.docker
         ports:
-            - "8080:80"
+            - "80:80"
         volumes:
             - ./public:/var/www/public
         links:

@@ -41,7 +41,7 @@ final class SentencesRepository extends CoreRepository
         return $this->model()
             ->select($columns)
             ->where('library_id', $libraryId)
-            ->orderBy('created_at')
+//            ->orderBy('created_at')
             ->toBase()
             ->paginate($limit);
     }

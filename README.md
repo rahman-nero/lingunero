@@ -69,7 +69,7 @@ make laravel-migrate
 docker-compose exec php-cli php artisan storage:link 
 ```
 
-Дальше заходим на `localhost:8080` и наслаждаемся баном :)
+Дальше заходим на `localhost` и наслаждаемся сайтом :)
 
 ---
 ### Бонус.
