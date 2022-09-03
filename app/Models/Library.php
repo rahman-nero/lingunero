@@ -19,8 +19,6 @@ class Library extends Model
 
     protected $guarded = ['id'];
 
-    public $timestamps = true;
-
     protected $casts = [
         'created_at' => 'datetime'
     ];
@@ -54,6 +52,5 @@ class Library extends Model
     {
         return $this->sentences()->count();
     }
-
 
 }
