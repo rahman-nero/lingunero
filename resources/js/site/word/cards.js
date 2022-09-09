@@ -29,13 +29,16 @@ right.addEventListener("click", () => {
 // Переворачивание карточек
 const cards = document.querySelectorAll('.slide .card');
 cards.forEach(function (card) {
+
     card.addEventListener('click', (e) => {
         if (
             e.target.classList[0] != 'button-add-favorite'
             && e.target.parentNode.classList[0] != 'button-add-favorite'
+            && e.target.parentNode.classList[0] != 'voice'
         ) {
             card.classList.toggle('is-flip');
         }
+
     });
 })
 
@@ -83,3 +86,19 @@ slides.forEach((elem) => {
 
 });
 
+
+// Text to speech a text (word or sentences)
+const voice = document.querySelectorAll('.voice');
+
+voice.forEach((elem, key) => {
+    elem.addEventListener('click', (e) => {
+        let text = e.currentTarget.dataset.text;
+
+        new Audio(`http://translate.google.com/translate_tts?q=${text}&tl=en&client=duncan3dc-speaker`)
+            .play()
+            .catch(() => {
+                new Audio(`https://tts.voicetech.yandex.net/tts?text=${text}`).play();
+            });
+    })
+
+})

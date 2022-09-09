@@ -34,6 +34,10 @@
                                     @endif
                                 <div class="center-word">
                                     {{ $word->word }}
+
+                                    <div class="voice" data-text="{{ $word->word }}">
+                                        <i class="fa fa-microphone" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                             </div>
 

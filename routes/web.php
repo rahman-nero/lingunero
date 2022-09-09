@@ -209,3 +209,6 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('user.favorites.delete.ajax')
         ->whereNumber('wordId');
 });
+
+
+Route::get('test', [\App\Http\Controllers\Controller::class, 'test']);
