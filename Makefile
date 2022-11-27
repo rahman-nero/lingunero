@@ -1,15 +1,24 @@
+init: docker-down docker-pull docker-build docker-up
+up: docker-up
+down: docker-down
+restart: docker-down docker-up
+
+
 ##################### COMMON COMMANDS
 docker-up:
 	docker-compose up -d
 
+docker-pull:
+	docker-compose pull
+
 docker-down:
-	docker-compose down
+	docker-compose down --remove-orphans
 
 docker-build: memory
-	docker-compose up --build -d
+	docker-compose build --pull
 
-clear-logs:
-	rm ./storage/logs/laravel.log
+docker-clear:
+	rm -rf ./docker/development/logs/*
 
 memory:
 	sudo sysctl -w vm.max_map_count=262144

@@ -44,4 +44,4 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
 RUN useradd -M $WWWUSER
 
-WORKDIR /var/www
+WORKDIR /var/www/

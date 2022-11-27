@@ -1,74 +1,96 @@
 version: '3.7'
 services:
-    npm:
-        container_name: npm
-        build:
-            context: ./
-            dockerfile: ./docker/npm.docker
-        volumes:
-            -  ./:/var/www
-        tty: true
-        restart: unless-stopped
-
-    php-cli:
-        container_name: php
-        build:
-            context: ./
-            dockerfile: ./docker/php.docker
-            args:
-                WWWUSER: ${USER}
-        volumes:
-            - ./:/var/www/
-        user: ${USER}
-        ports:
-            - "9001:9001"
-        tty: true
-
-    php-fpm:
-        container_name: php-fpm
-        build:
-            context: ./
-            dockerfile: ./docker/php-fpm.docker
-            args:
-                WWWUSER: ${USER}
-        volumes:
-            - ./:/var/www/
-#        ports:
-#            - "9001:9001"
-        links:
-            - mysql
-        user: ${USER}
-
     nginx:
         container_name: nginx
+        restart: unless-stopped
         build:
             context: ./
-            dockerfile: ./docker/nginx.docker
+            dockerfile: docker/development/nginx/Dockerfile
         ports:
-            - "80:80"
+            - ${PORT}:80
         volumes:
-            - ./public:/var/www/public
-        links:
+            - ./:/var/www
+            - ./docker/development/nginx/confs/:/etc/nginx/conf.d/
+            - ./docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/development/logs:/var/log/nginx/
+        depends_on:
             - php-fpm
+        networks:
+            - laravel
 
     mysql:
         container_name: mysql
         image: mysql:8.0
+        restart: unless-stopped
         environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_USER=rahman
             - MYSQL_PASSWORD=rahman
             - MYSQL_DATABASE=app
+            - TZ=Europe/Moscow
         volumes:
-            - ./storage/mysql:/var/lib/mysql/
-            - ./:/var/www
-        working_dir: /var/www
+            - ./docker/development/running/mysql:/var/lib/mysql/
         ports:
             - "33006:3306"
+        networks:
+            - laravel
+
+    php-cli:
+        container_name: php
+        build:
+            context: ./
+            dockerfile: docker/development/php-cli/Dockerfile
+            args:
+                WWWUSER: ${USER}
+        user: ${USER}
+        tty: true
+        volumes:
+            - ./backend:/var/www/
+        ports:
+            - "9001:9001"
+        networks:
+            - laravel
+
+    php-fpm:
+        container_name: php-fpm
+        build:
+            context: ./
+            dockerfile: docker/development/php-fpm/Dockerfile
+            args:
+                WWWUSER: ${USER}
+        user: ${USER}
+        volumes:
+            - ./:/var/www/
+            - ./docker/development/logs/:/var/log/php-fpm
+            - ./docker/development/php-fpm/www.conf:/usr/local/etc/php-fpm.d/www.conf
+        restart: unless-stopped
+        #        ports:
+        #            - "9001:9001"
+        depends_on:
+            - mysql
+        networks:
+            - laravel
+
+    npm:
+        container_name: npm
+        build:
+            context: ./
+            dockerfile: docker/development/npm/Dockerfile
+        volumes:
+            - ./:/var/www
+        tty: true
+        restart: unless-stopped
+        networks:
+            - laravel
 
     redis:
         container_name: redis
         image: redis
         ports:
             - "63799:6379"
+        networks:
+            - laravel
 
+networks:
+    laravel:
+        driver: bridge
