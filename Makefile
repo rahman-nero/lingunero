@@ -17,15 +17,87 @@ docker-down:
 docker-build: memory
 	docker-compose build --pull
 
-docker-clear:
-	rm -rf ./docker/development/logs/*
-
 memory:
 	sudo sysctl -w vm.max_map_count=262144
 
+
+build: build-gateway build-frontend-nginx build-frontend-npm build-backend-nginx build-backend-php-cli build-backend-php-fpm build-backend-npm
+
+build-gateway:
+	docker --log-level=debug build --pull --file=docker/production/gateway/Dockerfile --tag=${REGISTRY}/eccho-gateway:${IMAGE_TAG} docker/production/gateway
+
+build-frontend-nginx:
+	docker --log-level=debug build --pull --file=frontend/docker/production/nginx/Dockerfile --tag=${REGISTRY}/eccho-frontend-nginx:${IMAGE_TAG} frontend
+
+build-frontend-npm:
+	docker --log-level=debug build --pull --file=frontend/docker/production/npm/Dockerfile --tag=${REGISTRY}/eccho-frontend-npm:${IMAGE_TAG} frontend
+
+build-backend-nginx:
+	docker --log-level=debug build --pull --file=backend/docker/production/nginx/Dockerfile --tag=${REGISTRY}/eccho-backend-nginx:${IMAGE_TAG} backend
+
+build-backend-php-cli:
+	docker --log-level=debug build --build-arg WWWUSER=${WWWUSER} --pull --file=backend/docker/production/php-cli/Dockerfile --tag=${REGISTRY}/eccho-backend-php-cli:${IMAGE_TAG} backend
+
+build-backend-php-fpm:
+	docker --log-level=debug build --build-arg WWWUSER=${WWWUSER} --pull --file=backend/docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/eccho-backend-php-fpm:${IMAGE_TAG} backend
+
+build-backend-npm:
+	docker --log-level=debug build --pull --file=backend/docker/production/npm/Dockerfile --tag=${REGISTRY}/eccho-backend-npm:${IMAGE_TAG} backend
+
+
+try-build:
+	REGISTRY=localhost IMAGE_TAG=0 WWWUSER=rahman make build
+
+
+push: push-gateway push-backend-nginx push-backend-npm push-backend-php-cli push-backend-php-fpm push-frontend-nginx push-frontend-npm
+
+push-gateway:
+	docker push ${REGISTRY}/eccho-gateway:${IMAGE_TAG}
+
+push-frontend-nginx:
+	docker push ${REGISTRY}/eccho-frontend-nginx:${IMAGE_TAG}
+
+push-frontend-npm:
+	docker push ${REGISTRY}/eccho-frontend-npm:${IMAGE_TAG}
+
+push-backend-nginx:
+	docker push ${REGISTRY}/eccho-backend-nginx:${IMAGE_TAG}
+
+push-backend-php-cli:
+	docker push ${REGISTRY}/eccho-backend-php-cli:${IMAGE_TAG}
+
+push-backend-php-fpm:
+	docker push ${REGISTRY}/eccho-backend-php-fpm:${IMAGE_TAG}
+
+push-backend-npm:
+	docker push ${REGISTRY}/eccho-backend-npm:${IMAGE_TAG}
+
+
+deploy:
+	  ssh ${HOST} -p ${PORT} 'rm -rf site_${BUILD_NUMBER}' && \
+      ssh ${HOST} -p ${PORT} 'mkdir -rf site_${BUILD_NUMBER}'  && \
+      scp -P ${PORT} docker-compose-production.yml ${HOST}:site_${BUILD_NUMBER}/docker-compose-production.yml  && \
+      ssh ${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && echo "COMPOSE_PROJECT_NAME=eccho" >> .env'  && \
+      ssh ${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && echo "REGISTRY=${REGISTRY}" >> .env'  && \
+      ssh ${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && echo "IMAGE=${IMAGE_TAG}" >> .env'  && \
+      ssh ${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && docker-compose -f docker-compose-production.yml pull'  && \
+      ssh ${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && docker-compose -f docker-compose-production.yml up -d --build --remove-orphans'  && \
+      ssh ${HOST} -p ${PORT} 'rm -f site'  && \
+      ssh ${HOST} -p ${PORT} 'ln -sr site_${BUILD_NUMBER} site'
+
+rollback:
+	  ssh ${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && docker-compose -f docker-compose-production.yml pull'  && \
+      ssh ${HOST} -p ${PORT} 'cd site_${BUILD_NUMBER} && docker-compose -f docker-compose-production.yml up -d --build --remove-orphans'  && \
+      ssh ${HOST} -p ${PORT} 'rm -f site'  && \
+      ssh ${HOST} -p ${PORT} 'ln -sr site_${BUILD_NUMBER} site'
+
+
+
+###################### BACKEND COMMANDS
+
 ## Выполнять команду вручную, ибо не срабатывает вот эта запись: (date "+%d_%m_%+_%H_%M")
 dump-database:
-	docker-compose exec mysql mysqldump -uroot -proot app > ./backups/backup_$(date "+%d_%m_%Y_%H_%M").sql
+	docker-compose exec  mysqldump -uroot -proot app > ./backups/backup_$(date "+%d_%m_%Y_%H_%M").sql
 
 drop-database:
 	docker-compose exec mysql mysql -uroot -proot -e "drop database if exists app; create database app"
@@ -33,8 +105,6 @@ drop-database:
 chown:
 	docker-compose exec php-fpm chown -R www-data /var/www/storage
 	docker-compose exec php-fpm chmod -R 755 /var/www/storage
-
-###################### BACKEND COMMANDS
 
 # Integration tests
 run-tests: pre-tests
