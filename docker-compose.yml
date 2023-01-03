@@ -33,8 +33,6 @@ services:
                 WWWUSER: ${USER}
         volumes:
             - ./:/var/www/
-#        ports:
-#            - "9001:9001"
         links:
             - mysql
         user: ${USER}
