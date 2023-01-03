@@ -2,7 +2,7 @@ version: '3.7'
 services:
     gateway:
         restart: unless-stopped
-        image: ${REGISTRY}/eccho-gateway:${IMAGE_TAG}
+        image: ${REGISTRY}/english-gateway:${IMAGE_TAG}
         ports:
             - 80:80
             - 443:443
@@ -15,16 +15,16 @@ services:
 
     frontend-nginx:
         restart: unless-stopped
-        image: ${REGISTRY}/eccho-frontend-nginx:${IMAGE_TAG}
+        image: ${REGISTRY}/english-frontend-nginx:${IMAGE_TAG}
 
     frontend-npm:
-        image: ${REGISTRY}/eccho-frontend-npm:${IMAGE_TAG}
+        image: ${REGISTRY}/english-frontend-npm:${IMAGE_TAG}
         tty: true
         restart: unless-stopped
 
     backend-nginx:
         restart: unless-stopped
-        image: ${REGISTRY}/eccho-backend-nginx:${IMAGE_TAG}
+        image: ${REGISTRY}/english-backend-nginx:${IMAGE_TAG}
         depends_on:
           - backend-php-fpm
           - backend-mysql
@@ -34,20 +34,20 @@ services:
         restart: unless-stopped
         environment:
             - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_USER=rahman
-            - MYSQL_PASSWORD=rahman
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=user
             - MYSQL_DATABASE=app
             - TZ=Europe/Moscow
         volumes:
             - ./running/mysql:/var/lib/mysql/
 
     backend-php-cli:
-        image: ${REGISTRY}/eccho-backend-php-cli:${IMAGE_TAG}
+        image: ${REGISTRY}/english-backend-php-cli:${IMAGE_TAG}
         user: ${USER}
         tty: true
 
     backend-php-fpm:
-        image: ${REGISTRY}/eccho-backend-php-fpm:${IMAGE_TAG}
+        image: ${REGISTRY}/english-backend-php-fpm:${IMAGE_TAG}
         user: ${USER}
         volumes:
             - ./running/logs/:/var/www/docker/production/logs/
@@ -56,7 +56,7 @@ services:
         #            - "9001:9001"
 
     backend-npm:
-        image: ${REGISTRY}/eccho-backend-npm:${IMAGE_TAG}
+        image: ${REGISTRY}/english-backend-npm:${IMAGE_TAG}
         tty: true
         restart: unless-stopped
 
