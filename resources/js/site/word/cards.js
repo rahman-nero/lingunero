@@ -94,7 +94,7 @@ voice.forEach((elem, key) => {
     elem.addEventListener('click', (e) => {
         let text = e.currentTarget.dataset.text;
 
-        new Audio(`http://translate.google.com/translate_tts?q=${text}&tl=en&client=duncan3dc-speaker`)
+        new Audio(`https://translate.google.com/translate_tts?q=${text}&tl=en&client=duncan3dc-speaker`)
             .play()
             .catch(() => {
                 new Audio(`https://tts.voicetech.yandex.net/tts?text=${text}`).play();
