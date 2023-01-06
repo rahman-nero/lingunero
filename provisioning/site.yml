@@ -1,0 +1,9 @@
+---
+-   name: Provision Site
+    hosts: server
+    remote_user: root
+    tasks:
+      - name: Update apt packages
+        apt:
+          update_cache: yes
+      - name: Install dependencies
