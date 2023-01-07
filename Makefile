@@ -39,6 +39,9 @@ run-tests: pre-tests
 pre-tests:
 	docker-compose exec php-cli php artisan key:generate --env=tests
 
+key-generate:
+	docker-compose exec php-cli php artisan key:generate
+
 laravel-route:
 	docker-compose exec php-cli php artisan route:cache
 
