@@ -27,6 +27,11 @@ RUN apt-get install -y \
 #RUN bash -c "echo xdebug.discover_client_host=true >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 #RUN bash -c "echo xdebug.client_host = host.docker.internal >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
+# Install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');"  \
+    && mv composer.phar /usr/local/bin/composer
 
 RUN apt-get -y autoremove \
     && apt-get clean \
