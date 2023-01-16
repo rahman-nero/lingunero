@@ -21,7 +21,7 @@ memory:
 	sudo sysctl -w vm.max_map_count=262144
 
 
-build: build-gateway build-frontend-nginx build-frontend-npm build-backend-nginx build-backend-php-cli build-backend-php-fpm build-backend-npm
+build: build-gateway build-frontend-nginx  build-backend-nginx build-backend-php-fpm
 
 build-gateway:
 	docker --log-level=debug build --pull --file=docker/production/gateway/Dockerfile --tag=${REGISTRY}/english-gateway:${IMAGE_TAG} docker/production/gateway
@@ -29,27 +29,17 @@ build-gateway:
 build-frontend-nginx:
 	docker --log-level=debug build --pull --file=frontend/docker/production/nginx/Dockerfile --tag=${REGISTRY}/english-frontend-nginx:${IMAGE_TAG} frontend
 
-build-frontend-npm:
-	docker --log-level=debug build --pull --file=frontend/docker/production/npm/Dockerfile --tag=${REGISTRY}/english-frontend-npm:${IMAGE_TAG} frontend
-
 build-backend-nginx:
 	docker --log-level=debug build --pull --file=backend/docker/production/nginx/Dockerfile --tag=${REGISTRY}/english-backend-nginx:${IMAGE_TAG} backend
 
-build-backend-php-cli:
-	docker --log-level=debug build --build-arg WWWUSER=${WWWUSER} --pull --file=backend/docker/production/php-cli/Dockerfile --tag=${REGISTRY}/english-backend-php-cli:${IMAGE_TAG} backend
-
 build-backend-php-fpm:
-	docker --log-level=debug build --build-arg WWWUSER=${WWWUSER} --pull --file=backend/docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/english-backend-php-fpm:${IMAGE_TAG} backend
-
-build-backend-npm:
-	docker --log-level=debug build --pull --file=backend/docker/production/npm/Dockerfile --tag=${REGISTRY}/english-backend-npm:${IMAGE_TAG} backend
-
+	docker --log-level=debug build --pull --file=backend/docker/production/php-fpm/Dockerfile --tag=${REGISTRY}/english-backend-php-fpm:${IMAGE_TAG} backend
 
 try-build:
-	REGISTRY=localhost IMAGE_TAG=0 WWWUSER=rahman make build
+	REGISTRY=localhost IMAGE_TAG=1 make build
 
 
-push: push-gateway push-backend-nginx push-backend-npm push-backend-php-cli push-backend-php-fpm push-frontend-nginx push-frontend-npm
+push: push-gateway push-backend-nginx  push-backend-php-fpm push-frontend-nginx
 
 push-gateway:
 	docker push ${REGISTRY}/english-gateway:${IMAGE_TAG}
@@ -57,21 +47,11 @@ push-gateway:
 push-frontend-nginx:
 	docker push ${REGISTRY}/english-frontend-nginx:${IMAGE_TAG}
 
-push-frontend-npm:
-	docker push ${REGISTRY}/english-frontend-npm:${IMAGE_TAG}
-
 push-backend-nginx:
 	docker push ${REGISTRY}/english-backend-nginx:${IMAGE_TAG}
 
-push-backend-php-cli:
-	docker push ${REGISTRY}/english-backend-php-cli:${IMAGE_TAG}
-
 push-backend-php-fpm:
 	docker push ${REGISTRY}/english-backend-php-fpm:${IMAGE_TAG}
-
-push-backend-npm:
-	docker push ${REGISTRY}/english-backend-npm:${IMAGE_TAG}
-
 
 deploy:
 	  ssh ${HOST} -p ${PORT} 'rm -rf site_${BUILD_NUMBER}' && \

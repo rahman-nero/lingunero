@@ -7,8 +7,9 @@ services:
             - 80:80
             - 443:443
         volumes:
-          - /etc/letsencrypt/live/:/etc/letsencrypt/live/
+          - /etc/letsencrypt/:/etc/letsencrypt/
           - /var/www/html:/var/www/html
+          - ./running/logs/gateway:/var/log/nginx
         depends_on:
             - frontend-nginx
             - backend-nginx
@@ -16,11 +17,6 @@ services:
     frontend-nginx:
         restart: unless-stopped
         image: ${REGISTRY}/english-frontend-nginx:${IMAGE_TAG}
-
-    frontend-npm:
-        image: ${REGISTRY}/english-frontend-npm:${IMAGE_TAG}
-        tty: true
-        restart: unless-stopped
 
     backend-nginx:
         restart: unless-stopped
@@ -41,21 +37,20 @@ services:
         volumes:
             - ./running/mysql:/var/lib/mysql/
 
-    backend-php-cli:
-        image: ${REGISTRY}/english-backend-php-cli:${IMAGE_TAG}
-        user: ${USER}
-        tty: true
-
     backend-php-fpm:
         image: ${REGISTRY}/english-backend-php-fpm:${IMAGE_TAG}
-        user: ${USER}
+        environment:
+          - APP_URL=https://api.developer-nero.ru
+          - DB_HOST=backend-mysql
+          - DB_DATABASE=app
+          - DB_USERNAME=root
+          - DB_PASSWORD=root
+          - CACHE_DRIVER=redis
+          - QUEUE_CONNECTION=redis
+          - SESSION_DRIVER=redis
+          - REDIS_HOST=backend-redis
         volumes:
-            - ./running/logs/:/var/www/docker/production/logs/
-        restart: unless-stopped
-
-    backend-npm:
-        image: ${REGISTRY}/english-backend-npm:${IMAGE_TAG}
-        tty: true
+            - ./running/logs/laravel:/var/www/storage/logs
         restart: unless-stopped
 
     backend-redis:
