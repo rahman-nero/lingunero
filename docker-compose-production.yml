@@ -52,8 +52,6 @@ services:
         volumes:
             - ./running/logs/:/var/www/docker/production/logs/
         restart: unless-stopped
-        #        ports:
-        #            - "9001:9001"
 
     backend-npm:
         image: ${REGISTRY}/english-backend-npm:${IMAGE_TAG}
