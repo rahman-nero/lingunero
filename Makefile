@@ -83,7 +83,7 @@ npm-install:
 	docker-compose exec -T npm npm install
 
 build-production: npm-install
-	docker-compose exec -T npm npm run build production
+	docker-compose exec -T npm npm run prod
 
 npm-start:
 	docker-compose exec npm npm run start
