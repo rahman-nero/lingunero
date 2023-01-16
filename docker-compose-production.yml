@@ -7,7 +7,7 @@ services:
             - 80:80
             - 443:443
         volumes:
-          - ./running:/etc/letsencrypt/live/
+          - /etc/letsencrypt/live/:/etc/letsencrypt/live/
           - /var/www/html:/var/www/html
         depends_on:
             - frontend-nginx
