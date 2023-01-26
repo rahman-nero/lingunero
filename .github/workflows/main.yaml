@@ -6,17 +6,18 @@ on:
       - v2
 
 jobs:
-  test:
+  main:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
-        - name: hello world
-          run: echo "hello world"
+        - name: Composer install
+          uses: php-actions/composer@v6
+          with:
+            php_version: "8.0"
           shell: bash
 
   test2:
       runs-on: ubuntu-latest
       steps:
-        - name: good bye world
-          run: echo "good bye"
+        - name: Checking github
+          run: echo {{ toJson(github) }}
           shell: bash
