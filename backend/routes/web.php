@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     // "Профиль"
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
 
