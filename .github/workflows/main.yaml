@@ -18,9 +18,8 @@ jobs:
             php_version: "8.1"
             args: -d backend
 
-        - name: Psalm check
-          run: echo $PWD && backend/vendor/bin/psalm --no-cache -c backend/psalm.xml
+        - name: Run Psalm check
+          run: backend/vendor/bin/psalm --no-cache -c backend/psalm.xml
 
-#        - name: PHPUnit tests
-#          run: ./backend/vendor/bin/phpunit
-
+        - name: Run PHP tests
+          run: backend/vendor/bin/phpunit -c backend/phpunit.xml
