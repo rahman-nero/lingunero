@@ -26,10 +26,11 @@ final class ManageController
     private LibraryRepository $libraryRepository;
 
     public function __construct(
-        WordsRepository $wordsRepository,
+        WordsRepository   $wordsRepository,
         LibraryRepository $libraryRepository,
-        WordsService $wordsService,
-    ) {
+        WordsService      $wordsService,
+    )
+    {
         $this->wordsRepository = $wordsRepository;
         $this->libraryRepository = $libraryRepository;
         $this->wordsService = $wordsService;
@@ -53,7 +54,7 @@ final class ManageController
 
     /**
      * Обработка формы добавления слов
-    */
+     */
     public function store(StoreWordsRequest $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -72,8 +73,8 @@ final class ManageController
     }
 
     /**
-    * Страница редактирование слов
-   */
+     * Страница редактирование слов
+     */
     public function edit($libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -89,7 +90,7 @@ final class ManageController
 
     /**
      * Обаработка формы редактирование слов
-    */
+     */
     public function update(EditWordsRequest $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -108,7 +109,7 @@ final class ManageController
 
     /**
      * Удаление слова из библиотеки
-    */
+     */
     public function delete(int $libraryId, int $wordId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -130,7 +131,7 @@ final class ManageController
 
     /**
      * Страница импорта слов
-    */
+     */
     public function import($libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -144,7 +145,7 @@ final class ManageController
 
     /**
      * Обработка формы импорта слов
-    */
+     */
     public function importStore(Request $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {

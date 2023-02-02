@@ -6,7 +6,7 @@ final class UserController
 {
     /**
      * Страница профиля
-    */
+     */
     public function index()
     {
         return view('dashboard');

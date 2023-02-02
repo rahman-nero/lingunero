@@ -21,7 +21,8 @@ final class SentencesService
         ConnectionInterface    $connection,
         LogManager             $logManager,
         PracticeSentenceFacade $sentenceFacade
-    ) {
+    )
+    {
         $this->sentenceFacade = $sentenceFacade;
         $this->connection = $connection;
         $this->log = $logManager;
@@ -180,11 +181,11 @@ final class SentencesService
 
     /**
      * Удаление предложения
-    */
+     */
     public function delete(int $wordId): bool
     {
         return $this->getModel()
-                    ->find($wordId)
-                    ->delete();
+            ->find($wordId)
+            ->delete();
     }
 }

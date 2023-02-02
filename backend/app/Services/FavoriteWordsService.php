@@ -14,21 +14,21 @@ final class FavoriteWordsService
 
     /**
      * Добавление слов в избранные
-    */
+     */
     public function create(int $userId, int $wordId): bool
     {
         $result = $this->getModel()
-                    ->create([
-                        'word_id' => $wordId,
-                        'user_id' => $userId
-                    ]);
+            ->create([
+                'word_id' => $wordId,
+                'user_id' => $userId
+            ]);
 
-        return (bool) $result->id;
+        return (bool)$result->id;
     }
 
     /**
      * Удалить избранное слово
-    */
+     */
     public function removeFavorite(int $id): bool
     {
         return $this->getModel()

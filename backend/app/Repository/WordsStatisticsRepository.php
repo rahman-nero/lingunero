@@ -17,7 +17,7 @@ final class WordsStatisticsRepository extends CoreRepository
 
     /**
      * Получение статистики выполненного теста
-    */
+     */
     public function findByIdAndLibraryId(int $statisticId, int $libraryId)
     {
         return $this->model()

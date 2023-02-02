@@ -19,7 +19,7 @@ final class LibraryRepository extends CoreRepository
     /**
      * Получение всех библиотек по id-пользователя.
      * Получение происходит с пагинацией
-    */
+     */
     public function getAllLibrariesWithPaginate(int $userId, int $perPage = 10): LengthAwarePaginator
     {
         $columns = ['id', 'title', 'created_at'];
@@ -33,7 +33,7 @@ final class LibraryRepository extends CoreRepository
 
     /**
      * Получение данных о библиотеке
-    */
+     */
     public function getLibrary(int $libraryId): object
     {
         $columns = ['id', 'title', 'description', 'created_at'];
@@ -47,7 +47,7 @@ final class LibraryRepository extends CoreRepository
 
     /**
      * Проверка, созданна ли эта библиотека пользователем
-    */
+     */
     public function isUserLibrary(int $libraryId, int $userId): bool
     {
         return $this->model()

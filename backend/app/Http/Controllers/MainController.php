@@ -18,7 +18,7 @@ final class MainController
 
     /**
      * Страница показа всех библиотек пользователя
-    */
+     */
     public function index()
     {
         $libraries = $this->libraryRepository->getAllLibrariesWithPaginate(Auth::id(), 20);
@@ -28,7 +28,7 @@ final class MainController
 
     /**
      * Страница показа определенной библиотеки
-    */
+     */
     public function library(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {

@@ -18,7 +18,7 @@ final class FavoriteWordsRepository extends CoreRepository
 
     /**
      * Получение избранных слов пользователя
-    */
+     */
     public function getUserFavoriteWords(int $userId): Collection
     {
         $columns = [
@@ -43,7 +43,7 @@ final class FavoriteWordsRepository extends CoreRepository
 
     /**
      * Получение id-избранного слова, по word_id и user_id
-    */
+     */
     public function getUserFavoriteIdByWordId(int $userId, int $wordId): int|false
     {
         $result = $this->model()
@@ -58,7 +58,7 @@ final class FavoriteWordsRepository extends CoreRepository
 
     /**
      * Является ли переданный id-избранного слова относящимся к пользователю
-    */
+     */
     public function isUserFavoriteWord(int $id, int $userId): bool
     {
         return $this->model()

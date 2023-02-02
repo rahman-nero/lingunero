@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @param int $count_wrong
  * @param int $count_true
  * @param array $result
-*/
+ */
 class WordsStatistics extends Model
 {
     use HasFactory;

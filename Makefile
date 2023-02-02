@@ -136,6 +136,9 @@ laravel-down:
 laravel-up:
 	docker-compose exec backend-php-cli php artisan up
 
+psalm:
+	docker-compose exec backend-php-cli ./vendor/bin/psalm --no-cache --show-info=true
+
 ######################## FRONTEND COMMANDS
 npm-install:
 	docker-compose exec -T backend-npm npm install

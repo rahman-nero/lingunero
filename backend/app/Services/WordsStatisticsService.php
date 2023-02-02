@@ -9,7 +9,7 @@ final class WordsStatisticsService
 {
     /**
      * Создание статистики для слов
-    */
+     */
     public function create(int $libraryId, int $countWords, int $countFails, int $countSuccess, array $result): int|bool
     {
         $result = $this->getModel()

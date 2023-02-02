@@ -18,10 +18,11 @@ final class PracticeController extends Controller
     private SentencesStatisticsRepository $statisticsRepository;
 
     public function __construct(
-        SentencesRepository $sentencesRepository,
-        SentencesService $sentencesService,
+        SentencesRepository           $sentencesRepository,
+        SentencesService              $sentencesService,
         SentencesStatisticsRepository $statisticsRepository
-    ) {
+    )
+    {
         $this->sentencesRepository = $sentencesRepository;
         $this->sentencesService = $sentencesService;
         $this->statisticsRepository = $statisticsRepository;
@@ -29,7 +30,7 @@ final class PracticeController extends Controller
 
     /**
      * Страница выполнения теста. Показываются предложения в ряд.
-    */
+     */
     public function index(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -43,7 +44,7 @@ final class PracticeController extends Controller
 
     /**
      * Обработка выполненного теста и выведение статистики
-    */
+     */
     public function store(SentencesPracticeRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -66,7 +67,7 @@ final class PracticeController extends Controller
 
     /**
      * Страница показа результата выполнения теста
-    */
+     */
     public function statistic(int $libraryId, int $statisticId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {

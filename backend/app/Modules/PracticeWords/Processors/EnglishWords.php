@@ -16,9 +16,10 @@ final class EnglishWords implements ProcessorContract
     private WordsStatisticsService $statisticsService;
 
     public function __construct(
-        WordsRepository $wordsRepository,
+        WordsRepository        $wordsRepository,
         WordsStatisticsService $statisticsService,
-    ) {
+    )
+    {
         $this->wordsRepository = $wordsRepository;
         $this->statisticsService = $statisticsService;
     }

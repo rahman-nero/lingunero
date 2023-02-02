@@ -30,7 +30,7 @@ final class LibraryService
 
     /**
      * Создание новой библиотеки
-    */
+     */
     public function create(LibraryDTO $dto, int $userId): int
     {
         $result = $this->getModel()
@@ -45,7 +45,7 @@ final class LibraryService
 
     /**
      * Редактирование библиотеки
-    */
+     */
     public function edit(int $libraryId, LibraryDTO $dto): bool
     {
         return $this->getModel()
@@ -63,7 +63,7 @@ final class LibraryService
      * Удаление статистик слов
      * Удаление предложений
      * Удаление статистик предложений
-    */
+     */
     public function delete(int $libraryId): bool
     {
         $library = $this->getModel()
@@ -79,7 +79,7 @@ final class LibraryService
                     $elem->examples()->delete();
 
                     // Удаление слова из избранных
-                    if($elem->isFavorite()) {
+                    if ($elem->isFavorite()) {
                         FavoriteWords::query()
                             ->where('word_id', '=', $elem->id)
                             ->delete();
@@ -131,7 +131,7 @@ final class LibraryService
                 $elem->examples()->delete();
 
                 // Удаление слова из избранных
-                if($elem->isFavorite()) {
+                if ($elem->isFavorite()) {
                     FavoriteWords::query()
                         ->where('word_id', '=', $elem->id)
                         ->delete();

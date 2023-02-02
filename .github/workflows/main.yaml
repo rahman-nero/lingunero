@@ -11,14 +11,15 @@ jobs:
       steps:
         - name: Checkout
           uses: actions/checkout@v2
+
         - name: Composer install
           uses: php-actions/composer@v6
           with:
-            php_version: "8.0"
+            php_version: "8.1"
 
-  test2:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checking github
-          run: echo "${{ toJSON(github) }}"
-          shell: bash
+        - name: Psalm check
+          run: ./backend/vendor/bin/psalm --no--cache
+
+#        - name: PHPUnit tests
+#          run: ./backend/vendor/bin/phpunit
+

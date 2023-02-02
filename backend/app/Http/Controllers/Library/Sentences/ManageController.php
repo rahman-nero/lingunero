@@ -23,10 +23,11 @@ final class ManageController
     private SentencesService $sentencesService;
 
     public function __construct(
-        LibraryRepository $libraryRepository,
+        LibraryRepository   $libraryRepository,
         SentencesRepository $sentencesRepository,
-        SentencesService $sentencesService
-    ) {
+        SentencesService    $sentencesService
+    )
+    {
         $this->libraryRepository = $libraryRepository;
         $this->sentencesService = $sentencesService;
         $this->sentencesRepository = $sentencesRepository;
@@ -34,7 +35,7 @@ final class ManageController
 
     /**
      * Страница добавления новых предложений
-    */
+     */
     public function create(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -48,7 +49,7 @@ final class ManageController
 
     /**
      * Обработка формы добавления новых предложений
-    */
+     */
     public function store(StoreSentenceRequest $data, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -69,7 +70,7 @@ final class ManageController
 
     /**
      * Страница множественного редактирования предложений
-    */
+     */
     public function edit(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -83,7 +84,7 @@ final class ManageController
 
     /**
      * Обработка формы множественного редактирования предложений
-    */
+     */
     public function update(EditSentencesRequest $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -103,7 +104,7 @@ final class ManageController
 
     /**
      * Страница иморта предложений
-    */
+     */
     public function import($libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -118,7 +119,7 @@ final class ManageController
 
     /**
      * Обработка формы импорта предложений
-    */
+     */
     public function importStore(Request $request, $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -142,7 +143,7 @@ final class ManageController
 
     /**
      * Удаление предложения
-    */
+     */
     public function delete(int $libraryId, int $sentencesId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {

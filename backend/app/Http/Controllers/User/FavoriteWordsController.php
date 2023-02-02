@@ -16,9 +16,10 @@ class FavoriteWordsController
 
     public function __construct(
         FavoriteWordsRepository $repository,
-        FavoriteWordsService $service,
-        WordsRepository $wordsRepository,
-    ) {
+        FavoriteWordsService    $service,
+        WordsRepository         $wordsRepository,
+    )
+    {
         $this->repository = $repository;
         $this->service = $service;
         $this->wordsRepository = $wordsRepository;
@@ -26,7 +27,7 @@ class FavoriteWordsController
 
     /**
      * Страница показа всех избранных слов
-    */
+     */
     public function index()
     {
         $userId = Auth::id();
@@ -67,14 +68,14 @@ class FavoriteWordsController
 
     /**
      * Удаление избранного слова
-    */
+     */
     public function delete(int $id)
     {
         $userId = Auth::id();
 
         if (!$this->repository->isUserFavoriteWord($id, $userId)) {
             return back()
-                    ->withErrors(['message' => 'Невозможно удалить не существующее избранное слово']);
+                ->withErrors(['message' => 'Невозможно удалить не существующее избранное слово']);
         }
 
         $result = $this->service->removeFavorite($id);

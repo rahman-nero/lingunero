@@ -27,7 +27,7 @@ final class WordsRepository extends CoreRepository
     /**
      * Получение всех слов из библиотеки
      * Возвращается коллекция с stdClass
-    */
+     */
     public function getWordsByLibraryIdWithoutModel(int $libraryId): Collection
     {
         $columns = ['id', 'word', 'translation', 'description'];
@@ -58,7 +58,7 @@ final class WordsRepository extends CoreRepository
 
     /**
      * Получение всех слов из библиотеки с помощью пагинации
-    */
+     */
     public function getWordsByLibraryIdWithPaginate(int $libraryId, int $perPage): object
     {
         $columns = ['id', 'word', 'translation', 'description'];
@@ -72,7 +72,7 @@ final class WordsRepository extends CoreRepository
 
     /**
      * Является ли это слово относящимся к указанной библиотеке
-    */
+     */
     public function isBelongsToLibrary(int $wordId, int $libraryId): bool
     {
         return $this->model()
@@ -85,7 +85,7 @@ final class WordsRepository extends CoreRepository
 
     /**
      * Принадлежит ли это слово пользователю, т.е имеется ли это слово в библиотеках пользователя
-    */
+     */
     public function isUserWord(int $userId, int $wordId): bool
     {
         $word = $this->model()->find($wordId);
