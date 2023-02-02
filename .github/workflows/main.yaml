@@ -6,16 +6,17 @@ on:
       - v2
 
 jobs:
-  CI:
+  CI-BACKEND:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
 
         - name: Composer install
           uses: php-actions/composer@v6
           with:
             php_version: "8.1"
+            args: -d backend
 
         - name: Psalm check
           run: ./backend/vendor/bin/psalm --no--cache
