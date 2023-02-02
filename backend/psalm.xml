@@ -10,7 +10,6 @@
         <directory name="app/" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="node_modules" />
         </ignoreFiles>
     </projectFiles>
 </psalm>
