@@ -151,3 +151,6 @@ npm-start:
 
 mix-watch:
 	docker-compose exec frontend-npm npm run watch
+
+npm-eslint:
+	docker-compose exec frontend-npm npx eslint ./src
