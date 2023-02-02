@@ -1,17 +1,24 @@
-FROM php:8.1-fpm
+FROM php:8.1-fpm-alpine3.17
 
-# Поумолчанию его в гите нету, add-apt
-RUN apt-get update && apt-get install -y software-properties-common
+ARG WWWUSER
+ARG UID=10001
+ARG GID=10001
 
-RUN pecl install redis && docker-php-ext-enable redis
+# Install php extensions
+RUN apk update && apk add --no-cache pcre-dev ${PHPIZE_DEPS} unzip libzip-dev zip \
+    && pecl install redis && docker-php-ext-enable redis \
+    && docker-php-ext-install mysqli pdo pdo_mysql zip \
+    && apk del pcre-dev ${PHPIZE_DEPS}
 
-RUN add-apt-repository ppa:git-core/ppa \
-    && apt-get install -y git
+# Install Xdebug
+RUN apk add --no-cache gcc make autoconf libc-dev pkgconfig linux-headers && pecl install xdebug \
+    && sh -c "echo zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20210902/xdebug.so >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini" \
+    && sh -c "echo xdebug.mode=debug >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini" \
+    && sh -c "echo xdebug.remote_handler=dbgp >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini" \
+    && sh -c "echo xdebug.client_port=9001 >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini" \
+    && sh -c "echo xdebug.discover_client_host=false >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini" \
+    && sh -c "echo xdebug.start_with_request=no >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
-RUN apt-get install -y \
-        libzip-dev \
-        zip \
-        unzip
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -19,22 +26,18 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"  \
     && mv composer.phar /usr/local/bin/composer
 
-RUN apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Remove all tmp files
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && docker-php-source delete
 
-
-RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
+
+# Add user and group
+RUN addgroup -g $GID $WWWUSER && adduser -u $UID -G $WWWUSER -H $WWWUSER -D \
+    && chmod 776 /var/www
 
 WORKDIR /var/www/
 
 COPY ./ ./
 
-
-RUN composer install --no-dev
-
-RUN mv .env.production .env
-
-RUN php artisan key:generate
-RUN php artisan storage:link
+RUN composer install --no-dev && mv .env.production .env && php artisan key:generate && php artisan storage:link

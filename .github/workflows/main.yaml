@@ -6,9 +6,11 @@ on:
       - v2
 
 jobs:
-  main:
+  CI:
       runs-on: ubuntu-latest
       steps:
+        - name: Checkout
+          uses: actions/checkout@v2
         - name: Composer install
           uses: php-actions/composer@v6
           with:

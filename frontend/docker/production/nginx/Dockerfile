@@ -7,3 +7,4 @@ WORKDIR /var/www/
 
 COPY . .
 
+# NEED TO BUILD
