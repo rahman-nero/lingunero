@@ -32,9 +32,11 @@ services:
             context: ./
             dockerfile: frontend/docker/development/npm/Dockerfile
         volumes:
-            - ./frontend:/var/www
+            - ./frontend:/home/node/app
         tty: true
         restart: unless-stopped
+        ports:
+            - 3000:3000
 
 
 

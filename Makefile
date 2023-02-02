@@ -141,13 +141,13 @@ psalm:
 
 ######################## FRONTEND COMMANDS
 npm-install:
-	docker-compose exec -T backend-npm npm install
+	docker-compose exec -T frontend-npm npm install
 
 build-production: npm-install
-	docker-compose exec -T backend-npm npm run build prod
+	docker-compose exec -T frontend-npm npm run build prod
 
 npm-start:
-	docker-compose exec backend-npm npm  run start
+	docker-compose exec frontend-npm npm  run start
 
 mix-watch:
-	docker-compose exec backend-npm npm run watch
+	docker-compose exec frontend-npm npm run watch

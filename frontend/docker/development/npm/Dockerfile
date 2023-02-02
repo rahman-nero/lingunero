@@ -1,3 +1,5 @@
-FROM node:18.13-alpine3.17
+FROM node:18.13
 
-WORKDIR /var/www
+USER node
+
+WORKDIR /home/node/app
