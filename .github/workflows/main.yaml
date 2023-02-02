@@ -19,7 +19,7 @@ jobs:
             args: -d backend
 
         - name: Psalm check
-          run: ./backend/vendor/bin/psalm --no--cache
+          run: ./backend/vendor/bin/psalm --no-cache
 
 #        - name: PHPUnit tests
 #          run: ./backend/vendor/bin/phpunit
