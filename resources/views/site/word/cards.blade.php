@@ -7,31 +7,30 @@
 
 @section('content')
 
-    <section id="content" >
+    <section id="content">
         <div class="back">
             <a href="{{ back()->getTargetUrl() }}">Назад</a>
         </div>
 
 
-
-        @if($words->isNotEmpty())
+        @if($sentences->isNotEmpty())
             <div class="slider">
 
-                @foreach($words as $word)
+                @foreach($sentences as $word)
                     <div class="slide">
                         <div class="card">
 
                             {{-- Слово --}}
-                            <div class="word"  data-id="{{ $word->id }}">
+                            <div class="word" data-id="{{ $word->id }}">
                                 @if($word->isFavorite())
                                     <div class="button-add-favorite added">
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    @else
-                                        <div class="button-add-favorite">
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                    @endif
+                                @else
+                                    <div class="button-add-favorite">
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
+                                @endif
                                 <div class="center-word">
                                     {{ $word->word }}
 

@@ -19,14 +19,14 @@ final class SentencesRepository extends CoreRepository
     /**
      * Получение всех предложений из библиотеки
     */
-    public function getSentencesByLibraryId(int $libraryId): Collection
+    public function getSentencesByLibraryId(int $libraryId, $orderBy = 'created_at'): Collection
     {
         $columns = ['id', 'sentence', 'translation'];
 
         return $this->model()
             ->select($columns)
             ->where('library_id', $libraryId)
-            ->orderBy('created_at')
+            ->orderBy($orderBy)
             ->toBase()
             ->get();
     }

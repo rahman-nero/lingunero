@@ -24,6 +24,7 @@ services:
             - "9001:9001"
         tty: true
 
+
     php-fpm:
         container_name: php-fpm
         build:
@@ -37,6 +38,7 @@ services:
             - mysql
         user: ${USER}
 
+
     nginx:
         container_name: nginx
         build:
@@ -48,6 +50,7 @@ services:
             - ./public:/var/www/public
         links:
             - php-fpm
+
 
     mysql:
         container_name: mysql

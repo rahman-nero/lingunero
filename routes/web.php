@@ -132,6 +132,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['as' => 'manage.library.sentences.'], function () {
 
+
         // Страница редактирования предложения
         Route::get('manage/library/{libraryId}/sentences/edit', [SentenceManageController::class, 'edit'])
             ->whereNumber(['libraryId'])
@@ -177,6 +178,10 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('library.sentences.practice.index')
         ->whereNumber(['libraryId']);
 
+    // Страница просмотра предложений аккордионом
+    Route::get('/library/{libraryId}/sentences/cards', [SentencePracticeController::class, 'cards'])
+        ->name('library.sentences.practice.cards')
+        ->whereNumber('libraryId');
     // Проверка предложении и высчет статистики
     Route::post('/library/{libraryId}/sentences/practice', [SentencePracticeController::class, 'store'])
         ->name('library.sentences.practice.store')

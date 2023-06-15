@@ -84,4 +84,20 @@ final class PracticeController extends Controller
 
         return view('site.sentence.statistic', compact('libraryId', 'statisticId', 'statistic'));
     }
+
+
+    /**
+     * Страница показа всех слов из библиотеки в виде карточек
+     */
+    public function cards(int $libraryId)
+    {
+        if (!Gate::allows('can-edit-library', $libraryId)) {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
+
+        $sentences = $this->sentencesRepository->getSentencesByLibraryId(libraryId: $libraryId, orderBy: 'id');
+
+        return view(view: 'site.sentence.cards', data: compact('sentences', 'libraryId'));
+    }
+
 }

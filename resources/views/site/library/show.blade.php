@@ -59,6 +59,23 @@
             </a>
 
 
+            <a href="{{ route('library.sentences.practice.cards', $library->first()->id) }}">
+                <div class="list-block" data-background="{{ asset('media/i01_4.jpg') }}">
+                    <div class="content">
+                        <span>Карточки предложений - {{ $library->first()->countSentences() }}</span>
+                    </div>
+                    <div class="action">
+                        <a href="{{ route('manage.library.sentences.edit.show', $library->first()->id) }}">
+                            <img src="{{ asset('media/edit.png') }}" alt="">
+                        </a>
+                        <a href="{{ route('manage.library.sentences.add.show', $library->first()->id) }}">
+                            <img src="{{ asset('media/plus.png') }}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </a>
+
+
         </div>
     </section>
 

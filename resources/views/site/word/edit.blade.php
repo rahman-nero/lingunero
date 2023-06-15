@@ -60,7 +60,7 @@
                     @php
                         /** @var \App\Models\Words $word*/
                     @endphp
-                    @foreach($words as $word)
+                    @foreach($sentences as $word)
                         <div class="word-block" data-id="{{ $word->id }}">
                             <div class="header-block"></div>
                             <div class="definition-block">
@@ -74,17 +74,19 @@
                             <div class="word-panel">
                                 <a id="delete-word"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 @if($word->isFavorite())
-                                    <a href="#" title="Удалить из избранных" class="add-favorite added"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                    <a href="#" title="Удалить из избранных" class="add-favorite added"><i
+                                                class="fa fa-star" aria-hidden="true"></i></a>
                                 @else
-                                    <a href="#" title="Добавить в избранные" class="add-favorite"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                    <a href="#" title="Добавить в избранные" class="add-favorite"><i
+                                                class="fa fa-star-o" aria-hidden="true"></i></a>
                                 @endif
                             </div>
                         </div>
 
                     @endforeach
 
-                    @if($words->total() > $words->count())
-                        {{ $words->links() }}
+                    @if($sentences->total() > $sentences->count())
+                        {{ $sentences->links() }}
                     @endif
 
                 </div>
@@ -107,5 +109,5 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/word/edit.js') }}" ></script>
+    <script src="{{ asset('js/word/edit.js') }}"></script>
 @endpush

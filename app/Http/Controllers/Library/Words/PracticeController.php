@@ -20,8 +20,8 @@ final class PracticeController extends Controller
     private WordsStatisticsRepository $statisticsRepository;
 
     public function __construct(
-        WordsRepository $wordsRepository,
-        WordsService $wordsService,
+        WordsRepository           $wordsRepository,
+        WordsService              $wordsService,
         WordsStatisticsRepository $statisticsRepository
     )
     {
@@ -32,7 +32,7 @@ final class PracticeController extends Controller
 
     /**
      * Страница показа всех слов из библиотеки в виде карточек
-    */
+     */
     public function cards(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -47,7 +47,7 @@ final class PracticeController extends Controller
     /**
      * Страница практики слов из библиотеки
      * Некий тест на слова
-    */
+     */
     public function practice(int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -61,7 +61,7 @@ final class PracticeController extends Controller
 
     /**
      * Обработка формы "практики слов" и выведение статистики
-    */
+     */
     public function store(WordsPracticeRequest $request, int $libraryId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {
@@ -83,7 +83,7 @@ final class PracticeController extends Controller
 
     /**
      * Страница просмотра статистики по определенному тесту
-    */
+     */
     public function statistic(int $libraryId, int $statisticId)
     {
         if (!Gate::allows('can-edit-library', $libraryId)) {

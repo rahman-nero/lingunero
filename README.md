@@ -97,3 +97,12 @@ docker-compose exec -T mysql mysql -uroot -proot app < ./backups/<<тут пиш
 
     email: admin2@gmail.com
     password: 1234567890
+
+
+---
+
+### Замечание 
+
+Если у вас прокси, то в `.env`, вы должны во время подключения к бд **DB_HOST**, написать ip самого контейнера. Делаем `docker inspect mysql` и берем значение
+ключа `"IPAddress"` и ставим в .env -> DB_HOST
+

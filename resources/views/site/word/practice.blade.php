@@ -11,11 +11,11 @@
             <a href="{{ back()->getTargetUrl() }}">Назад</a>
         </div>
 
-        @if($words->isNotEmpty())
+        @if($sentences->isNotEmpty())
             <form action="{{ route('library.words.practice.store', $libraryId) }}" method="POST">
                 @csrf
 
-                @foreach($words as $word)
+                @foreach($sentences as $word)
                     <div class="form-div">
                         <div class="word">{{ $word->word }}</div>
 

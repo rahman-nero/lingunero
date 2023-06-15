@@ -3,7 +3,9 @@ FROM php:8.1
 ARG WWWUSER
 
 # Поумолчанию его в гите нету, add-apt
-RUN apt-get update && apt-get install -y software-properties-common
+RUN apt-get update && apt-get install -y software-properties-common && apt-get install -y wget
+
+RUN pear config-set http_proxy ${http_proxy}
 
 # Install redis extension for php
 RUN pecl install redis && docker-php-ext-enable redis
@@ -29,7 +31,7 @@ RUN bash -c "echo xdebug.start_with_request=no >> /usr/local/etc/php/conf.d/dock
 
 
 # Install composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+RUN wget https://getcomposer.org/installer -O composer-setup.php \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');"  \
     && mv composer.phar /usr/local/bin/composer

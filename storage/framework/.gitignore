@@ -8,7 +8,7 @@ routes.scanned.php
 schedule-*
 services.json
 !.gitignore
-/cache/
-/sessions/
-/testing/
-/views/
+cache/*
+sessions/*
+testing/*
+views/*
