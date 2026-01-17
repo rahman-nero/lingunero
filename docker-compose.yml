@@ -23,7 +23,6 @@ services:
             - "9001:9001"
         tty: true
 
-
     php-fpm:
         container_name: php-fpm
         build:
@@ -37,19 +36,17 @@ services:
             - mysql
         user: ${USER}
 
-
     nginx:
         container_name: nginx
         build:
             context: ./
             dockerfile: ./docker/nginx.docker
         ports:
-            - "80:80"
+            - "${NGINX_PORT:-80}:80"
         volumes:
             - ./public:/var/www/public
         links:
             - php-fpm
-
 
     mysql:
         container_name: mysql
@@ -64,10 +61,10 @@ services:
             - ./:/var/www
         working_dir: /var/www
         ports:
-            - "33006:3306"
+            - "${MYSQL_PORT:-3306}:3306"
 
     redis:
         container_name: redis
         image: redis
         ports:
-            - "63799:6379"
+            - "${REDIS_PORT:-6379}:6379"
