@@ -41,6 +41,6 @@ RUN apt-get -y autoremove \
 # Install php extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
-RUN useradd -M $WWWUSER
+RUN id -u $WWWUSER &>/dev/null || useradd -M $WWWUSER
 
 WORKDIR /var/www
