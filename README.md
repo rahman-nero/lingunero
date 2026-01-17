@@ -14,7 +14,7 @@
 
 Чтобы выполнить последующие действия, нам нужно запустить контейнеры:
 ```
-make docker-up
+make up
 ```
 
 
@@ -34,6 +34,7 @@ make composer-prod-install
 
 В этом файле вы должны указать заполнить поле `APP_KEY`, это не делается вручную, для этого есть команда
 ```
+cp .env.example .env
 docker-compose exec php-cli php artisan key:generate 
 ```
 Также если вы запустили сайт не на **localhost**, а на каком-то домене. (Поумолчанию сайт находится на **localhost:8080**) 
