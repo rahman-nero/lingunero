@@ -1,11 +1,11 @@
 ##################### COMMON COMMANDS
-docker-up:
+up:
 	docker-compose up -d
 
-docker-down:
+down:
 	docker-compose down
 
-docker-build: memory
+build: memory
 	docker-compose up --build -d
 
 clear-logs:

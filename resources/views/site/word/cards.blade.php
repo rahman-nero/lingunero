@@ -13,10 +13,10 @@
         </div>
 
 
-        @if($sentences->isNotEmpty())
+        @if($words->isNotEmpty())
             <div class="slider">
 
-                @foreach($sentences as $word)
+                @foreach($words as $word)
                     <div class="slide">
                         <div class="card">
 

@@ -3,16 +3,13 @@ FROM php:8.1-fpm
 ARG WWWUSER
 
 # Поумолчанию его в гите нету, add-apt
-RUN apt-get update && apt-get install -y software-properties-common
-
-RUN pear config-set http_proxy ${http_proxy}
+RUN apt update
 
 RUN pecl install redis && docker-php-ext-enable redis
 
-RUN add-apt-repository ppa:git-core/ppa \
-    && apt-get install -y git
+RUN apt install -y git
 
-RUN apt-get install -y \
+RUN apt install -y \
         libzip-dev \
         zip \
         unzip

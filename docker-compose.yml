@@ -1,4 +1,3 @@
-version: '3.7'
 services:
     npm:
         container_name: npm
@@ -72,4 +71,3 @@ services:
         image: redis
         ports:
             - "63799:6379"
-

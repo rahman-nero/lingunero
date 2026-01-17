@@ -60,7 +60,7 @@
                     @php
                         /** @var \App\Models\Words $word*/
                     @endphp
-                    @foreach($sentences as $word)
+                    @foreach($words as $word)
                         <div class="word-block" data-id="{{ $word->id }}">
                             <div class="header-block"></div>
                             <div class="definition-block">
@@ -85,8 +85,8 @@
 
                     @endforeach
 
-                    @if($sentences->total() > $sentences->count())
-                        {{ $sentences->links() }}
+                    @if($words->total() > $words->count())
+                        {{ $words->links() }}
                     @endif
 
                 </div>
