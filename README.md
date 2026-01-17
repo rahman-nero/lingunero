@@ -1,6 +1,3 @@
-## Документация
-
-
 ### Запуск
 
 Запуск не сложен, но требует некоторых содействий от вас. 
@@ -35,7 +32,7 @@ make composer-prod-install
 В этом файле вы должны указать заполнить поле `APP_KEY`, это не делается вручную, для этого есть команда
 ```
 cp .env.example .env
-docker-compose exec php-cli php artisan key:generate 
+docker compose exec php-cli php artisan key:generate 
 ```
 Также если вы запустили сайт не на **localhost**, а на каком-то домене. (Поумолчанию сайт находится на **localhost:8080**) 
 То тогда, меняем параметр `APP_URL` в конфиге, на тот адрес который вы указали.
@@ -67,13 +64,13 @@ make laravel-migrate
 Команда для создание ссылки на `storage` в папке `public`.
 
 ```
-docker-compose exec php-cli php artisan storage:link 
+docker compose exec php-cli php artisan storage:link 
 ```
 
 Дальше заходим на `localhost` и наслаждаемся сайтом :)
 
 ---
-### Бонус.
+### Бонус
 
 У меня в папке `backups`, хранятся слова которые я добавил в свою бд, во время изучения английского.
 Если вы хотите запустить приложения с этими данными, то вам нужно импортировать этот файл в бд.
@@ -81,7 +78,7 @@ docker-compose exec php-cli php artisan storage:link
 Но, сперва вам нужно удалить все таблицы чтобы импорт сработал, коротко, вот команды
 ```
 make drop-database
-docker-compose exec -T mysql mysql -uroot -proot app < ./backups/<<тут пишем имя backup-файла>>
+docker compose exec -T mysql mysql -uroot -proot app < ./backups/<<тут пишем имя backup-файла>>
 ```
 
 Заметь, чтобы это работало нужны запушенные контейнеры докера.
@@ -90,20 +87,12 @@ docker-compose exec -T mysql mysql -uroot -proot app < ./backups/<<тут пиш
 **Логин и пароль для входа на сайт:**
 
 Первый пользователь:
-
-    email: admin@gmail.com
-    password: 1234567890
-
+```
+email: admin@gmail.com
+password: 1234567890
+```
 Второй пользователь:
-
-    email: admin2@gmail.com
-    password: 1234567890
-
-
----
-
-### Замечание 
-
-Если у вас прокси, то в `.env`, вы должны во время подключения к бд **DB_HOST**, написать ip самого контейнера. Делаем `docker inspect mysql` и берем значение
-ключа `"IPAddress"` и ставим в .env -> DB_HOST
-
+``` 
+email: admin2@gmail.com
+password: 1234567890
+```
