@@ -57,7 +57,6 @@ services:
             - MYSQL_PASSWORD=user
             - MYSQL_DATABASE=app
         volumes:
-            - ./running/mysql:/var/lib/mysql/
             - ./:/var/www
         working_dir: /var/www
         ports:

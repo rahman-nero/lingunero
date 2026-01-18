@@ -3,16 +3,19 @@ up:
 	docker compose up -d
 
 down:
-	docker compose down
+	docker compose down --remove-orphans
 
-build: memory
-	docker compose up --build -d
+build:
+	docker compose build --no-cache
 
 clear-logs:
 	rm ./storage/logs/laravel.log
 
-memory:
-	sudo sysctl -w vm.max_map_count=262144
+bash:
+	docker compose exec php-cli bash
+
+optimize:
+	docker compose exec php-cli php artisan optimize
 
 ## Выполнять команду вручную, ибо не срабатывает вот эта запись: (date "+%d_%m_%+_%H_%M")
 dump-database:

@@ -1,10 +1,15 @@
 FROM php:8.1-fpm
 
-ARG WWWUSER
+# Устанавливаем значение по умолчанию для WWWUSER
+ARG WWWUSER=www-data
 
-# Поумолчанию его в гите нету, add-apt
+# Преобразуем ARG в ENV для использования в RUN командах
+ENV WWWUSER=${WWWUSER}
+
+# Обновляем apt
 RUN apt update
 
+# Устанавливаем redis
 RUN pecl install redis && docker-php-ext-enable redis
 
 RUN apt install -y git
@@ -14,25 +19,34 @@ RUN apt install -y \
         zip \
         unzip
 
-# Install Xdebug
-#RUN apt-get -y install gcc make autoconf libc-dev pkg-config
-#RUN pecl install xdebug
+# Install Xdebug (закомментировано)
+# RUN apt-get -y install gcc make autoconf libc-dev pkg-config
+# RUN pecl install xdebug
+# RUN bash -c "echo zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20210902/xdebug.so >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+# RUN bash -c "echo xdebug.mode=debug >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+# RUN bash -c "echo xdebug.remote_handler=dbgp >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+# RUN bash -c "echo xdebug.start_with_request=yes >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+# RUN bash -c "echo xdebug.client_port=9001 >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+# RUN bash -c "echo xdebug.discover_client_host=true >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+# RUN bash -c "echo xdebug.client_host = host.docker.internal >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
-#RUN bash -c "echo zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20210902/xdebug.so >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-#RUN bash -c "echo xdebug.mode=debug >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-#RUN bash -c "echo xdebug.remote_handler=dbgp >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-#RUN bash -c "echo xdebug.start_with_request=yes >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-#RUN bash -c "echo xdebug.client_port=9001 >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-#RUN bash -c "echo xdebug.discover_client_host=true >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-#RUN bash -c "echo xdebug.client_host = host.docker.internal >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-
-
+# Очистка
 RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Установка расширений PHP
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
-RUN id -u $WWWUSER &>/dev/null || useradd -M $WWWUSER
+# Создание пользователя (исправленная версия)
+RUN if ! getent passwd "$WWWUSER" > /dev/null 2>&1; then \
+        if [ "$WWWUSER" = "www-data" ]; then \
+            echo "User www-data already exists"; \
+        else \
+            useradd -M $WWWUSER; \
+        fi \
+    else \
+        echo "User $WWWUSER already exists"; \
+    fi
 
 WORKDIR /var/www/

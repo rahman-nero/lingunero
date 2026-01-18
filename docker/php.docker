@@ -1,6 +1,10 @@
 FROM php:8.1
 
-ARG WWWUSER
+# Устанавливаем значение по умолчанию для WWWUSER
+ARG WWWUSER=www-data
+
+# Устанавливаем переменную окружения на основе ARG
+ENV WWWUSER=${WWWUSER}
 
 # Поумолчанию его в гите нету, add-apt
 RUN apt-get update
@@ -26,7 +30,6 @@ RUN bash -c "echo xdebug.client_port=9001 >> /usr/local/etc/php/conf.d/docker-ph
 RUN bash -c "echo xdebug.discover_client_host=false >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 RUN bash -c "echo xdebug.start_with_request=no >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
-
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
@@ -41,6 +44,13 @@ RUN apt-get -y autoremove \
 # Install php extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
-RUN id -u $WWWUSER &>/dev/null || useradd -M $WWWUSER
+# Создаем пользователя если не существует
+RUN if ! id "$WWWUSER" >/dev/null 2>&1; then \
+        if [ "$WWWUSER" = "www-data" ]; then \
+            echo "User www-data already exists"; \
+        else \
+            useradd -M $WWWUSER; \
+        fi \
+    fi
 
 WORKDIR /var/www
