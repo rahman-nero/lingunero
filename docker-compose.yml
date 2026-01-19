@@ -22,6 +22,7 @@ services:
         ports:
             - "9001:9001"
         tty: true
+        restart: unless-stopped
 
     php-fpm:
         container_name: php-fpm
@@ -35,6 +36,7 @@ services:
         links:
             - mysql
         user: ${USER}
+        restart: unless-stopped
 
     nginx:
         container_name: nginx
@@ -47,6 +49,7 @@ services:
             - ./public:/var/www/public
         links:
             - php-fpm
+        restart: unless-stopped
 
     mysql:
         container_name: mysql
@@ -57,13 +60,16 @@ services:
             - MYSQL_PASSWORD=user
             - MYSQL_DATABASE=app
         volumes:
-            - ./:/var/www
-        working_dir: /var/www
+            - mysql_data:/var/lib/mysql  # Специальный volume для данных
         ports:
             - "${MYSQL_PORT:-3306}:3306"
+        restart: unless-stopped
 
     redis:
         container_name: redis
         image: redis
         ports:
             - "${REDIS_PORT:-6379}:6379"
+
+volumes:
+    mysql_data:  # Объявление volume
