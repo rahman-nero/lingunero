@@ -24,10 +24,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
-<body>
+<body class="font-sans antialiased min-h-screen flex flex-col bg-gray-100">
 @include('components.site.navigation')
 
-<main id="root" class="@yield('root-classes')">
+<main id="root" class="@yield('root-classes') flex-1">
     @include('components.site.errors')
     @include('components.site.info')
 
