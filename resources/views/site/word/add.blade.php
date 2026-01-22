@@ -82,5 +82,5 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/word/add.js') }}"></script>
+    @vite(['resources/js/site/word/add.js'])
 @endpush

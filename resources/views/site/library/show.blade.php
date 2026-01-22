@@ -83,5 +83,5 @@
 
 
 @push('js')
-    <script src="{{ asset('js/library/show.js') }}"></script>
+    @vite(['resources/js/site/library/show.js'])
 @endpush

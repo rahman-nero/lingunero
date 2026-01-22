@@ -70,5 +70,5 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/sentences/statistic.js') }}"></script>
+    @vite(['resources/js/site/sentences/statistic.js'])
 @endpush

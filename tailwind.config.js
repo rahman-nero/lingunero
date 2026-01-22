@@ -1,18 +1,14 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-
-module.exports = {
-    purge: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        "./resources/**/*.{vue,js,ts,jsx,tsx}",
+        './resources/**/*.blade.php',
     ],
-
     theme: {
-    },
-
-    variants: {
-        extend: {
-            opacity: ['disabled'],
+        fontFamily: {
+            'sans': ['Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
         },
-    }
-};
+        extend: {},
+    },
+    plugins: [require('tailwindcss-primeui')]
+}

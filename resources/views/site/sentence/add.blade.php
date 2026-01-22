@@ -71,5 +71,5 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/sentences/add.js') }}"></script>
+    @vite(['resources/js/site/sentences/add.js'])
 @endpush

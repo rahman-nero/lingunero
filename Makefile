@@ -86,7 +86,7 @@ npm-install:
 	docker compose exec -T npm npm install
 
 build-production: npm-install
-	docker compose exec -T npm npm run prod
+	docker compose exec -T npm npm run build
 
 npm-start:
 	docker compose exec npm npm run start

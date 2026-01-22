@@ -60,5 +60,5 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/sentences/edit.js') }}"></script>
+    @vite(['resources/js/site/sentences/edit.js'])
 @endpush

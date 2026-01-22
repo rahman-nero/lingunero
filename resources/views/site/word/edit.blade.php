@@ -109,5 +109,5 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/word/edit.js') }}"></script>
+    @vite(['resources/js/site/word/edit.js'])
 @endpush

@@ -69,5 +69,5 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/word/cards.js') }}"></script>
+    @vite(['resources/js/site/word/cards.js'])
 @endpush
