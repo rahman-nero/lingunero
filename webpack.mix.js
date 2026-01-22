@@ -1,4 +1,7 @@
 const mix = require('laravel-mix');
+require('dotenv').config();
+
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -44,3 +47,5 @@ mix.postCss('resources/css/app.css', 'public/css', [
  * */
 mix.sass('resources/sass/main.sass', 'public/css');
 
+mix.copy('resources/css/app.css', 'public/css')
+    .copy('resources/js/app.js', 'public/js');
