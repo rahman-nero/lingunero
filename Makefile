@@ -51,13 +51,13 @@ laravel-route:
 laravel-cache:
 	docker compose exec php-cli php artisan cache:clear
 
-laravel-migrate:
+migrate:
 	docker compose exec php-cli php artisan migrate
 
-laravel-migrate-seed:
+migrate-seed:
 	docker compose exec php-cli php artisan migrate --seed
 
-laravel-storage-link:
+storage-link:
 	docker compose exec php-cli php artisan storage:link
 
 composer-dev-install:
@@ -69,10 +69,10 @@ composer-prod-install:
 dump:
 	docker compose exec php-cli composer dumpautoload
 
-laravel-tests:
+tests:
 	docker compose exec php-cli vendor/bin/phpunit
 
-laravel-queue:
+queue:
 	docker compose exec php-cli php artisan queue:work
 
 laravel-down:
