@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property int $id
  * @property int $user_id
+ * @property string $title
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  * @property ?Carbon $deleted_at
@@ -27,6 +28,7 @@ class LLMChatRoom extends Model
     /** @inheritdoc */
     protected $fillable = [
         'user_id',
+        'title',
     ];
 
     /**

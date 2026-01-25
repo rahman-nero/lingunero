@@ -70,6 +70,8 @@ services:
         build:
             context: ./
             dockerfile: ./docker/npm.docker
+        ports:
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         volumes:
             -  ./backend:/var/www
         tty: true

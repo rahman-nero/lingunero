@@ -5,6 +5,8 @@ use App\Http\Controllers\Library\Sentences\ManageController as SentenceManageCon
 use App\Http\Controllers\Library\Sentences\PracticeController as SentencePracticeController;
 use App\Http\Controllers\Library\Words\ManageController;
 use App\Http\Controllers\Library\Words\PracticeController;
+use App\Http\Controllers\LLMChat\LLMChatMessageController;
+use App\Http\Controllers\LLMChat\LLMChatRoomController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\User\FavoriteWordsController;
 use App\Http\Controllers\User\UserController;
@@ -213,7 +215,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/user/favorites/{wordId}/ajax', [FavoriteWordsController::class, 'deleteAjax'])
         ->name('user.favorites.delete.ajax')
         ->whereNumber('wordId');
+
+
+    ///////// Чат с LLM
+
+    // Получить все чаты
+    Route::get('/llm/chats', [LLMChatRoomController::class, 'index'])->name('llm.chats.index');
+
+    // Получить конкретный чат
+    Route::get('/llm/chats/{chat_id}', [LLMChatRoomController::class, 'show'])->name('llm.chats.show');
+
+    // Создать новый чат
+    Route::post('/llm/chats', [LLMChatRoomController::class, 'store'])->name('llm.chats.store');
+
+    // Очистить чат
+    Route::delete('/llm/chats/{chat_id}', [LLMChatRoomController::class, 'delete'])->name('llm.chats.delete');
+
+    // Спросить у ИИ
+    Route::post('/llm/{chat_id}/messages', [LLMChatMessageController::class, 'store']);
 });
-
-
-Route::get('test', [\App\Http\Controllers\Controller::class, 'test']);

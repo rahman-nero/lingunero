@@ -8,6 +8,9 @@ down:
 build:
 	docker compose build --no-cache
 
+build-cache:
+	docker compose build
+
 clear-logs:
 	rm ./storage/logs/laravel.log
 
@@ -91,5 +94,5 @@ build-production: npm-install
 npm-start:
 	docker compose exec npm npm run start
 
-mix-watch:
-	docker compose exec npm npm run watch
+dev:
+	docker compose exec npm npm run dev

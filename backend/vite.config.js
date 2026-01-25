@@ -28,6 +28,9 @@ export default defineConfig({
                 'resources/js/site/word/cards.js',
                 'resources/js/site/word/edit.js',
                 'resources/js/site/word/statistic.js',
+
+                // LLM
+                'resources/js/site/llm/chats/show.js',
             ],
             refresh: true,
         }),

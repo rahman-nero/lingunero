@@ -10,6 +10,7 @@
         <div class="top-nav-bar">
             <ul>
                 <li><a href="{{ route('home') }}">Главная</a></li>
+                <li><a href="{{ route('llm.chats.index') }}">Чат бот</a></li>
                 <li><a href="{{ route('user.favorites') }}">Избранные</a></li>
                 <li><a href="{{ route('manage.library.create.show') }}" class="styled-button">Создать библиотеку</a>
                 </li>

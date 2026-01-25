@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('llm_chat_rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->string('title')->comment('Название чата');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,13 +1,15 @@
 import json
 from fastapi import FastAPI
-
 from pydantic import BaseModel
 from llama_cpp import Llama
-from prompts import PROMPTS
+import uvicorn
+
+# Инициализируем хранилище сессий
+chat_sessions = {}
 
 llm = Llama(
     model_path="models/current-model.gguf",
-    n_ctx=4096,
+    n_ctx=2096,
     n_threads=4,
     chat_format="llama-3",
     repeat_penalty=1.25,
@@ -18,30 +20,30 @@ app = FastAPI()
 
 class Prompt(BaseModel):
     prompt: str
-    chatId: int
-    userId: int
+    chat_id: int
+    user_id: int
     message: str
-
 
 @app.post("/chat")
 async def chat(prompt: Prompt):
     # Создаём историю для сессии, если нет
     if prompt.user_id not in chat_sessions:
         chat_sessions[prompt.user_id] = [
+            {"role": "system", "content": prompt.prompt}
         ]
 
     session_history = chat_sessions[prompt.user_id]
 
-    [
-        {"role": "system", "content": prompt.prompt}
-
-        // История
-        {"role": "user", "content": prompt.message} # Вопрос от пользователя
-        {"role": "assistant", "content": assistant_reply} # Ответ от ассистента
-
-        // Новый запрос
-        {"role": "user", "content": prompt.message} # Вопрос от пользователя
-    ]
+#     [
+#         {"role": "system", "content": prompt.prompt}
+#
+#         // История
+#         {"role": "user", "content": prompt.message} # Вопрос от пользователя
+#         {"role": "assistant", "content": assistant_reply} # Ответ от ассистента
+#
+#         // Новый запрос
+#         {"role": "user", "content": prompt.message} # Вопрос от пользователя
+#     ]
 
     # Добавляем новое сообщение пользователя
     session_history.append({"role": "user", "content": prompt.message})
@@ -59,13 +61,11 @@ async def chat(prompt: Prompt):
     # Добавляем ответ в историю
     session_history.append({"role": "assistant", "content": assistant_reply})
 
-    # Обрезаем историю, если слишком длинная (например, последние 10 сообщений)
-    if len(session_history) > 22:  # 1 system + 10 пар
-        session_history = [session_history[0]] + session_history[-20:]
-        chat_sessions[prompt.user_id] = session_history
+    # Обрезаем историю, если слишком длинная
+    if len(session_history) > 21:  # 1 system + 10 пар (20 сообщений)
+        chat_sessions[prompt.user_id] = [session_history[0]] + session_history[-20:]
 
     return {"reply": assistant_reply}
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    uvicorn.run(app, host='0.0.0.0', port=5000)
