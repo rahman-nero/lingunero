@@ -1,0 +1,19 @@
+FROM python:3.12
+
+WORKDIR /var/www
+
+COPY ./llm ./
+
+RUN pip install --no-cache-dir --upgrade -r ./requirements.txt
+
+WORKDIR /var/www/models
+
+# RUN chmod +x ./download.sh && bash ./download.sh
+
+WORKDIR /var/www
+
+EXPOSE 80
+
+# If running behind a proxy like Nginx or Traefik add --proxy-headers
+CMD ["fastapi", "run", "app.py", "--port", "80", "--proxy-headers"]
+

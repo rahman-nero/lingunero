@@ -20,15 +20,15 @@ RUN apt-get install -y \
         unzip
 
 # Install Xdebug
-RUN apt-get -y install gcc make autoconf libc-dev pkg-config
-RUN pecl install xdebug
-
-RUN bash -c "echo zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20210902/xdebug.so >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-RUN bash -c "echo xdebug.mode=debug >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-RUN bash -c "echo xdebug.remote_handler=dbgp >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-RUN bash -c "echo xdebug.client_port=9001 >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-RUN bash -c "echo xdebug.discover_client_host=false >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-RUN bash -c "echo xdebug.start_with_request=no >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+#RUN apt-get -y install gcc make autoconf libc-dev pkg-config
+#RUN pecl install xdebug
+#
+#RUN bash -c "echo zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20210902/xdebug.so >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+#RUN bash -c "echo xdebug.mode=debug >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+#RUN bash -c "echo xdebug.remote_handler=dbgp >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+#RUN bash -c "echo xdebug.client_port=9001 >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+#RUN bash -c "echo xdebug.discover_client_host=false >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+#RUN bash -c "echo xdebug.start_with_request=no >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \

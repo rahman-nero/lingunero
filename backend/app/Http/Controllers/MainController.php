@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repository\LibraryRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class MainController
