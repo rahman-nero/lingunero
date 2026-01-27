@@ -222,14 +222,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Получить все чаты
     Route::get('/llm/chats', [LLMChatRoomController::class, 'index'])->name('llm.chats.index');
 
+    // Создать новый чат
+    Route::get('/llm/chats/create', [LLMChatRoomController::class, 'store'])->name('llm.chats.store');
+
+    // Удалить чат
+    Route::get('/llm/chats/{chat_id}/delete', [LLMChatRoomController::class, 'delete'])->name('llm.chats.delete');
+
     // Получить конкретный чат
     Route::get('/llm/chats/{chat_id}', [LLMChatRoomController::class, 'show'])->name('llm.chats.show');
-
-    // Создать новый чат
-    Route::post('/llm/chats', [LLMChatRoomController::class, 'store'])->name('llm.chats.store');
-
-    // Очистить чат
-    Route::delete('/llm/chats/{chat_id}', [LLMChatRoomController::class, 'delete'])->name('llm.chats.delete');
 
     // Спросить у ИИ
     Route::post('/llm/{chat_id}/messages', [LLMChatMessageController::class, 'store']);

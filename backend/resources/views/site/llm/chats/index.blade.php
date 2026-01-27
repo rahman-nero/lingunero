@@ -9,7 +9,10 @@
         <div class="chats-layout">
 
             <aside class="chats-sidebar">
-                <h2 class="chats-sidebar__title">Все чаты</h2>
+                <div class="flex justify-between">
+                    <h2 class="chats-sidebar__title">Все чаты</h2>
+                    <a href="{{ route('llm.chats.store') }}" class="block" title="Создать чат"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </div>
 
                 <ul class="chats-list">
                     @if($chats->isNotEmpty())
@@ -31,7 +34,8 @@
                 <div class="chat-placeholder__content">
                     <p class="chat-placeholder__text">Выберите чат</p>
                     <p class="chat-placeholder__text text-sm">или</p>
-                    <a href="/chats/create" class="chat-placeholder__button">
+
+                    <a href="{{ route('llm.chats.store') }}" class="chat-placeholder__button">
                         <span class="chat-placeholder__icon">＋</span>
                         Создать чат
                     </a>

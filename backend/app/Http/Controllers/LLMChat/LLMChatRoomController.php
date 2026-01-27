@@ -72,11 +72,11 @@ final class LLMChatRoomController
 
         $result = $LLMChatRoomService->create($user->id);
 
-        return to_route('site.llm.chats.show', ['chat_id' => $result->id]);
+        return to_route('llm.chats.show', ['chat_id' => $result->id]);
     }
 
     /**
-     * Удаление чата
+     * Удаление чата.
      *
      * @param int $chatId
      * @param LLMChatRoomService $LLMChatRoomService

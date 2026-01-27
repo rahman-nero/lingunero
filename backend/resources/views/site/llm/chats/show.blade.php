@@ -8,8 +8,11 @@
     <section id="content" class="chats-page">
         <div class="chats-layout">
 
-            <aside class="chats-sidebar">
-                <h2 class="chats-sidebar__title">Все чаты</h2>
+            <aside class="chats-sidebar hidden md:block">
+                <div class="flex justify-between">
+                    <h2 class="chats-sidebar__title">Все чаты</h2>
+                    <a href="{{ route('llm.chats.store') }}" class="block" title="Создать чат"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </div>
 
                 <ul class="chats-list">
                     @if($chats->isNotEmpty())
@@ -32,15 +35,18 @@
 
 
             {{-- RIGHT: Chat --}}
-            <main class="chat">
+            <main class="chat h-auto">
 
                 {{-- Header --}}
                 <div class="chat-header">
-                    <h3 class="chat-header__title">{{ $currentChat->title }}</h3>
+                    <h3 class="chat-header__title">
+                        <a href="{{ route('llm.chats.index') }}" class="mr-2"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                        {{ $currentChat->title }}
+                    </h3>
 
-                    <button class="chat-header__delete" title="Удалить чат">
-                        🗑
-                    </button>
+                    <a href="{{ route('llm.chats.delete', ['chat_id' => $currentChat->id]) }}" class="chat-header__delete" title="Удалить чат">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
                 </div>
 
                 {{-- Messages --}}
@@ -50,7 +56,7 @@
 
                     @foreach($messages as $message)
                         {{-- Message from current user --}}
-                        <div class="chat-message chat-message--outgoing">
+                        <div class="chat-message chat-message--outgoing"  title="{{ $message->created_at->translatedFormat('j F Y H:i:s') }}">
                             <div class="chat-message__bubble">
                                 {!! $message->message !!}
                             </div>
@@ -58,7 +64,7 @@
 
                         @if($message->reply_given_at !== null)
                             {{-- Reply from LLM --}}
-                            <div class="chat-message chat-message--incoming">
+                            <div class="chat-message chat-message--incoming" title="{{ $message->reply_given_at->translatedFormat('j F Y H:i:s') }}">
                                 <div class="chat-message__bubble">
                                     {!! $message->reply !!}
                                 </div>
@@ -86,7 +92,7 @@
                         autocomplete="off"
                     />
 
-                    <button type="submit">Отправить</button>
+                    <button type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                 </form>
 
             </main>

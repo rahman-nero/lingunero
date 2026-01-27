@@ -19,13 +19,13 @@ final class LLMChatRoomService
      * @param int $userId
      * @return LLMChatRoom
      */
-    public function create(int $userId): LLMChatRoom
+    public function create(int $userId, ?string $title = null): LLMChatRoom
     {
         return $this->getModel()
             ->create([
                 'user_id' => $userId,
-                'title'   => Carbon::now()
-                    ->translatedFormat('d j y H:i:s'),
+                'title'   => $title ?? Carbon::now()
+                        ->translatedFormat('j F Y H:i:s'),
             ]);
     }
 

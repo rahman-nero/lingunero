@@ -34,6 +34,11 @@ class LLMChatMessage extends Model
         'reply_given_at',
     ];
 
+    /** @inheritdoc */
+    protected $casts = [
+        'reply_given_at' => 'datetime',
+    ];
+
     /**
      * @return BelongsTo
      */

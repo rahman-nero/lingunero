@@ -894,9 +894,12 @@ $radius-md: 8px
 ///// Responsive
 @media (max-width: 1024px)
     .chats-page
+        padding: 0!important
         .chats-layout
             flex-direction: column
-            height: auto
+
+    .chat-placeholder
+        display: none
 
     .chats-sidebar
         width: 100%
