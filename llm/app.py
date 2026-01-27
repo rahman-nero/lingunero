@@ -9,7 +9,7 @@ chat_sessions = {}
 
 llm = Llama(
     model_path="models/current-model.gguf",
-    n_ctx=2096,
+    n_ctx=1096,
     n_threads=4,
     chat_format="llama-3",
     repeat_penalty=1.25,
@@ -52,7 +52,7 @@ async def chat(prompt: Prompt):
     response = llm.create_chat_completion(
         messages=session_history,
         temperature=0.1,
-        max_tokens=512,
+        max_tokens=256,
         stop=["<|eot_id|>"],
     )
 
