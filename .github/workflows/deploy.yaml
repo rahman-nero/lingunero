@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 # Authenticate to the server via ssh
 # and run our deployment script
@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to server
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@main
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}

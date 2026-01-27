@@ -4,13 +4,13 @@ services:
         build:
             context: ./
             dockerfile: ./docker/nginx/Dockerfile
+        restart: unless-stopped
         ports:
             - "${NGINX_PORT:-80}:80"
         volumes:
             - ./backend:/var/www
         links:
             - php
-        restart: unless-stopped
 
     mysql:
         container_name: mysql
@@ -20,11 +20,11 @@ services:
             - MYSQL_USER=user
             - MYSQL_PASSWORD=user
             - MYSQL_DATABASE=app
+        restart: unless-stopped
         volumes:
             - mysql_data:/var/lib/mysql  # Специальный volume для данных
         ports:
             - "${MYSQL_PORT:-3306}:3306"
-        restart: unless-stopped
 
     llm:
         container_name: llm
@@ -47,13 +47,13 @@ services:
             dockerfile: ./docker/php/Dockerfile
             args:
                 WWWUSER: ${USER}
+        restart: unless-stopped
+        user: ${USER}
         volumes:
             - ./backend:/var/www/
         links:
             - mysql
             - llm
-        user: ${USER}
-        restart: unless-stopped
 
     node:
         container_name: node
@@ -62,14 +62,15 @@ services:
             dockerfile: ./docker/node/Dockerfile
         ports:
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        restart: unless-stopped
+        tty: true
         volumes:
             -  ./backend:/var/www
-        tty: true
-        restart: unless-stopped
 
     redis:
         container_name: redis
         image: redis
+        restart: unless-stopped
         ports:
             - "${REDIS_PORT:-6379}:6379"
 
