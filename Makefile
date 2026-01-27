@@ -55,7 +55,7 @@ laravel-cache:
 	docker compose exec php php artisan cache:clear
 
 migrate:
-	docker compose exec php php artisan migrate
+	docker compose exec php php artisan migrate --force
 
 migrate-seed:
 	docker compose exec php php artisan migrate --seed
@@ -67,7 +67,7 @@ composer-dev-install:
 	docker compose exec php composer install
 
 composer-prod-install:
-	docker compose exec php composer install --no-dev
+	docker compose exec php composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 dump:
 	docker compose exec php composer dumpautoload
