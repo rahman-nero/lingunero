@@ -25,14 +25,11 @@ make laravel-down
 # Запустить миграцию базы данных
 make migrate
 
-# Очистка кэша конфигурации
-make laravel-cache
+# Линк storage папки в public
+make storage-link
 
 # Кэширование конфигов
 make optimize
-
-# Линк storage папки в public
-make storage-link
 
 # Билд фронтенда
 make build-production

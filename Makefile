@@ -18,6 +18,10 @@ bash:
 	docker compose exec php bash
 
 optimize:
+	docker compose exec php php artisan cache:clear
+	docker compose exec php php artisan config:clear
+	docker compose exec php php artisan route:clear
+	docker compose exec php php artisan view:clear
 	docker compose exec php php artisan optimize
 
 ## Выполнять команду вручную, ибо не срабатывает вот эта запись: (date "+%d_%m_%+_%H_%M")
