@@ -39,6 +39,8 @@ cp .env.example .env
 cd backend
 cp .env.example .env
 
+cd ../
+
 cd llm
 cp .env.example .env
 ```
@@ -58,7 +60,7 @@ make up
 Конечные команды:
 
 ```shell
-make composer-prod-install # Установка composer-зависимостепй
+make composer-prod-install # Установка composer-зависимостей
 make key-generate # Генерация ключа
 make build-production # Установка зависимостей front-end и билд
 make laravel-migrate # Запуск миграции
