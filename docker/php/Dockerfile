@@ -38,6 +38,12 @@ RUN apt-get -y autoremove \
 # Установка расширений PHP
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
+# Install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');"  \
+    && mv composer.phar /usr/local/bin/composer
+
 # Создание пользователя
 RUN if ! getent passwd "$WWWUSER" > /dev/null 2>&1; then \
         if [ "$WWWUSER" = "www-data" ]; then \
