@@ -3,13 +3,13 @@ services:
         container_name: nginx
         build:
             context: ./
-            dockerfile: ./docker/nginx.docker
+            dockerfile: ./docker/nginx/Dockerfile
         ports:
             - "${NGINX_PORT:-80}:80"
         volumes:
             - ./backend:/var/www
         links:
-            - php-fpm
+            - php
         restart: unless-stopped
 
     mysql:
@@ -28,33 +28,23 @@ services:
 
     llm:
         container_name: llm
+        env_file:
+            - path: .env
+              required: true
         build:
           context: ./
-          dockerfile: ./docker/llm.docker
+          dockerfile: ./docker/llm/Dockerfile
+          args:
+            - LLM_URL=${LLM_URL:-false} # Doesn't download LLM by default
         restart: unless-stopped
         links:
             - mysql
 
-    php-cli:
+    php:
         container_name: php
         build:
             context: ./
-            dockerfile: ./docker/php.docker
-            args:
-                WWWUSER: ${USER}
-        volumes:
-            - ./backend:/var/www/
-        user: ${USER}
-        ports:
-            - "9001:9001"
-        tty: true
-        restart: unless-stopped
-
-    php-fpm:
-        container_name: php-fpm
-        build:
-            context: ./
-            dockerfile: ./docker/php-fpm.docker
+            dockerfile: ./docker/php/Dockerfile
             args:
                 WWWUSER: ${USER}
         volumes:
@@ -65,11 +55,11 @@ services:
         user: ${USER}
         restart: unless-stopped
 
-    npm:
-        container_name: npm
+    node:
+        container_name: node
         build:
             context: ./
-            dockerfile: ./docker/npm.docker
+            dockerfile: ./docker/node/Dockerfile
         ports:
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         volumes:

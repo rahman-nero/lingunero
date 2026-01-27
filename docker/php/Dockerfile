@@ -38,7 +38,7 @@ RUN apt-get -y autoremove \
 # Установка расширений PHP
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
-# Создание пользователя (исправленная версия)
+# Создание пользователя
 RUN if ! getent passwd "$WWWUSER" > /dev/null 2>&1; then \
         if [ "$WWWUSER" = "www-data" ]; then \
             echo "User www-data already exists"; \

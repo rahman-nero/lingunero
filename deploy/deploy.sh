@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -e
+
+sudo chown -R rahman:rahman /var/www/lingunero
+
+# Загрузить последнюю версию приложения
+git pull origin master
+
+# Stopping containers
+make down
+
+# Docker building (with cache)
+make build-cache
+
+# Starting containers
+make up
+
+# Установить зависимости Composer
+make composer-prod-install
+
+# Вход в режима обслуживания
+make laravel-down
+
+# Запустить миграцию базы данных
+make migrate
+
+# Очистка кэша конфигурации
+make laravel-cache
+
+# Кэширование конфигов
+make optimize
+
+# Линк storage папки в public
+make storage-link
+
+# Билд фронтенда
+make build-production
+
+# Выход из режима обслуживания
+make laravel-up
+
+echo "Deployment finished!"
