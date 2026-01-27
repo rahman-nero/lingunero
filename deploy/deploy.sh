@@ -5,7 +5,7 @@ set -e
 sudo chown -R rahman:rahman /var/www/lingunero
 
 # Загрузить последнюю версию приложения
-git pull origin master
+git pull origin main
 
 # Stopping containers
 make down
