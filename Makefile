@@ -32,8 +32,8 @@ drop-database:
 	docker compose exec mysql mysql -uroot -proot -e "drop database if exists app; create database app"
 
 chown:
-	docker compose exec php-fpm chown -R www-data /var/www/storage
-	docker compose exec php-fpm chmod -R 755 /var/www/storage
+	docker compose exec chown -R www-data /var/www/storage
+	docker compose exec chmod -R 755 /var/www/storage
 
 ###################### BACKEND COMMANDS
 

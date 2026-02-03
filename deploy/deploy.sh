@@ -2,8 +2,6 @@
 
 set -e
 
-sudo chown -R rahman:rahman /var/www/lingunero
-
 # Загрузить последнюю версию приложения
 git pull origin main
 
@@ -33,6 +31,9 @@ make optimize
 
 # Билд фронтенда
 make build-production
+
+# Сброс прав
+make chown
 
 # Выход из режима обслуживания
 make laravel-up
