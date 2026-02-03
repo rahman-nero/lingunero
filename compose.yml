@@ -26,19 +26,19 @@ services:
         ports:
             - "${MYSQL_PORT:-3306}:3306"
 
-    llm:
-        container_name: llm
-        env_file:
-            - path: .env
-              required: true
-        build:
-          context: ./
-          dockerfile: ./docker/llm/Dockerfile
-          args:
-            - LLM_URL=${LLM_URL:-false} # Doesn't download LLM by default
-        restart: unless-stopped
-        links:
-            - mysql
+#    llm:
+#        container_name: llm
+#        env_file:
+#            - path: .env
+#              required: true
+#        build:
+#          context: ./
+#          dockerfile: ./docker/llm/Dockerfile
+#          args:
+#            - LLM_URL=${LLM_URL:-false} # Doesn't download LLM by default
+#        restart: unless-stopped
+#        links:
+#            - mysql
 
     php:
         container_name: php
