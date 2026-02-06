@@ -84,7 +84,7 @@ const togglePasswordConfirmationVisibility = () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-100 px-4 py-12">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12">
     <div class="w-full max-w-md">
       <!-- Card -->
       <div class="bg-white rounded-2xl shadow-xl p-8">
@@ -118,7 +118,7 @@ const togglePasswordConfirmationVisibility = () => {
                 'w-full px-4 py-3 border rounded-lg transition-colors focus:outline-none focus:ring-2',
                 formErrors.name
                   ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                  : 'border-gray-300 focus:border-purple-500 focus:ring-purple-200'
+                  : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
               ]"
               :disabled="isSubmitting"
               placeholder="John Doe"
@@ -142,7 +142,7 @@ const togglePasswordConfirmationVisibility = () => {
                 'w-full px-4 py-3 border rounded-lg transition-colors focus:outline-none focus:ring-2',
                 formErrors.email
                   ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                  : 'border-gray-300 focus:border-purple-500 focus:ring-purple-200'
+                  : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
               ]"
               :disabled="isSubmitting"
               placeholder="you@example.com"
@@ -167,7 +167,7 @@ const togglePasswordConfirmationVisibility = () => {
                   'w-full px-4 py-3 border rounded-lg pr-12 transition-colors focus:outline-none focus:ring-2',
                   formErrors.password
                     ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                    : 'border-gray-300 focus:border-purple-500 focus:ring-purple-200'
+                    : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
                 ]"
                 :disabled="isSubmitting"
                 placeholder="At least 8 characters"
@@ -236,7 +236,7 @@ const togglePasswordConfirmationVisibility = () => {
                   'w-full px-4 py-3 border rounded-lg pr-12 transition-colors focus:outline-none focus:ring-2',
                   formErrors.password_confirmation
                     ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                    : 'border-gray-300 focus:border-purple-500 focus:ring-purple-200'
+                    : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
                 ]"
                 :disabled="isSubmitting"
                 placeholder="Re-enter your password"
@@ -297,8 +297,8 @@ const togglePasswordConfirmationVisibility = () => {
             :class="[
               'w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200',
               isSubmitting
-                ? 'bg-purple-400 cursor-not-allowed'
-                : 'bg-purple-600 hover:bg-purple-700 active:scale-98 shadow-sm hover:shadow-md'
+                ? 'bg-indigo-400 cursor-not-allowed'
+                : 'bg-indigo-600 hover:bg-indigo-700 active:scale-98 shadow-sm hover:shadow-md'
             ]"
           >
             <span v-if="isSubmitting" class="flex items-center justify-center">
@@ -334,7 +334,7 @@ const togglePasswordConfirmationVisibility = () => {
             Already have an account?
             <router-link
               to="/login"
-              class="font-medium text-purple-600 hover:text-purple-500 transition-colors"
+              class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
             >
               Sign in
             </router-link>

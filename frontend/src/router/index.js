@@ -1,8 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import {getToken, getUser} from '@/api/auth'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
+import Home from '../pages/Home.vue'
+import Login from '../pages/Login.vue'
+import Register from '../pages/Register.vue'
+import Grammar from '../pages/Grammar.vue'
+import Practice from '../pages/Practice.vue'
+import Words from '../pages/Words.vue'
 
 
 const router = createRouter({
@@ -11,18 +14,36 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: HomeView,
+            component: Home,
+            meta: {requiresAuth: true},
+        },
+        {
+            path: '/grammar',
+            name: 'grammar',
+            component: Grammar,
+            meta: {requiresAuth: true},
+        },
+        {
+            path: '/practice',
+            name: 'practice',
+            component: Practice,
+            meta: {requiresAuth: true},
+        },
+        {
+            path: '/words',
+            name: 'words',
+            component: Words,
             meta: {requiresAuth: true},
         },
         {
             path: '/login',
             name: 'login',
-            component: LoginView
+            component: Login
         },
         {
             path: '/register',
             name: 'register',
-            component: RegisterView
+            component: Register
         },
     ],
 })
