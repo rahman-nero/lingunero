@@ -61,11 +61,11 @@ services:
             context: ./
             dockerfile: ./docker/node/Dockerfile
         ports:
-            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+            - '${VITE_PORT:-5173}:5173'
         restart: unless-stopped
         tty: true
         volumes:
-            -  ./backend:/var/www
+            -  ./frontend:/var/www
 
     redis:
         container_name: redis
