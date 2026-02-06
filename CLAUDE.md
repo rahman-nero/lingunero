@@ -9,7 +9,7 @@ Lingunero is an English language learning web application. Users create librarie
 ## Tech Stack
 
 - **Backend:** Laravel 12 (PHP 8.4) with Redis (cache/sessions) and MySQL 8.0
-- **Frontend:** Vue 3 (Composition API) + Vite + Tailwind CSS + PrimeUI
+- **Frontend:** Vue 3 (Composition API) + Vite + Tailwind CSS 4 + Vue Router + Pinia + Axios
 - **LLM Service:** FastAPI (Python 3.12) with Llama C++ (disabled in compose.yml)
 - **Infrastructure:** Docker Compose (nginx, php, mysql, redis, node containers)
 
@@ -55,15 +55,18 @@ Follows a layered architecture:
 - **AI** (`app/AI/`) - LLM prompt templates and provider configuration.
 - **Models** (`app/Models/`) - Eloquent models: User, Words, Library, Sentences, FavoriteWord, WordExample, practice statistics, LLM chat rooms/messages.
 
-### Frontend (`backend/resources/`)
+### Frontend (`frontend/`)
 
-Vue 3 components are organized by feature under `resources/js/site/`:
-- `library/` - Library display
-- `word/` - Word add/edit/cards/statistics
-- `sentences/` - Sentence add/edit/statistics
-- `llm/chats/` - LLM chat interface
+Standalone Vue 3 SPA located in the `frontend/` directory with its own `package.json`:
 
-Each feature has a dedicated Vite entry point defined in `vite.config.js`. Blade templates in `resources/views/` serve as page shells that mount Vue components.
+- **Entry point:** `src/main.js` — mounts Vue with Pinia and Vue Router
+- **Routing:** `src/router/index.js` — Vue Router with HTML5 history mode
+- **State management:** `src/stores/` — Pinia stores
+- **Views:** `src/views/` — page-level components
+- **Components:** `src/components/` — reusable components
+- **API calls:** `src/api/` — Axios-based API modules, one file per entity (e.g., `sentence.js`, `user.js`, `word.js`)
+- **Styles:** Uses Tailwind CSS everywhere, minimal custom CSS in css-files
+- **Build tool:** Vite with `@tailwindcss/vite` plugin
 
 ### Docker (`docker/`)
 
@@ -86,3 +89,10 @@ GitHub Actions (`.github/workflows/deploy.yaml`) triggers on push to `main`, SSH
 - Routes are web-based (not API-first); authenticated via Laravel Breeze session auth
 - Redis is used for cache, sessions, and file storage drivers
 - The LLM feature connects to the FastAPI service via `LLM_URL` env variable when enabled
+
+## Important Rules
+
+- **Every command MUST be run through docker-compose.** Never run commands directly on the host (e.g., use `docker compose exec node npm install axios`, not `npm install axios`).
+- Never run `npm run dev` directly — use `make dev` (which runs through docker-compose).
+- Use `docker compose exec node npm run build` to check for compilation errors and fix them if needed.
+- Install npm packages via: `docker compose exec node npm install <package>`

@@ -55,6 +55,9 @@ key-generate:
 laravel-route:
 	docker compose exec php php artisan route:cache
 
+routes:
+	docker compose exec php php artisan route:list
+
 laravel-cache:
 	docker compose exec php php artisan cache:clear
 
