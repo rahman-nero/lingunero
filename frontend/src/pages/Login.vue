@@ -65,20 +65,20 @@ const togglePasswordVisibility = () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 px-4 py-12 transition-colors">
     <div class="w-full max-w-md">
       <!-- Card -->
-      <div class="bg-white rounded-2xl shadow-xl p-8">
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl dark:shadow-gray-900/50 p-8 transition-colors">
         <!-- Header -->
         <div class="text-center mb-8">
-          <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
-          <p class="text-gray-600">Sign in to continue learning</p>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Welcome back</h1>
+          <p class="text-gray-600 dark:text-gray-400">Sign in to continue learning</p>
         </div>
 
         <!-- Error Message -->
         <div
           v-if="authStore.error"
-          class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm"
+          class="mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-300 text-sm"
         >
           {{ authStore.error }}
         </div>
@@ -87,7 +87,7 @@ const togglePasswordVisibility = () => {
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <!-- Email Field -->
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Email address
             </label>
             <input
@@ -96,22 +96,22 @@ const togglePasswordVisibility = () => {
               type="email"
               autocomplete="email"
               :class="[
-                'w-full px-4 py-3 border rounded-lg transition-colors focus:outline-none focus:ring-2',
+                'w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-colors focus:outline-none focus:ring-2',
                 formErrors.email
-                  ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                  : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
+                  ? 'border-red-300 dark:border-red-700 focus:border-red-500 focus:ring-red-200 dark:focus:ring-red-900/50'
+                  : 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-200 dark:focus:ring-indigo-900/50'
               ]"
               :disabled="isSubmitting"
               placeholder="you@example.com"
             />
-            <p v-if="formErrors.email" class="mt-2 text-sm text-red-600">
+            <p v-if="formErrors.email" class="mt-2 text-sm text-red-600 dark:text-red-400">
               {{ formErrors.email[0] }}
             </p>
           </div>
 
           <!-- Password Field -->
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Password
             </label>
             <div class="relative">
@@ -121,10 +121,10 @@ const togglePasswordVisibility = () => {
                 :type="showPassword ? 'text' : 'password'"
                 autocomplete="current-password"
                 :class="[
-                  'w-full px-4 py-3 border rounded-lg pr-12 transition-colors focus:outline-none focus:ring-2',
+                  'w-full px-4 py-3 border rounded-lg pr-12 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-colors focus:outline-none focus:ring-2',
                   formErrors.password
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                    : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
+                    ? 'border-red-300 dark:border-red-700 focus:border-red-500 focus:ring-red-200 dark:focus:ring-red-900/50'
+                    : 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-200 dark:focus:ring-indigo-900/50'
                 ]"
                 :disabled="isSubmitting"
                 placeholder="Enter your password"
@@ -132,7 +132,7 @@ const togglePasswordVisibility = () => {
               <button
                 type="button"
                 @click="togglePasswordVisibility"
-                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
                 :disabled="isSubmitting"
               >
                 <svg
@@ -173,7 +173,7 @@ const togglePasswordVisibility = () => {
                 </svg>
               </button>
             </div>
-            <p v-if="formErrors.password" class="mt-2 text-sm text-red-600">
+            <p v-if="formErrors.password" class="mt-2 text-sm text-red-600 dark:text-red-400">
               {{ formErrors.password[0] }}
             </p>
           </div>
@@ -184,10 +184,10 @@ const togglePasswordVisibility = () => {
               id="remember"
               v-model="form.remember"
               type="checkbox"
-              class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              class="h-4 w-4 text-indigo-600 dark:text-indigo-500 focus:ring-indigo-500 dark:focus:ring-indigo-600 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded"
               :disabled="isSubmitting"
             />
-            <label for="remember" class="ml-2 block text-sm text-gray-700">
+            <label for="remember" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
               Remember me
             </label>
           </div>
@@ -199,8 +199,8 @@ const togglePasswordVisibility = () => {
             :class="[
               'w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200',
               isSubmitting
-                ? 'bg-indigo-400 cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-700 active:scale-98 shadow-sm hover:shadow-md'
+                ? 'bg-indigo-400 dark:bg-indigo-500 cursor-not-allowed'
+                : 'bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 active:scale-98 shadow-sm hover:shadow-md'
             ]"
           >
             <span v-if="isSubmitting" class="flex items-center justify-center">
@@ -232,11 +232,11 @@ const togglePasswordVisibility = () => {
 
         <!-- Register Link -->
         <div class="mt-6 text-center">
-          <p class="text-sm text-gray-600">
+          <p class="text-sm text-gray-600 dark:text-gray-400">
             Don't have an account?
             <router-link
               to="/register"
-              class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+              class="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors"
             >
               Sign up
             </router-link>
@@ -245,7 +245,7 @@ const togglePasswordVisibility = () => {
       </div>
 
       <!-- Footer -->
-      <p class="mt-8 text-center text-sm text-gray-600">
+      <p class="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
         Lingunero - English Language Learning
       </p>
     </div>
