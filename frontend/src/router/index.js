@@ -4,6 +4,7 @@ import Home from '@/pages/Home.vue'
 import Login from '@/pages/Auth/Login.vue'
 import Register from '@/pages/Auth/Register.vue'
 import Grammar from '@/pages/Grammar.vue'
+import GrammarTopic from '@/pages/GrammarTopic.vue'
 import Practice from '@/pages/Practice.vue'
 import Words from '@/pages/Words.vue'
 
@@ -31,6 +32,12 @@ const router = createRouter({
             path: '/grammar',
             name: 'grammar',
             component: Grammar,
+            meta: {requiresAuth: true},
+        },
+        {
+            path: '/grammar/:id',
+            name: 'grammar-topic',
+            component: GrammarTopic,
             meta: {requiresAuth: true},
         },
         {

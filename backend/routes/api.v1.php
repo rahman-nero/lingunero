@@ -24,5 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/grammary', [GrammaryController::class, 'index']);
+    Route::get('/grammary/{id}/practices', [GrammaryController::class, 'practices']);
     Route::get('/grammary/{id}', [GrammaryController::class, 'show']);
 });

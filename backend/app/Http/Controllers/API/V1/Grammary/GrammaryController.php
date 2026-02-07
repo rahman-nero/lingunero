@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API\V1\Grammary;
 
 use App\Helpers\ApiResponse;
+use App\Http\Controllers\API\V1\Grammary\Responses\GrammaryPracticesGroupedResponse;
 use App\Http\Controllers\API\V1\Grammary\Responses\GrammaryResource;
 use App\Http\Controllers\Controller;
+use App\Repository\GrammaryPracticeRepository;
 use App\Repository\GrammaryRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,10 +15,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 /**
  * API контроллер тем по грамматике
  */
-class GrammaryController extends Controller
+final class GrammaryController extends Controller
 {
     public function __construct(
-        private readonly GrammaryRepository $repository
+        private readonly GrammaryRepository $repository,
+        private readonly GrammaryPracticeRepository $practiceRepository
     ) {
     }
 
@@ -51,5 +54,25 @@ class GrammaryController extends Controller
         }
 
         return new GrammaryResource($grammary);
+    }
+
+    /**
+     * Список практик по теме грамматики, сгруппированных по union_id.
+     *
+     * @param int $id Идентификатор темы грамматики (grammary_id)
+     * @return JsonResponse
+     */
+    public function practices(int $id): JsonResponse
+    {
+        $grammary = $this->repository->getById($id);
+
+        if ($grammary === null) {
+            return ApiResponse::notFound('Grammar topic not found');
+        }
+
+        $practices = $this->practiceRepository->getByGrammaryId($id);
+        $data = GrammaryPracticesGroupedResponse::toArray($practices);
+
+        return ApiResponse::success(['data' => $data]);
     }
 }

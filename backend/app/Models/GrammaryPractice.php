@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\GrammaryPracticeTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +26,7 @@ class GrammaryPractice extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
+        'type' => GrammaryPracticeTypeEnum::class,
         'answers' => 'array',
     ];
 

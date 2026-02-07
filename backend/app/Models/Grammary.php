@@ -22,10 +22,6 @@ class Grammary extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
 
     public function practices()
     {
