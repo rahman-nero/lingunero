@@ -36,3 +36,12 @@ export const getGrammaryPractices = async (id) => {
 export const submitGrammaryPractice = async (topicId, payload) => {
   return axios.post(`${V1_BASE}/grammary/${topicId}/practices`, payload)
 }
+
+/**
+ * Get current user's previous statistics (scores) for a grammar topic.
+ * @param {number} topicId - Grammar topic id (grammary_id)
+ * @returns {Promise<{ data: { data: Array<{ id: number, statistic: { total: number, correct: number, details: Array<{ id: number, question: string|null, answers: string[], user_answer: string, correct: boolean, union_id: string, title: string }> }, created_at: string, updated_at: string }> } }>}
+ */
+export const getGrammaryStatistics = async (topicId) => {
+  return axios.get(`${V1_BASE}/grammary/${topicId}/statistics`)
+}

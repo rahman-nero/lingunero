@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/grammary', [GrammaryController::class, 'index']);
     Route::get('/grammary/{id}/practices', [GrammaryController::class, 'practices']);
+    Route::get('/grammary/{id}/statistics', [GrammaryController::class, 'statistics']);
     Route::post('/grammary/{id}/practices', [GrammaryController::class, 'submitPractice']);
     Route::get('/grammary/{id}', [GrammaryController::class, 'show']);
 });

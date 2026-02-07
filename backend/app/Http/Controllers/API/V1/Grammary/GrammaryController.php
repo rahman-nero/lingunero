@@ -5,9 +5,11 @@ namespace App\Http\Controllers\API\V1\Grammary;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\API\V1\Grammary\Responses\GrammaryPracticesGroupedResponse;
 use App\Http\Controllers\API\V1\Grammary\Responses\GrammaryResource;
+use App\Http\Controllers\API\V1\Grammary\Responses\GrammaryStatisticResource;
 use App\Http\Requests\API\V1\Grammary\SubmitPracticeRequest;
 use App\Http\Controllers\Controller;
 use App\Repository\GrammaryPracticeRepository;
+use App\Repository\GrammaryPracticeStatisticRepository;
 use App\Repository\GrammaryRepository;
 use App\Services\GrammaryPracticeService;
 use Illuminate\Http\JsonResponse;
@@ -22,6 +24,7 @@ final class GrammaryController extends Controller
     public function __construct(
         private readonly GrammaryRepository $repository,
         private readonly GrammaryPracticeRepository $practiceRepository,
+        private readonly GrammaryPracticeStatisticRepository $statisticRepository,
         private readonly GrammaryPracticeService $practiceService
     ) {
     }
@@ -106,5 +109,28 @@ final class GrammaryController extends Controller
         );
 
         return ApiResponse::success($result, 201);
+    }
+
+    /**
+     * Предыдущие результаты (статистика) текущего пользователя по теме грамматики.
+     *
+     * @param int     $id      Идентификатор темы грамматики (grammary_id)
+     * @param Request $request
+     * @return AnonymousResourceCollection|JsonResponse
+     */
+    public function statistics(int $id, Request $request): AnonymousResourceCollection|JsonResponse
+    {
+        $grammary = $this->repository->getById($id);
+
+        if ($grammary === null) {
+            return ApiResponse::notFound('Grammar topic not found');
+        }
+
+        $statistics = $this->statisticRepository->getByGrammaryAndUser(
+            $id,
+            (int) $request->user()->id
+        );
+
+        return GrammaryStatisticResource::collection($statistics);
     }
 }

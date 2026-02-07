@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
-import { getGrammaryById, getGrammaryPractices, submitGrammaryPractice } from '@/api/grammary.js'
+import { getGrammaryById, getGrammaryPractices, submitGrammaryPractice, getGrammaryStatistics } from '@/api/grammary.js'
 import CenterComponent from '../components/CenterComponent.vue'
 
 const route = useRoute()
@@ -24,6 +24,10 @@ const checkLoading = ref(false)
 const checkError = ref(null)
 /** Last check result: { total, correct, statistic_id } */
 const checkResult = ref(null)
+
+const statisticsList = ref([])
+const statisticsLoading = ref(false)
+const statisticsError = ref(null)
 
 function formatCheckError (err) {
   if (err == null) return ''
@@ -109,9 +113,51 @@ async function checkAnswers () {
 
 onMounted(loadTopic)
 
+async function loadStatistics () {
+  if (!id.value) return
+  try {
+    statisticsLoading.value = true
+    statisticsError.value = null
+    const { data } = await getGrammaryStatistics(id.value)
+    statisticsList.value = data.data ?? data ?? []
+  } catch (e) {
+    statisticsError.value = e.response?.data?.message ?? 'Failed to load previous scores'
+  } finally {
+    statisticsLoading.value = false
+  }
+}
+
+function formatStatisticDate (isoString) {
+  if (!isoString) return '—'
+  try {
+    const d = new Date(isoString)
+    return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+  } catch {
+    return isoString
+  }
+}
+
+/** Group statistic details by union_id; each group has title (from first item with title) and items */
+function groupDetailsByUnionId (details) {
+  if (!Array.isArray(details) || !details.length) return []
+  const byUnion = {}
+  for (const d of details) {
+    const uid = d?.union_id ?? ''
+    if (!byUnion[uid]) byUnion[uid] = []
+    byUnion[uid].push(d)
+  }
+  return Object.entries(byUnion).map(([unionId, items]) => {
+    const title = items.find((t) => t?.title)?.title ?? null
+    return { unionId, title, items }
+  })
+}
+
 watch(activeTab, (tab) => {
   if (tab === 'test' && topic.value && !practicesByUnion.value && !practicesLoading.value) {
     loadPractices()
+  }
+  if (tab === 'scores' && topic.value) {
+    loadStatistics()
   }
 })
 
@@ -227,7 +273,7 @@ watch(topic, (t) => {
             <button
               type="button"
               :disabled="checkLoading"
-              class="self-start px-4 py-2 rounded-lg font-medium bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+              class="self-start cursor-pointer px-4 py-2 rounded-lg font-medium bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none transition-colors"
               @click="checkAnswers"
             >
               {{ checkLoading ? 'Checking…' : 'Check answers' }}
@@ -239,7 +285,7 @@ watch(topic, (t) => {
               v-else-if="checkResult"
               class="text-gray-700 dark:text-gray-300 font-medium"
             >
-              Result: {{ checkResult.correct }} / {{ checkResult.total }} correct
+              Result: {{ checkResult.correct }} / {{ checkResult.total }} correct. <span @click="activeTab = 'scores'" class="text-green-400 cursor-pointer underline">Check answers</span>
             </p>
           </div>
         </template>
@@ -249,8 +295,74 @@ watch(topic, (t) => {
       </div>
 
       <!-- Previous scores tab content -->
-      <div v-show="activeTab === 'scores'" class="text-gray-500 dark:text-gray-400">
-        Previous scores will appear here.
+      <div v-show="activeTab === 'scores'" class="space-y-6">
+        <div v-if="statisticsLoading" class="text-gray-500 dark:text-gray-400">
+          Loading previous scores…
+        </div>
+        <div v-else-if="statisticsError" class="text-red-600 dark:text-red-400">
+          {{ statisticsError }}
+        </div>
+        <template v-else-if="statisticsList.length">
+          <div
+            v-for="score in statisticsList"
+            :key="score.id"
+            class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700"
+          >
+            <div class="flex justify-between mb-3 border-b border-gray-200 dark:border-gray-600 pb-3">
+               <p
+              v-if="score.statistic"
+              class="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Score: {{ score.statistic.correct }} / {{ score.statistic.total }} correct
+            </p>
+              <time
+                :datetime="score.created_at"
+                class="text-sm text-gray-500 dark:text-gray-400"
+              >
+                {{ formatStatisticDate(score.created_at) }}
+              </time>
+            </div>
+           
+            <div class="space-y-5">
+              <div
+                v-for="group in groupDetailsByUnionId(score.statistic?.details)"
+                :key="group.unionId"
+                class="space-y-2 border-b border-gray-200 dark:border-gray-600 pb-5 last:border-0 last:pb-0"
+              >
+                <h4
+                  v-if="group.title"
+                  class="font-semibold text-gray-900 dark:text-gray-200 pb-1"
+                >
+                  {{ group.title }}
+                </h4>
+                <div
+                  v-for="(detail, idx) in group.items"
+                  :key="detail.id ?? idx"
+                  class="pl-5 border-b border-gray-200 dark:border-gray-600 pb-3 last:border-0 last:pb-0"
+                >
+                  <p class="text-gray-800 dark:text-gray-200 font-medium mb-1">
+                    {{ detail.question || '—' }}
+                  </p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <span class="font-medium">Correct:</span>
+                    {{ Array.isArray(detail.answers) ? detail.answers.join(', ') : (detail.answers ?? '—') }}
+                  </p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <span class="font-medium">Your answer: </span>
+                    <span
+                      :class="detail.correct ? 'text-green-600 dark:text-green-400 font-medium' : 'text-red-600 dark:text-red-400 font-medium'"
+                    >
+                      {{ detail.user_answer ?? '—' }}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <p v-else class="text-gray-500 dark:text-gray-400">
+          No previous scores yet.
+        </p>
       </div>
     </template>
   </CenterComponent>

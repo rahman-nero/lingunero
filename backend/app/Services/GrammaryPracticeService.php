@@ -69,7 +69,12 @@ final class GrammaryPracticeService
                 $correct++;
             }
             $details[] = [
-                'practice_id' => $practice->id,
+                'id' => $practice->id,
+                'title' => $practice->title,
+                'union_id' => $practice->union_id,
+                'question' => $practice->question,
+                'answers' => $correctAnswers,
+                'user_answer' => $userAnswer,
                 'correct' => $isCorrect,
             ];
         }
