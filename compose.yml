@@ -7,8 +7,10 @@ services:
         restart: unless-stopped
         ports:
             - "${NGINX_PORT:-80}:80"
+            - "${NGINX_FRONTEND_PORT:-81}:81"
         volumes:
             - ./backend:/var/www
+            - ./frontend/dist:/var/www/frontend
         links:
             - php
 
