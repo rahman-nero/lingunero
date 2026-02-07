@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\Grammary\GrammaryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +22,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/grammary', [GrammaryController::class, 'index']);
+    Route::get('/grammary/{id}', [GrammaryController::class, 'show']);
 });

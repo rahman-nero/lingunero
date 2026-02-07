@@ -1,16 +1,26 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import {getToken, getUser} from '@/api/auth'
-import Home from '../pages/Home.vue'
-import Login from '../pages/Login.vue'
-import Register from '../pages/Register.vue'
-import Grammar from '../pages/Grammar.vue'
-import Practice from '../pages/Practice.vue'
-import Words from '../pages/Words.vue'
+import {getToken, getUser} from '@/api/auth.js'
+import Home from '@/pages/Home.vue'
+import Login from '@/pages/Auth/Login.vue'
+import Register from '@/pages/Auth/Register.vue'
+import Grammar from '@/pages/Grammar.vue'
+import Practice from '@/pages/Practice.vue'
+import Words from '@/pages/Words.vue'
 
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Register
+        },
         {
             path: '/',
             name: 'home',
@@ -34,16 +44,6 @@ const router = createRouter({
             name: 'words',
             component: Words,
             meta: {requiresAuth: true},
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login
-        },
-        {
-            path: '/register',
-            name: 'register',
-            component: Register
         },
     ],
 })
