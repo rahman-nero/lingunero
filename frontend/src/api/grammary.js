@@ -26,3 +26,13 @@ export const getGrammaryById = async (id) => {
 export const getGrammaryPractices = async (id) => {
   return axios.get(`${V1_BASE}/grammary/${id}/practices`)
 }
+
+/**
+ * Submit practice answers for checking. Body must match backend: answers array of { id, value }.
+ * @param {number} topicId - Grammar topic id (grammary_id)
+ * @param {{ answers: Array<{ id: number, value: string }> }} payload - { answers: [ { id: practiceId, value: userAnswer }, ... ] }
+ * @returns {Promise<{ data: { total: number, correct: number, statistic_id: number } }>}
+ */
+export const submitGrammaryPractice = async (topicId, payload) => {
+  return axios.post(`${V1_BASE}/grammary/${topicId}/practices`, payload)
+}

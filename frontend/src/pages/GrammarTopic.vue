@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
-import { getGrammaryById, getGrammaryPractices } from '@/api/grammary.js'
+import { getGrammaryById, getGrammaryPractices, submitGrammaryPractice } from '@/api/grammary.js'
 import CenterComponent from '../components/CenterComponent.vue'
 
 const route = useRoute()
@@ -19,6 +19,18 @@ const practicesLoading = ref(false)
 const practicesError = ref(null)
 /** User answers keyed by practice id */
 const answers = ref({})
+
+const checkLoading = ref(false)
+const checkError = ref(null)
+/** Last check result: { total, correct, statistic_id } */
+const checkResult = ref(null)
+
+function formatCheckError (err) {
+  if (err == null) return ''
+  if (Array.isArray(err)) return err.join(', ')
+  if (typeof err === 'object') return Object.values(err).flat().join(', ')
+  return String(err)
+}
 
 /** Flatten practices API response into list of { unionId, items, title } for rendering */
 const practiceGroups = computed(() => {
@@ -67,6 +79,32 @@ async function loadPractices () {
 
 function setAnswer (practiceId, value) {
   answers.value = { ...answers.value, [practiceId]: value }
+}
+
+/** Build payload for backend: answers array of { id, value } */
+function buildPracticePayload () {
+  return {
+    answers: Object.entries(answers.value).map(([id, value]) => ({
+      id: Number(id),
+      value: value != null ? String(value) : ''
+    }))
+  }
+}
+
+async function checkAnswers () {
+  if (!id.value || !practiceGroups.value?.length) return
+  try {
+    checkLoading.value = true
+    checkError.value = null
+    checkResult.value = null
+    const payload = buildPracticePayload()
+    const { data } = await submitGrammaryPractice(id.value, payload)
+    checkResult.value = data
+  } catch (e) {
+    checkError.value = e.response?.data?.message ?? e.response?.data?.errors ?? 'Failed to check answers'
+  } finally {
+    checkLoading.value = false
+  }
 }
 
 onMounted(loadTopic)
@@ -183,6 +221,26 @@ watch(topic, (t) => {
                 Type "{{ task.type }}" is not supported yet.
               </p>
             </div>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <button
+              type="button"
+              :disabled="checkLoading"
+              class="self-start px-4 py-2 rounded-lg font-medium bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+              @click="checkAnswers"
+            >
+              {{ checkLoading ? 'Checking…' : 'Check answers' }}
+            </button>
+            <p v-if="checkError" class="text-red-600 dark:text-red-400 text-sm">
+              {{ formatCheckError(checkError) }}
+            </p>
+            <p
+              v-else-if="checkResult"
+              class="text-gray-700 dark:text-gray-300 font-medium"
+            >
+              Result: {{ checkResult.correct }} / {{ checkResult.total }} correct
+            </p>
           </div>
         </template>
         <p v-else class="text-gray-500 dark:text-gray-400">
